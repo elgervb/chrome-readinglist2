@@ -1,0 +1,25 @@
+{
+  "manifest_version": 2,
+  "name": "Chrome Reading List 2",
+  "version": "0.1",
+  "permissions": [
+    "bookmarks",
+    "tabs",
+    "contextMenus"
+  ],
+  "optional_permissions": [
+    "http://*/",
+    "https://*/"
+  ],
+  "browser_action": {
+    "default_title": "Reading list",
+    "default_icon": "./assets/icon128.png",
+    "default_popup": "index.html"
+  },
+  "icons": {
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+    },
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://www.google-analytics.com; object-src 'self'"
+}
