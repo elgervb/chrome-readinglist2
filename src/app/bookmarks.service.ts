@@ -12,7 +12,7 @@ export class BookmarksService {
     this.bookmarks$ = this.bookmarks.asObservable();
   }
 
-  getBookmarks(title: string): Observable<chrome.bookmarks.BookmarkTreeNode[]> {
+  get(title: string): Observable<chrome.bookmarks.BookmarkTreeNode[]> {
     const OTHER_BOOKMARKS = 'Other bookmarks';
     chrome.bookmarks.getTree(bookmarks => {
       const result = bookmarks[0].children
@@ -27,5 +27,9 @@ export class BookmarksService {
     });
 
     return this.bookmarks$;
+  }
+
+  add(bookmark: chrome.bookmarks.BookmarkCreateArg) {
+    chrome.bookmarks.create(bookmark);
   }
 }
