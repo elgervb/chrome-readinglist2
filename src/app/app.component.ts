@@ -8,7 +8,7 @@ const READINGLIST_BOOKMARK_NAME = 'My ReadingList';
   selector: 'app-root',
   template: `<h1>My Reading list ({{(bookmarks$|async)?.length || 0}})</h1>
     <ul>
-      <li *ngFor="let bookmark of bookmarks">{{bookmark.title}}</li>
+      <li *ngFor="let bookmark of bookmarks$ | async">{{bookmark.title}}</li>
     </ul>
   `,
   styleUrls: ['./app.component.scss']
@@ -20,8 +20,6 @@ export class AppComponent implements OnInit {
   constructor(private bookmarksService: BookmarksService) {}
 
   ngOnInit() {
-    this.bookmarks$ = this.bookmarksService.bookmarks$;
-
-    this.bookmarksService.getBookmarks(READINGLIST_BOOKMARK_NAME);
+    this.bookmarks$ = this.bookmarksService.getBookmarks(READINGLIST_BOOKMARK_NAME);
   }
 }
