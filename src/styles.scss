@@ -1,1 +1,24 @@
-/* You can add global styles to this file, and also import other style files */
+/* Default stylesheet. Taken from https://gist.github.com/elgervb/00359968425a6eecdd1d1c80d87d3886 */
+html {
+  box-sizing: border-box;
+  font-size: 16px;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  text-rendering: optimizeLegibility;
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+body, input, select, textarea {
+  font-family: Open Sans, sans-serif;
+}
