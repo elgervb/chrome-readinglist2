@@ -35,7 +35,7 @@ ul {
 
 .reading-list__body {
   flex: 1 1 auto;
-  font-size: .8em;
+  font-size: 1em;
   margin-bottom: .5rem;
   overflow-y: auto;
 }
@@ -82,7 +82,6 @@ ul {
 .bookmark__favicon {
   height: 1rem;
   margin-right: 1rem;
-  overflow: hidden;
   vertical-align: bottom;
   width: 1rem;
 }

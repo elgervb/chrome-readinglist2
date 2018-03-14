@@ -58,8 +58,9 @@ export class AppComponent implements OnInit {
   }
 
   getFavicon(bookmark: chrome.bookmarks.BookmarkTreeNode) {
-    const parsed = this.parse(bookmark.url);
-    return `${this.getBase(parsed)}/favicon.ico`;
+    // const parsed = this.parse(bookmark.url);
+    // return `${this.getBase(parsed)}/favicon.ico`;
+    return '/assets/bookmark-default.svg';
   }
 
   addCurrentPage() {
