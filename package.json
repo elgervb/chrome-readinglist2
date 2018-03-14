@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng build --watch --prod --delete-output-path false",
+    "start": "ng build --watch --delete-output-path false",
     "prestart": "npm run copy",
     "build": "ng build --prod --delete-output-path false",
     "prebuild": "npm run clean && npm run copy",

@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+import { take, takeUntil, share } from 'rxjs/operators';
 import { BookmarksService } from './bookmarks.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+
 
 const READINGLIST_BOOKMARK_NAME = 'My ReadingList';
 
@@ -11,18 +14,18 @@ const READINGLIST_BOOKMARK_NAME = 'My ReadingList';
     <header class="reading-list__header">
       <h1 class="reading-list__title">
       My Reading list
-      <span class="reading-list__title--small">({{(bookmarks$|async)?.length || 0}})</span>
+      <span class="reading-list__title--small">({{ bookmarks?.length || 0 }})</span>
       <span class="reading-list__version">0.0.1</span>
       </h1>
     </header>
     <main class="reading-list__body">
       <ul>
-        <li *ngFor="let bookmark of bookmarks$ | async" class="bookmark">
+        <li *ngFor="let bookmark of bookmarks" class="bookmark">
           <a [href]="getSafeLink(bookmark)" (click)="onClick(bookmark)" class="bookmark__link">
             <img [src]="getFavicon(bookmark)" alt="Site's favicon" class="bookmark__favicon">
             <div class="bookmark__text">
-              <div class="bookmark__title">{{bookmark.title}}</div>
-              <div class="bookmark__url">{{bookmark.url}}</div>
+              <div class="bookmark__title">{{ bookmark.title }}</div>
+              <div class="bookmark__url">{{ bookmark.url }}</div>
             </div>
           </a>
         </li>
@@ -30,20 +33,37 @@ const READINGLIST_BOOKMARK_NAME = 'My ReadingList';
     </main>
     <footer class="reading-list__footer">
       <input type="text" class="reading-list__filter" placeholder="filter" autofocus>
-      <button ng-click="randomBookmark()" title="Reload reading list">↻</button>
-      <button ng-click="addCurrentPage()" class="readinglist__btn-add" title="Add current page">+</button>
+      <button (click)="randomBookmark()" title="Pick a random item">↻</button>
+      <button (click)="addCurrentPage()" class="readinglist__btn-add" title="Add current page">+</button>
     </footer>
   `,
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'app';
   bookmarks$: Observable<chrome.bookmarks.BookmarkTreeNode[]>;
+  bookmarks: chrome.bookmarks.BookmarkTreeNode[];
 
-  constructor(private bookmarksService: BookmarksService, private sanitizer: DomSanitizer) {}
+  private unsubscribe = new Subject<void>();
+
+  constructor(private bookmarksService: BookmarksService, private sanitizer: DomSanitizer, private changeDetector: ChangeDetectorRef) {}
 
   ngOnInit() {
-    this.bookmarks$ = this.bookmarksService.get(READINGLIST_BOOKMARK_NAME);
+    this.bookmarks$ = this.bookmarksService.get(READINGLIST_BOOKMARK_NAME)
+      .pipe(share());
+
+    this.bookmarks$
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(bookmarks => {
+        this.bookmarks = bookmarks;
+        this.changeDetector.detectChanges();
+      });
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe.next(undefined);
+    this.unsubscribe.complete();
   }
 
   getSafeLink(bookmark: chrome.bookmarks.BookmarkTreeNode): SafeUrl {
@@ -64,11 +84,21 @@ export class AppComponent implements OnInit {
   }
 
   addCurrentPage() {
-
+    chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
+      const tab = tabs[0];
+      this.bookmarksService.add({
+        parentId: this.bookmarksService.readingListId,
+        url: tab.url,
+        title: tab.title,
+      });
+    });
   }
 
   randomBookmark() {
-
+    this.bookmarks$.pipe(take(1)).subscribe(bookmarks => {
+      const randomIndex = Math.floor(Math.random() * bookmarks.length);
+      this.onClick(bookmarks[randomIndex]);
+    });
   }
 
   private parse(url): ParsedUrl {
@@ -86,7 +116,7 @@ export class AppComponent implements OnInit {
     };
   }
 
-  private getBase(parsed): string {
+  private getBase(parsed: ParsedUrl): string {
     let base = `${parsed.protocol}//${parsed.hostname}`;
     if (parsed.port) {
         base = `${base}:${parsed.port}`;
