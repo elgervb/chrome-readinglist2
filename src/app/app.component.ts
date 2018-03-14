@@ -8,6 +8,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 
 const READINGLIST_BOOKMARK_NAME = 'My ReadingList';
+export const DEFAULT_IMAGE = '/assets/bookmark-default.svg';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +24,7 @@ const READINGLIST_BOOKMARK_NAME = 'My ReadingList';
       <ul>
         <li *ngFor="let bookmark of bookmarks" class="bookmark">
           <a [href]="getSafeLink(bookmark)" (click)="onClick(bookmark, $event)" class="bookmark__link">
-            <img [src]="getFavicon(bookmark)" alt="Site's favicon" class="bookmark__favicon">
+            <img [appLazyImg]="getFavicon(bookmark)" alt="Site's favicon" class="bookmark__favicon">
             <div class="bookmark__text">
               <div class="bookmark__title">{{ bookmark.title }}</div>
               <div class="bookmark__url">{{ bookmark.url }}</div>
@@ -95,9 +96,8 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   getFavicon(bookmark: chrome.bookmarks.BookmarkTreeNode) {
-    // const parsed = this.parse(bookmark.url);
-    // return `${this.getBase(parsed)}/favicon.ico`;
-    return '/assets/bookmark-default.svg';
+    const parsed = this.parse(bookmark.url);
+    return `${this.getBase(parsed)}/favicon.ico`;
   }
 
   addCurrentPage() {
