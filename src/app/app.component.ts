@@ -73,6 +73,7 @@ export class AppComponent implements OnInit, OnDestroy {
     chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
       const tab = tabs[0];
       chrome.tabs.create({url: bookmark.url});
+      this.removeBookmark(bookmark);
     });
   }
 
@@ -98,6 +99,10 @@ export class AppComponent implements OnInit, OnDestroy {
       const randomIndex = Math.floor(Math.random() * bookmarks.length);
       this.onClick(bookmarks[randomIndex]);
     });
+  }
+
+  removeBookmark(bookmark: chrome.bookmarks.BookmarkTreeNode) {
+    this.bookmarksService.remove(bookmark);
   }
 
   private parse(url): ParsedUrl {
