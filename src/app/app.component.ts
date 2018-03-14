@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import { take, takeUntil } from 'rxjs/operators';
+import { take, takeUntil, debounceTime } from 'rxjs/operators';
+import { combineLatest } from 'rxjs/observable/combineLatest';
 import { BookmarksService } from './bookmarks.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
@@ -21,7 +22,7 @@ const READINGLIST_BOOKMARK_NAME = 'My ReadingList';
     <main class="reading-list__body">
       <ul>
         <li *ngFor="let bookmark of bookmarks" class="bookmark">
-          <a [href]="getSafeLink(bookmark)" (click)="onClick(bookmark)" class="bookmark__link">
+          <a [href]="getSafeLink(bookmark)" (click)="onClick(bookmark, $event)" class="bookmark__link">
             <img [src]="getFavicon(bookmark)" alt="Site's favicon" class="bookmark__favicon">
             <div class="bookmark__text">
               <div class="bookmark__title">{{ bookmark.title }}</div>
@@ -32,7 +33,7 @@ const READINGLIST_BOOKMARK_NAME = 'My ReadingList';
       </ul>
     </main>
     <footer class="reading-list__footer">
-      <input type="text" class="reading-list__filter" placeholder="filter" autofocus>
+      <input type="text" class="reading-list__filter" placeholder="filter" autofocus (input)="applyFilter($event.target.value)">
       <button (click)="randomBookmark()" class="readinglist__btn-random" title="Pick a random item">↻</button>
       <button (click)="addCurrentPage()" class="readinglist__btn-add" title="Add current page">+</button>
     </footer>
@@ -41,23 +42,32 @@ const READINGLIST_BOOKMARK_NAME = 'My ReadingList';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit, OnDestroy {
-  title = 'app';
   bookmarks$: Observable<chrome.bookmarks.BookmarkTreeNode[]>;
   bookmarks: chrome.bookmarks.BookmarkTreeNode[];
-
+  private filter = new Subject<string>();
   private unsubscribe = new Subject<void>();
 
   constructor(private bookmarksService: BookmarksService, private sanitizer: DomSanitizer, private changeDetector: ChangeDetectorRef) {}
 
   ngOnInit() {
-    this.bookmarks$ = this.bookmarksService.get(READINGLIST_BOOKMARK_NAME);
+    const filter$ = this.filter.asObservable().pipe(debounceTime(200));
 
-    this.bookmarks$
-      .pipe(takeUntil(this.unsubscribe))
-      .subscribe(bookmarks => {
-        this.bookmarks = bookmarks;
-        this.changeDetector.detectChanges();
-      });
+    combineLatest(this.bookmarksService.bookmarks$, filter$, (bookmarks, filter) => {
+      if (bookmarks) {
+        return bookmarks.filter(bookmark => !filter || bookmark.title.includes(filter) || bookmark.url.includes(filter));
+      }
+      if (!filter) {
+        return bookmarks;
+      }
+    })
+    .pipe(takeUntil(this.unsubscribe))
+    .subscribe((bookmarks) => {
+      this.bookmarks = bookmarks;
+      this.changeDetector.detectChanges();
+    });
+
+    this.bookmarksService.get(READINGLIST_BOOKMARK_NAME);
+    this.filter.next(undefined);
   }
 
   ngOnDestroy() {
@@ -69,12 +79,19 @@ export class AppComponent implements OnInit, OnDestroy {
     return this.sanitizer.bypassSecurityTrustUrl(bookmark.url);
   }
 
-  onClick(bookmark: chrome.bookmarks.BookmarkTreeNode) {
+  onClick(bookmark: chrome.bookmarks.BookmarkTreeNode, event?: MouseEvent) {
+    if (event) {
+      event.preventDefault();
+    }
     chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
       const tab = tabs[0];
       chrome.tabs.create({url: bookmark.url});
       this.removeBookmark(bookmark);
     });
+  }
+
+  applyFilter(filter: string) {
+    this.filter.next(filter);
   }
 
   getFavicon(bookmark: chrome.bookmarks.BookmarkTreeNode) {
