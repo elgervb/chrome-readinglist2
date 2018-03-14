@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import { take, takeUntil, share } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 import { BookmarksService } from './bookmarks.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
@@ -33,7 +33,7 @@ const READINGLIST_BOOKMARK_NAME = 'My ReadingList';
     </main>
     <footer class="reading-list__footer">
       <input type="text" class="reading-list__filter" placeholder="filter" autofocus>
-      <button (click)="randomBookmark()" title="Pick a random item">↻</button>
+      <button (click)="randomBookmark()" class="readinglist__btn-random" title="Pick a random item">↻</button>
       <button (click)="addCurrentPage()" class="readinglist__btn-add" title="Add current page">+</button>
     </footer>
   `,
@@ -50,8 +50,7 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(private bookmarksService: BookmarksService, private sanitizer: DomSanitizer, private changeDetector: ChangeDetectorRef) {}
 
   ngOnInit() {
-    this.bookmarks$ = this.bookmarksService.get(READINGLIST_BOOKMARK_NAME)
-      .pipe(share());
+    this.bookmarks$ = this.bookmarksService.get(READINGLIST_BOOKMARK_NAME);
 
     this.bookmarks$
       .pipe(takeUntil(this.unsubscribe))

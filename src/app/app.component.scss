@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   max-height: 100vh;
-  min-height: 20rem;
+  min-height: 30rem;
   width: 25rem;
 }
 main {
@@ -53,8 +53,13 @@ ul {
   border-bottom: 1px dotted #999;
   color: #999;
   font-size: .8em;
-  padding: .1rem .2rem;
+  padding: .4rem .2rem;
   flex: 2;
+}
+
+.readinglist__btn-random {
+  background: transparent;
+  border: none;
 }
 
 .readinglist__btn-add {
