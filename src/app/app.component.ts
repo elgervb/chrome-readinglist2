@@ -15,8 +15,9 @@ export const DEFAULT_IMAGE = '/assets/bookmark-default.svg';
   template: `
     <header class="reading-list__header">
       <h1 class="reading-list__title">
-      My Reading list
-      <span class="reading-list__title--small">({{ bookmarks?.length || 0 }})</span>
+        <span> My Reading list
+          <span class="reading-list__title--small">({{ bookmarks?.length || 0 }})</span>
+        </span>
       <span class="reading-list__version">0.0.1</span>
       </h1>
     </header>
@@ -35,8 +36,11 @@ export const DEFAULT_IMAGE = '/assets/bookmark-default.svg';
     </main>
     <footer class="reading-list__footer">
       <input type="text" class="reading-list__filter" placeholder="filter" autofocus (input)="applyFilter($event.target.value)">
-      <button (click)="randomBookmark()" class="readinglist__btn-random" title="Pick a random item">↻</button>
-      <button (click)="addCurrentPage()" class="readinglist__btn-add" title="Add current page">+</button>
+      <button class="readinglist__btn-random" title="Pick a random item"
+        (click)="randomBookmark()"
+        [disabled]="!bookmarks?.length">↻</button>
+      <button class="readinglist__btn-add" title="Add current page"
+        (click)="addCurrentPage()">+</button>
     </footer>
   `,
   styleUrls: ['./app.component.scss'],
@@ -112,10 +116,8 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   randomBookmark() {
-    this.bookmarks$.pipe(take(1)).subscribe(bookmarks => {
-      const randomIndex = Math.floor(Math.random() * bookmarks.length);
-      this.onClick(bookmarks[randomIndex]);
-    });
+    const randomIndex = Math.floor(Math.random() * this.bookmarks.length);
+    this.onClick(this.bookmarks[randomIndex]);
   }
 
   removeBookmark(bookmark: chrome.bookmarks.BookmarkTreeNode) {
