@@ -15,9 +15,10 @@ export const DEFAULT_IMAGE = '/assets/bookmark-default.svg';
   template: `
     <header class="reading-list__header">
       <h1 class="reading-list__title">
-      My Reading list
-      <span class="reading-list__title--small">({{ bookmarks?.length || 0 }})</span>
-      <span class="reading-list__version">0.0.1</span>
+        <span>My Reading list
+          <span class="reading-list__title--small">({{ bookmarks?.length || 0 }})</span>
+        </span>
+        <span class="reading-list__version">0.0.1</span>
       </h1>
     </header>
     <main class="reading-list__body">

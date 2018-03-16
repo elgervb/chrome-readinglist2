@@ -21,6 +21,9 @@ ul {
 
 .reading-list__title {
   color: #444;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   font-size: 1.2em;
   font-weight: 600;
   overflow-y: auto;
