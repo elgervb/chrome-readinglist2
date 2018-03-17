@@ -86,6 +86,11 @@ ul {
   display: flex;
   flex-direction: row;
   padding: .5rem;
+  text-decoration: none;
+
+  &:hover {
+    background-color: #f5f5f5;
+  }
 }
 .bookmark__favicon {
   height: 1rem;

@@ -56,7 +56,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     combineLatest(this.bookmarksService.bookmarks$, filter$, (bookmarks, filter) => {
       if (bookmarks) {
-        return bookmarks.filter(bookmark => !filter || bookmark.title.includes(filter) || bookmark.url.includes(filter));
+        return bookmarks.filter(bookmark => !filter || bookmark.title.toLowerCase().includes(filter) || bookmark.url.toLowerCase().includes(filter));
       }
       if (!filter) {
         return bookmarks;

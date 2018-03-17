@@ -28,11 +28,19 @@ export class BookmarksService {
   }
 
   add(create: chrome.bookmarks.BookmarkCreateArg) {
-    chrome.bookmarks.create(create, bookmark => {
-      const copy = [...this.bookmarks.value];
-      copy.push(bookmark);
-      this.bookmarks.next(copy);
-    });
+    const bookmarkExists = this.exists(create.url);
+
+    if (!bookmarkExists) {
+      chrome.bookmarks.create(create, bookmark => {
+        const copy = [...this.bookmarks.value];
+        copy.push(bookmark);
+        this.bookmarks.next(copy);
+      });
+    }
+  }
+
+  exists(url: string) {
+    return this.bookmarks.getValue().some(bookmark => url === bookmark.url);
   }
 
   remove(remove: chrome.bookmarks.BookmarkTreeNode) {
