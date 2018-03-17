@@ -19,6 +19,7 @@ export const DEFAULT_IMAGE = '/assets/bookmark-default.svg';
         <span>My Reading list
           <span class="reading-list__title--small">({{ bookmarks?.length || 0 }})</span>
         </span>
+        <span>
           <span class="reading-list__version">0.0.1</span>
           <svg class="icon icon--sort" [ngClass]="{'icon--sort__asc':!(isSorted| async), 'icon--sort__desc': isSorted| async}" (click)="sort()" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 512 512" enable-background="new 0 0 512 512">
             <g>
@@ -30,12 +31,13 @@ export const DEFAULT_IMAGE = '/assets/bookmark-default.svg';
               </g>
             </g>
           </svg>
+        </span>
       </h1>
     </header>
     <main class="reading-list__body">
       <ul>
         <li *ngFor="let bookmark of bookmarks" class="bookmark">
-          <a [href]="getSafeLink(bookmark)" (click)="onClick(bookmark, $event)" class="bookmark__link" title="getHover(bookmark)">
+          <a [href]="getSafeLink(bookmark)" (click)="onClick(bookmark, $event)" class="bookmark__link" [title]="getHover(bookmark)">
             <img [appLazyImg]="getFavicon(bookmark)" alt="Site's favicon" class="bookmark__favicon">
             <div class="bookmark__text">
               <div class="bookmark__title">{{ bookmark.title }}</div>
@@ -96,6 +98,11 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.unsubscribe.next(undefined);
     this.unsubscribe.complete();
+  }
+
+  getHover(bookmark: chrome.bookmarks.BookmarkTreeNode) {
+    const addDate = new Date(bookmark.dateAdded).toLocaleDateString();
+    return `${bookmark.title}\nAdded on ${addDate}`;
   }
 
   getSafeLink(bookmark: chrome.bookmarks.BookmarkTreeNode): SafeUrl {
