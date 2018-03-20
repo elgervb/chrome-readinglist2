@@ -57,7 +57,6 @@ export const DEFAULT_IMAGE = '/assets/bookmark-default.svg';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit, OnDestroy {
-  bookmarks$: Observable<chrome.bookmarks.BookmarkTreeNode[]>;
   bookmarks: chrome.bookmarks.BookmarkTreeNode[];
   isSorted = new BehaviorSubject<boolean>(false);
   private filter = new Subject<string>();
@@ -141,10 +140,8 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   randomBookmark() {
-    this.bookmarks$.pipe(take(1)).subscribe(bookmarks => {
-      const randomIndex = Math.floor(Math.random() * bookmarks.length);
-      this.onClick(bookmarks[randomIndex]);
-    });
+    const randomIndex = Math.floor(Math.random() * this.bookmarks.length);
+    this.onClick(this.bookmarks[randomIndex]);
   }
 
   removeBookmark(bookmark: chrome.bookmarks.BookmarkTreeNode) {
