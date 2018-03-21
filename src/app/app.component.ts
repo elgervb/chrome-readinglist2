@@ -1,12 +1,10 @@
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { take, takeUntil, debounceTime } from 'rxjs/operators';
+import { takeUntil, debounceTime } from 'rxjs/operators';
 import { combineLatest } from 'rxjs/observable/combineLatest';
 import { BookmarksService } from './bookmarks.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-
 
 const READINGLIST_BOOKMARK_NAME = 'My ReadingList';
 export const DEFAULT_IMAGE = '/assets/bookmark-default.svg';
@@ -139,7 +137,6 @@ export class AppComponent implements OnInit, OnDestroy {
       event.preventDefault();
     }
     chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-      const tab = tabs[0];
       chrome.tabs.create({url: bookmark.url});
       this.removeBookmark(bookmark);
     });
@@ -178,7 +175,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.isSorted.next(!this.isSorted.getValue());
   }
 
-  private parse(url): ParsedUrl {
+  private parse(url: string): ParsedUrl {
     const parser = document.createElement('a');
     parser.href = url;
 
