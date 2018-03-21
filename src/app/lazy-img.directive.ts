@@ -34,7 +34,6 @@ export class LazyImgDirective {
     const element: HTMLImageElement = image.nativeElement;
     element.src = this.appLazyImg;
     element.onerror = () => {
-      debugger;
       if (this.defaultPath) {
         element.src = this.defaultPath;
       }

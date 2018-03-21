@@ -35,6 +35,22 @@ ul {
   color: #999;
   font-size: .6em;
 }
+.icon {
+  cursor: pointer;
+  fill: #999;
+  height: 1rem;
+  width: 1rem;
+}
+.icon--sort__desc {
+    .icon--sort__up {
+      fill: #333;
+    }
+}
+.icon--sort__asc {
+  .icon--sort__down {
+    fill: #333;
+  }
+}
 
 .reading-list__body {
   flex: 1 1 auto;
@@ -86,6 +102,11 @@ ul {
   display: flex;
   flex-direction: row;
   padding: .5rem;
+  text-decoration: none;
+
+  &:hover {
+    background-color: #f5f5f5;
+  }
 }
 .bookmark__favicon {
   height: 1rem;
