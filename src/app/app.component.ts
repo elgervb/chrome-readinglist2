@@ -44,7 +44,7 @@ export const DEFAULT_IMAGE = '/assets/bookmark-default.svg';
       </h1>
       <button class="readinglist__btn-add" title="Add current page"
         (click)="addCurrentPage()">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+          <svg class="icon icon--plus" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
             <g><g>
               <line class="st1" x1="257" x2="257" y1="53" y2="461"/>
               <line class="st1" x1="461" x2="53" y1="257" y2="257"/>
