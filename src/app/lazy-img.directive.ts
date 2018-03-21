@@ -37,7 +37,7 @@ export class LazyImgDirective {
       if (this.defaultPath) {
         element.src = this.defaultPath;
       }
-    }
+    };
   }
 
 }

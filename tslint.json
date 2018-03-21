@@ -3,6 +3,10 @@
     "node_modules/codelyzer"
   ],
   "rules": {
+    "array-type": false,
+    "linebreak-style": true,
+    "new-parens": true,
+    "no-any": true,
     "arrow-return-shorthand": true,
     "callable-types": true,
     "class-name": true,
@@ -11,6 +15,8 @@
       "check-space"
     ],
     "curly": true,
+    "switch-default": true,
+    "prefer-method-signature": true,
     "deprecation": {
       "severity": "warn"
     },
