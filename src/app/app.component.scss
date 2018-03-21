@@ -17,6 +17,7 @@ ul {
   box-shadow: 0 -4px 30px rgba(0,0,0,.5);
   flex: 0 0 auto;
   margin-bottom: .7rem;
+  position: relative;
 }
 
 .reading-list__title {
@@ -86,10 +87,17 @@ ul {
   border: none;
   border-radius: 50%;
   color: #fff;
-  font-size: .8em;
+  cursor: pointer;
+  display: flex;
+  font-size: 3em;
   font-weight: 700;
-  height: 20px;
-  width: 20px;
+  height: 1.1em;
+  justify-content: center;
+  left: 50%;
+  padding: 0;
+  position: absolute;
+  transform: translate(-50%,-50%);
+  width: 1.1em;
 }
 
 .bookmark {

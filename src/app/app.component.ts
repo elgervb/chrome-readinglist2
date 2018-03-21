@@ -42,6 +42,19 @@ export const DEFAULT_IMAGE = '/assets/bookmark-default.svg';
           </svg>
         </span>
       </h1>
+      <button class="readinglist__btn-add" title="Add current page"
+        (click)="addCurrentPage()">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+            <g><g>
+              <line class="st1" x1="257" x2="257" y1="53" y2="461"/>
+              <line class="st1" x1="461" x2="53" y1="257" y2="257"/>
+            </g></g>
+            <g id="cross_copy">
+              <path d="M461,249H265V53c0-4.418-3.582-8-8-8c-4.418,0-8,3.582-8,8v196H53c-4.418,0-8,3.582-8,8c0,4.418,3.582,8,8,8h196v196
+                c0,4.418,3.582,8,8,8c4.418,0,8-3.582,8-8V265h196c4.418,0,8-3.582,8-8C469,252.582,465.418,249,461,249z"/>
+            </g>
+          </svg>
+        </button>
     </header>
     <main class="reading-list__body">
       <ul>
@@ -61,8 +74,6 @@ export const DEFAULT_IMAGE = '/assets/bookmark-default.svg';
       <button class="readinglist__btn-random" title="Pick a random item"
         (click)="randomBookmark()"
         [disabled]="!bookmarks?.length">↻</button>
-      <button class="readinglist__btn-add" title="Add current page"
-        (click)="addCurrentPage()">+</button>
     </footer>
   `,
   styleUrls: ['./app.component.scss'],
