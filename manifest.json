@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Chrome Reading List 2",
-  "version": "0.1",
+  "version": "0.0.1",
   "permissions": [
     "bookmarks",
     "tabs",
@@ -13,7 +13,11 @@
   ],
   "browser_action": {
     "default_title": "Reading list",
-    "default_icon": "./assets/icon128.png",
+    "default_icon": {
+      "16": "assets/icon16.png",
+      "48": "assets/icon48.png",
+      "128": "assets/icon128.png"
+    },
     "default_popup": "index.html"
   },
   "icons": {
