@@ -100,8 +100,16 @@ ul {
   left: 50%;
   padding: 0;
   position: absolute;
+  transition: all .3s ease-out;
   transform: translate(-50%,-50%);
   width: 1.1em;
+
+  &:disabled {
+    background-color: #999999;
+    cursor: none;
+    opacity: .5;
+    pointer-events: none;
+  }
 }
 
 .bookmark {

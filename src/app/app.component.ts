@@ -41,6 +41,7 @@ export const DEFAULT_IMAGE = '/assets/bookmark-default.svg';
         </span>
       </h1>
       <button class="readinglist__btn-add" title="Add current page"
+        [disabled]="currentUrlExists"
         (click)="addCurrentPage()">
           <svg class="icon icon--plus" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
             <g><g>
@@ -80,6 +81,7 @@ export const DEFAULT_IMAGE = '/assets/bookmark-default.svg';
 export class AppComponent implements OnInit, OnDestroy {
   bookmarks: chrome.bookmarks.BookmarkTreeNode[];
   isSorted = new BehaviorSubject<boolean>(false);
+  currentUrlExists = true;
   private filter = new Subject<string>();
   private unsubscribe = new Subject<void>();
 
@@ -116,6 +118,16 @@ export class AppComponent implements OnInit, OnDestroy {
     this.bookmarksService.get(READINGLIST_BOOKMARK_NAME);
     this.filter.next(undefined);
     this.isSorted.next(false);
+
+    this.bookmarksService.bookmarks$.subscribe(() => {
+      chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
+        const tab = tabs[0];
+        this.currentUrlExists = this.bookmarksService.exists(tab.url);
+
+        this.changeDetector.detectChanges();
+      });
+    });
+
   }
 
   ngOnDestroy() {
