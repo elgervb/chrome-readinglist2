@@ -4,7 +4,6 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { takeUntil, debounceTime } from 'rxjs/operators';
 import { combineLatest } from 'rxjs/observable/combineLatest';
 import { BookmarksService } from './bookmarks.service';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 const READINGLIST_BOOKMARK_NAME = 'My ReadingList';
 export const DEFAULT_IMAGE = '/assets/bookmark-default.svg';
@@ -57,21 +56,18 @@ export const DEFAULT_IMAGE = '/assets/bookmark-default.svg';
     </header>
     <main class="reading-list__body">
       <ul>
-        <li *ngFor="let bookmark of bookmarks" class="bookmark">
-          <a [href]="getSafeLink(bookmark)" (click)="onClick(bookmark, $event)" class="bookmark__link" [title]="getHover(bookmark)">
-            <img [appLazyImg]="getFavicon(bookmark)" alt="Site's favicon" class="bookmark__favicon">
-            <div class="bookmark__text">
-              <div class="bookmark__title">{{ bookmark.title }}</div>
-              <div class="bookmark__url">{{ bookmark.url }}</div>
-            </div>
-          </a>
+        <li *ngFor="let bookmark of bookmarks" class="list__item">
+          <app-bookmark-item
+            [bookmark]="bookmark"
+            (select)="select($event)">
+          </app-bookmark-item>
         </li>
       </ul>
     </main>
     <footer class="reading-list__footer">
       <input type="text" class="reading-list__filter" placeholder="filter" autofocus (input)="applyFilter($event.target.value)">
       <button class="readinglist__btn-random" title="Pick a random item"
-        (click)="randomBookmark()"
+        (select)="randomBookmark()"
         [disabled]="!bookmarks?.length">↻</button>
     </footer>
   `,
@@ -82,10 +78,11 @@ export class AppComponent implements OnInit, OnDestroy {
   bookmarks: chrome.bookmarks.BookmarkTreeNode[];
   isSorted = new BehaviorSubject<boolean>(false);
   currentUrlExists = true;
+
   private filter = new Subject<string>();
   private unsubscribe = new Subject<void>();
 
-  constructor(private bookmarksService: BookmarksService, private sanitizer: DomSanitizer, private changeDetector: ChangeDetectorRef) {}
+  constructor(private bookmarksService: BookmarksService, private changeDetector: ChangeDetectorRef) {}
 
   ngOnInit() {
     const filter$ = this.filter.asObservable().pipe(debounceTime(200));
@@ -135,19 +132,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.unsubscribe.complete();
   }
 
-  getHover(bookmark: chrome.bookmarks.BookmarkTreeNode) {
-    const addDate = new Date(bookmark.dateAdded).toLocaleDateString();
-    return `${bookmark.title}\nAdded on ${addDate}`;
-  }
-
-  getSafeLink(bookmark: chrome.bookmarks.BookmarkTreeNode): SafeUrl {
-    return this.sanitizer.bypassSecurityTrustUrl(bookmark.url);
-  }
-
-  onClick(bookmark: chrome.bookmarks.BookmarkTreeNode, event?: MouseEvent) {
-    if (event) {
-      event.preventDefault();
-    }
+  select(bookmark: chrome.bookmarks.BookmarkTreeNode) {
     chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
       chrome.tabs.create({url: bookmark.url});
       this.removeBookmark(bookmark);
@@ -156,11 +141,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   applyFilter(filter: string) {
     this.filter.next(filter);
-  }
-
-  getFavicon(bookmark: chrome.bookmarks.BookmarkTreeNode) {
-    const parsed = this.parse(bookmark.url);
-    return `${this.getBase(parsed)}/favicon.ico`;
   }
 
   addCurrentPage() {
@@ -176,7 +156,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   randomBookmark() {
     const randomIndex = Math.floor(Math.random() * this.bookmarks.length);
-    this.onClick(this.bookmarks[randomIndex]);
+    this.select(this.bookmarks[randomIndex]);
   }
 
   removeBookmark(bookmark: chrome.bookmarks.BookmarkTreeNode) {
@@ -186,38 +166,4 @@ export class AppComponent implements OnInit, OnDestroy {
   sort() {
     this.isSorted.next(!this.isSorted.getValue());
   }
-
-  private parse(url: string): ParsedUrl {
-    const parser = document.createElement('a');
-    parser.href = url;
-
-    return {
-        protocol: parser.protocol, // => "http:"
-        hostname: parser.hostname, // => "example.com"
-        port: parseInt(parser.port, 10),     // => "3000"
-        pathname: parser.pathname, // => "/pathname/"
-        search: parser.search,   // => "?search=test"
-        hash: parser.hash,     // => "#hash"
-        host: parser.host     // => "example.com:3000"
-    };
-  }
-
-  private getBase(parsed: ParsedUrl): string {
-    let base = `${parsed.protocol}//${parsed.hostname}`;
-    if (parsed.port) {
-        base = `${base}:${parsed.port}`;
-    }
-
-    return base;
-  }
-}
-
-interface ParsedUrl {
-  protocol: string;
-  hostname: string;
-  port: number;
-  pathname: string;
-  search: string;
-  hash: string;
-  host: string;
 }

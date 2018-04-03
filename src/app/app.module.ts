@@ -7,11 +7,13 @@ import { BookmarksService } from './bookmarks.service';
 
 import { environment } from '../environments/environment';
 import { LazyImgDirective, DEFAULT_LAZY_IMAGE } from './lazy-img.directive';
+import { BookmarkitemComponent } from './bookmark/item/bookmarkitem.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LazyImgDirective
+    LazyImgDirective,
+    BookmarkitemComponent
   ],
   imports: [
     BrowserModule,
