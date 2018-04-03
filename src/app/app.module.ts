@@ -2,27 +2,21 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { AppComponent, DEFAULT_IMAGE } from './app.component';
-import { BookmarksService } from './bookmarks.service';
+import { AppComponent } from './app.component';
 
 import { environment } from '../environments/environment';
-import { LazyImgDirective, DEFAULT_LAZY_IMAGE } from './lazy-img.directive';
-import { BookmarkitemComponent } from './bookmark/item/bookmarkitem.component';
+import { BookmarkModule } from './bookmark/bookmark.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    LazyImgDirective,
-    BookmarkitemComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
+    BookmarkModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
-  providers: [
-    BookmarksService,
-    { provide: DEFAULT_LAZY_IMAGE, useValue: DEFAULT_IMAGE }
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

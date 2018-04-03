@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
-export class BookmarksService {
+export class BookmarkService {
   bookmarks$: Observable<chrome.bookmarks.BookmarkTreeNode[]>;
   readingListId: string;
   private bookmarks = new BehaviorSubject<chrome.bookmarks.BookmarkTreeNode[]>(undefined);

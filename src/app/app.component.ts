@@ -3,10 +3,9 @@ import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { takeUntil, debounceTime } from 'rxjs/operators';
 import { combineLatest } from 'rxjs/observable/combineLatest';
-import { BookmarksService } from './bookmarks.service';
+import { BookmarkService } from './bookmark/bookmark.service';
 
 const READINGLIST_BOOKMARK_NAME = 'My ReadingList';
-export const DEFAULT_IMAGE = '/assets/bookmark-default.svg';
 
 @Component({
   selector: 'app-root',
@@ -82,12 +81,12 @@ export class AppComponent implements OnInit, OnDestroy {
   private filter = new Subject<string>();
   private unsubscribe = new Subject<void>();
 
-  constructor(private bookmarksService: BookmarksService, private changeDetector: ChangeDetectorRef) {}
+  constructor(private bookmarkService: BookmarkService, private changeDetector: ChangeDetectorRef) {}
 
   ngOnInit() {
     const filter$ = this.filter.asObservable().pipe(debounceTime(200));
 
-    combineLatest(this.bookmarksService.bookmarks$, filter$, this.isSorted, (allBookmarks, filter, sort) => {
+    combineLatest(this.bookmarkService.bookmarks$, filter$, this.isSorted, (allBookmarks, filter, sort) => {
       if (!allBookmarks) {
         return undefined;
       }
@@ -112,14 +111,14 @@ export class AppComponent implements OnInit, OnDestroy {
       this.changeDetector.detectChanges();
     });
 
-    this.bookmarksService.get(READINGLIST_BOOKMARK_NAME);
+    this.bookmarkService.get(READINGLIST_BOOKMARK_NAME);
     this.filter.next(undefined);
     this.isSorted.next(false);
 
-    this.bookmarksService.bookmarks$.subscribe(() => {
+    this.bookmarkService.bookmarks$.subscribe(() => {
       chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
         const tab = tabs[0];
-        this.currentUrlExists = this.bookmarksService.exists(tab.url);
+        this.currentUrlExists = this.bookmarkService.exists(tab.url);
 
         this.changeDetector.detectChanges();
       });
@@ -146,8 +145,8 @@ export class AppComponent implements OnInit, OnDestroy {
   addCurrentPage() {
     chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
       const tab = tabs[0];
-      this.bookmarksService.add({
-        parentId: this.bookmarksService.readingListId,
+      this.bookmarkService.add({
+        parentId: this.bookmarkService.readingListId,
         url: tab.url,
         title: tab.title,
       });
@@ -160,7 +159,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   removeBookmark(bookmark: chrome.bookmarks.BookmarkTreeNode) {
-    this.bookmarksService.remove(bookmark);
+    this.bookmarkService.remove(bookmark);
   }
 
   sort() {
