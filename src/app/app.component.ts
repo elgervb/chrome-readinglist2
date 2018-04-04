@@ -21,19 +21,15 @@ const READINGLIST_BOOKMARK_NAME = 'My ReadingList';
             [ngClass]="{'icon--sort__asc':!(isSorted| async), 'icon--sort__desc': isSorted| async}"
             (click)="sort()">
             <g>
-              <g>
-                <g>
-                  <path class="icon--sort__up"
-                    d="m496.1,138.3l-120.4-120.4c-7.9-7.9-20.6-7.9-28.5-7.10543e-15l-120.3,
-                    120.4c-7.9,7.9-7.9,20.6 0,28.5 7.9,7.9 20.6,7.9 28.5,0l85.7-85.7v352.8c0,
-                    11.3 9.1,20.4 20.4,20.4 11.3,0 20.4-9.1 20.4-20.4v-352.8l85.7,85.7c7.9,
-                    7.9 20.6,7.9 28.5,0 7.9-7.8 7.9-20.6 5.68434e-14-28.5z"/>
-                  <path class="icon--sort__down"
-                    d="m287.1,347.2c-7.9-7.9-20.6-7.9-28.5,0l-85.7,85.7v-352.8c0-11.3-9.1-20.4-20.4-20.4-11.3,
-                    0-20.4,9.1-20.4,20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5,0-7.9,7.9-7.9,20.6 0,
-                    28.5l120.4,120.4c7.9,7.9 20.6,7.9 28.5,0l120.4-120.4c7.8-7.9 7.8-20.7-0.1-28.5l0,0z"/>
-                </g>
-              </g>
+              <path class="icon--sort__up"
+                d="m496.1,138.3l-120.4-120.4c-7.9-7.9-20.6-7.9-28.5-7.10543e-15l-120.3,
+                120.4c-7.9,7.9-7.9,20.6 0,28.5 7.9,7.9 20.6,7.9 28.5,0l85.7-85.7v352.8c0,
+                11.3 9.1,20.4 20.4,20.4 11.3,0 20.4-9.1 20.4-20.4v-352.8l85.7,85.7c7.9,
+                7.9 20.6,7.9 28.5,0 7.9-7.8 7.9-20.6 5.68434e-14-28.5z"/>
+              <path class="icon--sort__down"
+                d="m287.1,347.2c-7.9-7.9-20.6-7.9-28.5,0l-85.7,85.7v-352.8c0-11.3-9.1-20.4-20.4-20.4-11.3,
+                0-20.4,9.1-20.4,20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5,0-7.9,7.9-7.9,20.6 0,
+                28.5l120.4,120.4c7.9,7.9 20.6,7.9 28.5,0l120.4-120.4c7.8-7.9 7.8-20.7-0.1-28.5l0,0z"/>
             </g>
           </svg>
         </span>
@@ -66,7 +62,7 @@ const READINGLIST_BOOKMARK_NAME = 'My ReadingList';
     <footer class="reading-list__footer">
       <input type="text" class="reading-list__filter" placeholder="filter" autofocus (input)="applyFilter($event.target.value)">
       <button class="readinglist__btn-random" title="Pick a random item"
-        (select)="randomBookmark()"
+        (click)="randomBookmark()"
         [disabled]="!bookmarks?.length">↻</button>
     </footer>
   `,
@@ -133,6 +129,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   select(bookmark: chrome.bookmarks.BookmarkTreeNode) {
     chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
+      debugger;
       chrome.tabs.create({url: bookmark.url});
       this.removeBookmark(bookmark);
     });
@@ -154,6 +151,8 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   randomBookmark() {
+    debugger;
+
     const randomIndex = Math.floor(Math.random() * this.bookmarks.length);
     this.select(this.bookmarks[randomIndex]);
   }
