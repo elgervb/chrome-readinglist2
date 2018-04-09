@@ -4,13 +4,21 @@ import { CommonModule } from '@angular/common';
 import { LazyImgDirective, DEFAULT_LAZY_IMAGE } from './lazy-img.directive';
 import { BookmarkitemComponent } from './item/bookmarkitem.component';
 import { BookmarkService } from './bookmark.service';
+import { BookmarkComponent } from './containers/bookmark.component';
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { BodyComponent } from './components/body/body.component';
 
 export const DEFAULT_IMAGE = '/assets/bookmark-default.svg';
 
 @NgModule({
   declarations: [
     BookmarkitemComponent,
-    LazyImgDirective
+    LazyImgDirective,
+    BookmarkComponent,
+    HeaderComponent,
+    FooterComponent,
+    BodyComponent
   ],
   imports: [
     CommonModule
@@ -20,7 +28,7 @@ export const DEFAULT_IMAGE = '/assets/bookmark-default.svg';
     { provide: DEFAULT_LAZY_IMAGE, useValue: DEFAULT_IMAGE }
   ],
   exports: [
-    BookmarkitemComponent
+    BookmarkComponent
   ]
 })
 export class BookmarkModule { }
