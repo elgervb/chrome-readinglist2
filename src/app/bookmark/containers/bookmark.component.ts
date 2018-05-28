@@ -21,19 +21,15 @@ const READINGLIST_BOOKMARK_NAME = 'My ReadingList';
             [ngClass]="{'icon--sort__asc':!(isSorted| async), 'icon--sort__desc': isSorted| async}"
             (click)="sort()">
             <g>
-              <g>
-                <g>
-                  <path class="icon--sort__up"
-                    d="m496.1,138.3l-120.4-120.4c-7.9-7.9-20.6-7.9-28.5-7.10543e-15l-120.3,
-                    120.4c-7.9,7.9-7.9,20.6 0,28.5 7.9,7.9 20.6,7.9 28.5,0l85.7-85.7v352.8c0,
-                    11.3 9.1,20.4 20.4,20.4 11.3,0 20.4-9.1 20.4-20.4v-352.8l85.7,85.7c7.9,
-                    7.9 20.6,7.9 28.5,0 7.9-7.8 7.9-20.6 5.68434e-14-28.5z"/>
-                  <path class="icon--sort__down"
-                    d="m287.1,347.2c-7.9-7.9-20.6-7.9-28.5,0l-85.7,85.7v-352.8c0-11.3-9.1-20.4-20.4-20.4-11.3,
-                    0-20.4,9.1-20.4,20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5,0-7.9,7.9-7.9,20.6 0,
-                    28.5l120.4,120.4c7.9,7.9 20.6,7.9 28.5,0l120.4-120.4c7.8-7.9 7.8-20.7-0.1-28.5l0,0z"/>
-                </g>
-              </g>
+              <path class="icon--sort__up"
+                d="m496.1,138.3l-120.4-120.4c-7.9-7.9-20.6-7.9-28.5-7.10543e-15l-120.3,
+                120.4c-7.9,7.9-7.9,20.6 0,28.5 7.9,7.9 20.6,7.9 28.5,0l85.7-85.7v352.8c0,
+                11.3 9.1,20.4 20.4,20.4 11.3,0 20.4-9.1 20.4-20.4v-352.8l85.7,85.7c7.9,
+                7.9 20.6,7.9 28.5,0 7.9-7.8 7.9-20.6 5.68434e-14-28.5z"/>
+              <path class="icon--sort__down"
+                d="m287.1,347.2c-7.9-7.9-20.6-7.9-28.5,0l-85.7,85.7v-352.8c0-11.3-9.1-20.4-20.4-20.4-11.3,
+                0-20.4,9.1-20.4,20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5,0-7.9,7.9-7.9,20.6 0,
+                28.5l120.4,120.4c7.9,7.9 20.6,7.9 28.5,0l120.4-120.4c7.8-7.9 7.8-20.7-0.1-28.5l0,0z"/>
             </g>
           </svg>
         </span>
@@ -42,10 +38,10 @@ const READINGLIST_BOOKMARK_NAME = 'My ReadingList';
         [disabled]="currentUrlExists"
         (click)="addCurrentPage()">
           <svg class="icon icon--plus" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-            <g><g>
+            <g>
               <line class="st1" x1="257" x2="257" y1="53" y2="461"/>
               <line class="st1" x1="461" x2="53" y1="257" y2="257"/>
-            </g></g>
+            </g>
             <g id="cross_copy">
               <path d="M461,249H265V53c0-4.418-3.582-8-8-8c-4.418,0-8,3.582-8,8v196H53c-4.418,0-8,3.582-8,8c0,4.418,3.582,8,8,8h196v196
                 c0,4.418,3.582,8,8,8c4.418,0,8-3.582,8-8V265h196c4.418,0,8-3.582,8-8C469,252.582,465.418,249,461,249z"/>
@@ -111,7 +107,7 @@ export class BookmarkComponent implements OnInit, OnDestroy {
       this.changeDetector.detectChanges();
     });
 
-    this.bookmarkService.get(READINGLIST_BOOKMARK_NAME);
+    this.bookmarkService.getRootnode(READINGLIST_BOOKMARK_NAME);
     this.filter.next(undefined);
     this.isSorted.next(false);
 
