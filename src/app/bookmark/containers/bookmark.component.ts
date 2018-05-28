@@ -66,7 +66,7 @@ const READINGLIST_BOOKMARK_NAME = 'My ReadingList';
     <footer class="reading-list__footer">
       <input type="text" class="reading-list__filter" placeholder="filter" autofocus (input)="applyFilter($event.target.value)">
       <button class="readinglist__btn-random" title="Pick a random item"
-        (select)="randomBookmark()"
+        (click)="randomBookmark()"
         [disabled]="!bookmarks?.length">↻</button>
     </footer>
   `,
