@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-bookmark-header',
@@ -8,6 +8,8 @@ import { Component, OnInit, Input } from '@angular/core';
 export class BookmarkHeaderComponent implements OnInit {
 
   @Input() bookmarks: chrome.bookmarks.BookmarkTreeNode[];
+
+  @Output() addBookmark = new EventEmitter<void>();
 
   constructor() { }
 

@@ -10,7 +10,7 @@ export class LocalBookmarkService implements BookmarkService {
 
   readonly bookmarks$: Observable<chrome.bookmarks.BookmarkTreeNode[]>;
 
-  private bookmarkSubject = new BehaviorSubject<chrome.bookmarks.BookmarkTreeNode[]>(mockBookmarks);
+  private bookmarkSubject = new BehaviorSubject<chrome.bookmarks.BookmarkTreeNode[]>([]);
 
   constructor() {
     this.bookmarks$ = this.bookmarkSubject.asObservable();
@@ -30,6 +30,12 @@ export class LocalBookmarkService implements BookmarkService {
 
   exists(url: string): boolean {
     return this.bookmarkSubject.value.some(bookmark => url === bookmark.url);
+  }
+
+  load(): Observable<chrome.bookmarks.BookmarkTreeNode[]> {
+    this.bookmarkSubject.next(mockBookmarks);
+
+    return this.bookmarks$;
   }
 
   select(bookmark: chrome.bookmarks.BookmarkTreeNode) {
