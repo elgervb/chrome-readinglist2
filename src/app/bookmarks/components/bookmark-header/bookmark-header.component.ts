@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Bookmark } from '../../models';
 
 @Component({
   selector: 'app-bookmark-header',
@@ -8,7 +7,7 @@ import { Bookmark } from '../../models';
 })
 export class BookmarkHeaderComponent implements OnInit {
 
-  @Input() bookmarks: Bookmark[];
+  @Input() bookmarks: chrome.bookmarks.BookmarkTreeNode[];
 
   constructor() { }
 

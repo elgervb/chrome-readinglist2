@@ -1,6 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Bookmark } from '../../models';
 import { BookmarkServiceProvider } from '../../services/bookmark/bookmark.factory';
 import { BookmarkService } from '../../services/bookmark/bookmark.service';
 
@@ -11,7 +10,7 @@ import { BookmarkService } from '../../services/bookmark/bookmark.service';
 })
 export class BookmarksComponent implements OnInit {
 
-  bookmarks$: Observable<Bookmark[]>;
+  bookmarks$: Observable<chrome.bookmarks.BookmarkTreeNode[]>;
 
   constructor(@Inject(BookmarkServiceProvider) private bookmarkService: BookmarkService) { }
 
@@ -19,7 +18,7 @@ export class BookmarksComponent implements OnInit {
     this.bookmarks$ = this.bookmarkService.bookmarks$;
   }
 
-  selectBookmark(bookmark: Bookmark) {
+  selectBookmark(bookmark: chrome.bookmarks.BookmarkTreeNode) {
     this.bookmarkService.select(bookmark);
   }
 

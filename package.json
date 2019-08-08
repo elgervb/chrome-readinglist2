@@ -29,6 +29,7 @@
     "@angular/cli": "~8.2.0",
     "@angular/compiler-cli": "~8.2.0",
     "@angular/language-service": "~8.2.0",
+    "@types/chrome": "^0.0.88",
     "@types/jest": "^24.0.16",
     "@types/node": "~8.9.4",
     "codelyzer": "^5.0.0",

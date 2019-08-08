@@ -20,12 +20,13 @@
       "node_modules/@types"
     ],
     "types": [
+      "chrome",
       "jest"
     ],
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

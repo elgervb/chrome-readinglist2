@@ -1,14 +1,14 @@
 import { Observable } from 'rxjs';
-import { Bookmark } from '../../models';
 
 export interface BookmarkService {
 
-  readonly bookmarks$: Observable<Bookmark[]>;
+  readonly bookmarks$: Observable<chrome.bookmarks.BookmarkTreeNode[]>;
 
-  add(url: string, title?: string): void;
+  add(create: chrome.bookmarks.BookmarkCreateArg): void;
 
-  select(bookmark: Bookmark): void;
+  exists(url: string): boolean;
 
-  remove(bookmark: Bookmark): void;
+  remove(bookmark: chrome.bookmarks.BookmarkTreeNode): void;
 
+  select(bookmark: chrome.bookmarks.BookmarkTreeNode): void;
 }

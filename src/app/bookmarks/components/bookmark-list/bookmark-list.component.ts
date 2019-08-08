@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Bookmark } from '../../models';
 
 @Component({
   selector: 'app-bookmark-list',
@@ -8,9 +7,9 @@ import { Bookmark } from '../../models';
 })
 export class BookmarkListComponent implements OnInit {
 
-  @Input() bookmarks: Bookmark[];
+  @Input() bookmarks: chrome.bookmarks.BookmarkTreeNode[];
 
-  @Output() selectEvent = new EventEmitter<Bookmark>();
+  @Output() selectEvent = new EventEmitter<chrome.bookmarks.BookmarkTreeNode>();
 
   constructor() { }
 

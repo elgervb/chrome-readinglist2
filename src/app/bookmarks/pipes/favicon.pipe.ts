@@ -1,12 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ParsedUrl, Bookmark } from '../models';
+import { ParsedUrl } from '../models';
 
 @Pipe({
   name: 'favicon'
 })
 export class FaviconPipe implements PipeTransform {
 
-  transform(bookmark?: Bookmark): string {
+  transform(bookmark?: chrome.bookmarks.BookmarkTreeNode): string {
     if (!bookmark) {
       return null;
     }
