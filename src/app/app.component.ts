@@ -1,15 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  template: `
-    <app-bookmark></app-bookmark>
-  `,
-  styleUrls: ['./app.component.scss'],
-
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
-
-  ngOnInit() {}
+export class AppComponent {
+  title = 'chrome-readinglist2';
 }

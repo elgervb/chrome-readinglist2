@@ -1,0 +1,10 @@
+<app-bookmark-header
+  [bookmarks]="bookmarks$ | async">
+</app-bookmark-header>
+
+<app-bookmark-list
+  [bookmarks]="bookmarks$ | async"
+  (selectEvent)="selectBookmark($event)">
+</app-bookmark-list>
+
+<app-bookmark-footer></app-bookmark-footer>

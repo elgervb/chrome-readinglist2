@@ -1,0 +1,10 @@
+<ul *ngIf="bookmarks.length; else noBookmarks">
+  <li *ngFor="let bookmark of bookmarks" (pointerup)="selectEvent.emit(bookmark)">
+    <img [appLazyImg]="bookmark | favicon" alt="Favicon for {{bookmark.url}}" />
+    {{bookmark.url}}
+  </li>
+</ul>
+
+<ng-template #noBookmarks>
+  <div class="no-bookmarks">No bookmarks present</div>
+</ng-template>
