@@ -1,8 +1,7 @@
-import { Component, OnInit, Inject, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Subject, combineLatest } from 'rxjs';
-import { BookmarkServiceProvider } from '../../services/bookmark/bookmark.factory';
-import { BookmarkService } from '../../services/bookmark/bookmark.service';
 import { debounceTime, map } from 'rxjs/operators';
+import { BookmarkService } from '../../services/bookmark/bookmark.service';
 
 @Component({
   selector: 'app-bookmarks',
@@ -19,7 +18,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   private unsubscribe = new Subject<void>();
 
   constructor(
-    @Inject(BookmarkServiceProvider) private bookmarkService: BookmarkService,
+    private bookmarkService: BookmarkService,
     private changeDetector: ChangeDetectorRef
   ) { }
 
