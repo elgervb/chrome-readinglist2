@@ -6,8 +6,7 @@ module.exports = {
   modulePathIgnorePatterns: [
     '<rootDir>/src/test.ts',
     '<rootDir>/src/coverage',
-    '<rootDir>/coverage',
-    '<rootDir>/.*\.e2e\.ts'
+    '<rootDir>/coverage'
   ],
   collectCoverageFrom: [
     '**/*.{ts,tsx}',

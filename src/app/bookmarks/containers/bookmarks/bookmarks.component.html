@@ -1,6 +1,9 @@
 <app-bookmark-header
   [bookmarks]="bookmarks"
-  (addBookmark)="addBookmark()">
+  [currentUrlExists]="currentUrlExists"
+  [isSorted]="isSorted | async"
+  (addBookmark)="addBookmark()"
+  (sortEvent)="sort()">
 </app-bookmark-header>
 
 <app-bookmark-list
@@ -8,4 +11,8 @@
   (selectEvent)="selectBookmark($event)">
 </app-bookmark-list>
 
-<app-bookmark-footer></app-bookmark-footer>
+<app-bookmark-footer
+  [bookmarks]="bookmarks"
+  (filterEvent)="applyFilter($event)"
+  (randomBookmarkEvent)="randomBookmark()">
+</app-bookmark-footer>

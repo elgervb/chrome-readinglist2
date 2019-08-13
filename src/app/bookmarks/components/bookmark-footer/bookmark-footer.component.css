@@ -1,6 +1,25 @@
 :host {
-  display: block;
+  box-shadow: 0px -1px 1px rgba(0, 0, 0, .25);
+  display: flex;
   flex: 0 0 auto;
-  min-height: 4em;
-  box-shadow: 0px -1px 1px rgba(0, 0, 0, .25)
+  min-height: 2em;
+  justify-content: space-between;
+}
+
+.filter {
+  border: none;
+  border-bottom: 1px dotted #999;
+  color: #999;
+  font-size: .8em;
+  outline: none;
+  padding: .4rem .2rem;
+  flex: 2;
+}
+::placeholder {
+  color: rgb(230, 230, 230);
+}
+
+.btn-random {
+  background: transparent;
+  border: none;
 }

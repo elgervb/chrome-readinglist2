@@ -6,7 +6,7 @@ import { take } from 'rxjs/operators';
 import { LoggerService } from '../../logger/logger.service';
 
 const OTHER_BOOKMARKS = 'Other Bookmarks';
-const READING_LIST_TITLE = 'ChromeReadingListExtension';
+const READING_LIST_TITLE = 'My ReadingList';
 
 @Injectable({
   providedIn: 'root'

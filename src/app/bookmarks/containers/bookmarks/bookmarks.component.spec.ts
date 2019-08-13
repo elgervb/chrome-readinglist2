@@ -2,7 +2,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BookmarksComponent } from './bookmarks.component';
 import { BehaviorSubject } from 'rxjs';
-import { Bookmark } from '../../models';
 import { BookmarkServiceProvider } from '../../services/bookmark/bookmark.factory';
 import { BookmarkService } from '../../services/bookmark/bookmark.service';
 import { BookmarkFooterComponent, BookmarkHeaderComponent, BookmarkListComponent } from '../../components';
@@ -10,10 +9,12 @@ import { NO_ERRORS_SCHEMA } from '@angular/compiler/src/core';
 import { FaviconPipe } from '../../pipes/favicon.pipe';
 
 const bookmarkService: BookmarkService = {
+  bookmarks$: new BehaviorSubject<chrome.bookmarks.BookmarkTreeNode[]>([]),
   add: jest.fn(),
   remove: jest.fn(),
   select: jest.fn(),
-  bookmarks$: new BehaviorSubject<Bookmark[]>([])
+  exists: jest.fn(),
+  load: jest.fn()
 };
 
 describe('BookmarksComponent', () => {

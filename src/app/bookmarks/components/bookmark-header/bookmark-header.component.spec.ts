@@ -21,6 +21,5 @@ describe('BookmarkHeaderComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-
   });
 });

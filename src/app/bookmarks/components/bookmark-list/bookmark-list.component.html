@@ -1,7 +1,10 @@
 <ul *ngIf="bookmarks?.length; else noBookmarks">
   <li *ngFor="let bookmark of bookmarks; trackBy:bookmark?.id" (pointerup)="selectEvent.emit(bookmark)">
-    <img [appLazyImg]="bookmark | favicon" alt="Favicon for {{bookmark.url}}" />
-    {{bookmark.url}}
+    <img [appLazyImg]="bookmark | favicon" alt="Favicon for {{bookmark.url}}" class="favicon" />
+    <div class="text">
+      <div class="title">{{ bookmark.title }}</div>
+      <div class="url">{{ bookmark.url }}</div>
+    </div>
   </li>
 </ul>
 

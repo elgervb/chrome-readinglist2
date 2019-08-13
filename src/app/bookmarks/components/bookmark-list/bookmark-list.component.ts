@@ -15,8 +15,7 @@ export class BookmarkListComponent implements OnInit, OnChanges {
     private logger: LoggerService
   ) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   ngOnChanges(): void {
     this.logger.log('BookmarkListComponent', `render ${this.bookmarks ? this.bookmarks.length : 0} bookmarks`);

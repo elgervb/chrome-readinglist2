@@ -41,7 +41,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
           }
 
           if (sort) {
-            return bookmarks.sort((a, b) => b.dateAdded - a.dateAdded);
+            return bookmarks.sort((a, b) => ('' + a.title).localeCompare(b.title));
           }
 
           return bookmarks;

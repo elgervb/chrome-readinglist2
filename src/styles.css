@@ -1,4 +1,38 @@
+html {
+  box-sizing: border-box;
+  font-size: 16px;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
 body {
+  text-rendering: optimizeLegibility;
+  font-size: 100%;
+  line-height: 1.5;
   margin: 0;
   padding: 0;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+body, input, select, textarea {
+  font-family: Open Sans, sans-serif;
+}
+
+img {
+  border: 0;
+  height: auto;
+  max-width: 100%;
+}
+
+
+.icon {
+  cursor: pointer;
+  fill: #999;
+  height: 1rem;
+  width: 1rem;
 }

@@ -8,12 +8,13 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class BookmarkHeaderComponent implements OnInit {
 
   @Input() bookmarks: chrome.bookmarks.BookmarkTreeNode[];
+  @Input() isSorted: boolean;
+  @Input() currentUrlExists: boolean;
 
   @Output() addBookmark = new EventEmitter<void>();
+  @Output() sortEvent = new EventEmitter<void>();
 
   constructor() { }
 
-  ngOnInit() {
-  }
-
+  ngOnInit() { }
 }
