@@ -15,10 +15,21 @@
   padding: .5rem;
   position: relative;
 }
+.title .container {
+  align-items: center;
+  display: flex;
+}
 
 .title--small, .version {
   color: #999;
   font-size: .6em;
+}
+
+.title--small {
+  margin-left: .5rem;
+}
+.version {
+  margin-right: .5rem;
 }
 
 .icon--sort__desc .icon--sort__up {
