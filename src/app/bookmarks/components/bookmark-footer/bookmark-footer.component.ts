@@ -7,7 +7,7 @@ import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 })
 export class BookmarkFooterComponent implements OnInit {
 
-  @Input() bookmarks: chrome.bookmarks.BookmarkTreeNode;
+  @Input() bookmarks: chrome.bookmarks.BookmarkTreeNode[];
 
   @Output() readonly filterEvent = new EventEmitter<string>();
   @Output() readonly randomBookmarkEvent = new EventEmitter<void>();

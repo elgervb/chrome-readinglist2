@@ -21,4 +21,9 @@ export class BookmarkListComponent implements OnInit, OnChanges {
   ngOnChanges(): void {
     this.logger.log('BookmarkListComponent', `render ${this.bookmarks ? this.bookmarks.length : 0} bookmarks`);
   }
+
+  trackByBookmark(_: number, bookmark: chrome.bookmarks.BookmarkTreeNode) {
+    console.log(_, bookmark);
+    return bookmark.id;
+  }
 }
