@@ -11,6 +11,7 @@ export class BookmarkHeaderComponent implements OnInit {
   @Input() isSorted: boolean;
   @Input() currentUrlExists: boolean;
   @Input() version: string;
+  @Input() countBookmarks: number;
 
   @Output() addBookmark = new EventEmitter<void>();
   @Output() sortEvent = new EventEmitter<void>();

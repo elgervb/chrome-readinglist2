@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Subject, combineLatest } from 'rxjs';
-import { debounceTime, map } from 'rxjs/operators';
+import { debounceTime, map, tap } from 'rxjs/operators';
 import { BookmarkService } from '../../services/bookmark/bookmark.service';
 import { VersionService } from '../../services/version/version.service';
 
@@ -13,7 +13,10 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
   bookmarks: chrome.bookmarks.BookmarkTreeNode[];
   isSorted = new BehaviorSubject<boolean>(false);
+  // TODO: move this to the header. It has all bookmarks, so it can check if it exists
   currentUrlExists = true;
+  // the number of total (unfiltered) bookmarks
+  countBookmarks: number;
 
   get version() {
     return this.versionService.getVersion();
@@ -33,6 +36,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
     combineLatest(this.bookmarkService.bookmarks$, filter$, this.isSorted)
       .pipe(
+        tap(([allBookmarks, _, __]) => this.countBookmarks = allBookmarks ? allBookmarks.length : 0),
         map(([allBookmarks, filter, sort]) => {
           if (!allBookmarks) {
             return undefined;
