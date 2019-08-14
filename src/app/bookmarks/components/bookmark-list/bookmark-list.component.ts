@@ -8,6 +8,7 @@ import { LoggerService } from '../../services/logger/logger.service';
 })
 export class BookmarkListComponent implements OnInit, OnChanges {
   @Input() bookmarks: chrome.bookmarks.BookmarkTreeNode[];
+  @Input() countBookmarks: number;
 
   @Output() selectEvent = new EventEmitter<chrome.bookmarks.BookmarkTreeNode>();
 

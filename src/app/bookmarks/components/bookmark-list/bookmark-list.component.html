@@ -9,5 +9,6 @@
 </ul>
 
 <ng-template #noBookmarks>
-  <div class="no-bookmarks">No bookmarks present</div>
+  <div *ngIf="!countBookmarks" class="no-bookmarks">No bookmarks present</div>
+  <div *ngIf="countBookmarks > 0" class="no-bookmarks">No bookmarks found</div>
 </ng-template>

@@ -3,12 +3,14 @@
   [currentUrlExists]="currentUrlExists"
   [isSorted]="isSorted | async"
   [version]="version"
+  [countBookmarks]="countBookmarks"
   (addBookmark)="addBookmark()"
   (sortEvent)="sort()">
 </app-bookmark-header>
 
 <app-bookmark-list
   [bookmarks]="bookmarks"
+  [countBookmarks]="countBookmarks"
   (selectEvent)="selectBookmark($event)">
 </app-bookmark-list>
 
