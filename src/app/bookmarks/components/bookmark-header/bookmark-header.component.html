@@ -1,10 +1,10 @@
 <header class="header">
   <h1 class="title">
-    <span>My Reading list
+    <span class="container">My Reading list
       <span class="title--small">({{ bookmarks?.length || 0 }})</span>
     </span>
-    <span>
-      <span class="version">1.0.0</span>
+    <span class="container">
+      <span class="version">{{version}}</span>
       <svg class="icon icon--sort" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
         [ngClass]="{'icon--sort__asc':!isSorted, 'icon--sort__desc': isSorted}"
         (click)="sortEvent.emit()">

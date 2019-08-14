@@ -10,6 +10,7 @@ export class BookmarkHeaderComponent implements OnInit {
   @Input() bookmarks: chrome.bookmarks.BookmarkTreeNode[];
   @Input() isSorted: boolean;
   @Input() currentUrlExists: boolean;
+  @Input() version: string;
 
   @Output() addBookmark = new EventEmitter<void>();
   @Output() sortEvent = new EventEmitter<void>();

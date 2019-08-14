@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Subject, combineLatest } from 'rxjs';
 import { debounceTime, map } from 'rxjs/operators';
 import { BookmarkService } from '../../services/bookmark/bookmark.service';
+import { VersionService } from '../../services/version/version.service';
 
 @Component({
   selector: 'app-bookmarks',
@@ -14,11 +15,16 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   isSorted = new BehaviorSubject<boolean>(false);
   currentUrlExists = true;
 
+  get version() {
+    return this.versionService.getVersion();
+  }
+
   private filter = new Subject<string>();
   private unsubscribe = new Subject<void>();
 
   constructor(
     private bookmarkService: BookmarkService,
+    private versionService: VersionService,
     private changeDetector: ChangeDetectorRef
   ) { }
 
