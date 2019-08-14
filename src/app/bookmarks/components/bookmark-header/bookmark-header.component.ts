@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Sorting } from '../../models/sorting';
 
 @Component({
   selector: 'app-bookmark-header',
@@ -8,7 +9,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class BookmarkHeaderComponent implements OnInit {
 
   @Input() bookmarks: chrome.bookmarks.BookmarkTreeNode[];
-  @Input() isSorted: boolean;
+  @Input() sorting: Sorting;
   @Input() currentUrlExists: boolean;
   @Input() version: string;
   @Input() countBookmarks: number;
