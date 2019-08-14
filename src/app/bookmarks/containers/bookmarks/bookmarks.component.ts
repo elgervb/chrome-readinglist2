@@ -3,6 +3,12 @@ import { BehaviorSubject, Subject, combineLatest } from 'rxjs';
 import { debounceTime, map, tap } from 'rxjs/operators';
 import { BookmarkService } from '../../services/bookmark/bookmark.service';
 import { VersionService } from '../../services/version/version.service';
+import { Sorting } from '../../models/sorting';
+
+const initialSorting: Sorting = {
+  field: 'dateAdded',
+  asc: true
+};
 
 @Component({
   selector: 'app-bookmarks',
@@ -12,7 +18,7 @@ import { VersionService } from '../../services/version/version.service';
 export class BookmarksComponent implements OnInit, OnDestroy {
 
   bookmarks: chrome.bookmarks.BookmarkTreeNode[];
-  isSorted = new BehaviorSubject<boolean>(false);
+  sorting$ = new BehaviorSubject<Sorting>(initialSorting);
   // TODO: move this to the header. It has all bookmarks, so it can check if it exists
   currentUrlExists = true;
   // the number of total (unfiltered) bookmarks
@@ -34,7 +40,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const filter$ = this.filter.asObservable().pipe(debounceTime(200));
 
-    combineLatest(this.bookmarkService.bookmarks$, filter$, this.isSorted)
+    combineLatest(this.bookmarkService.bookmarks$, filter$, this.sorting$)
       .pipe(
         tap(([allBookmarks, _, __]) => this.countBookmarks = allBookmarks ? allBookmarks.length : 0),
         map(([allBookmarks, filter, sort]) => {
@@ -49,11 +55,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
               || bookmark.url.toLowerCase().includes(filter));
           }
 
-          if (sort) {
-            return bookmarks.sort((a, b) => ('' + a.title).localeCompare(b.title));
-          }
-
-          return bookmarks;
+          return bookmarks.sort((a, b) => this.sortBookmarks(a, b, sort));
         })
       )
       .subscribe(bookmarks => {
@@ -63,7 +65,6 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
     this.bookmarkService.load();
     this.filter.next(undefined);
-    this.isSorted.next(false);
 
     this.bookmarkService.bookmarks$.subscribe(() => {
       chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -73,23 +74,11 @@ export class BookmarksComponent implements OnInit, OnDestroy {
         this.changeDetector.detectChanges();
       });
     });
-
   }
 
   ngOnDestroy() {
     this.unsubscribe.next(undefined);
     this.unsubscribe.complete();
-  }
-
-  selectBookmark(bookmark: chrome.bookmarks.BookmarkTreeNode) {
-    chrome.tabs.query({ active: true, currentWindow: true }, () => {
-      chrome.tabs.create({ url: bookmark.url });
-      this.bookmarkService.remove(bookmark);
-    });
-  }
-
-  applyFilter(filter: string) {
-    this.filter.next(filter);
   }
 
   addBookmark() {
@@ -102,12 +91,50 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     });
   }
 
+  applyFilter(filter: string) {
+    this.filter.next(filter);
+  }
+
   randomBookmark() {
     const randomIndex = Math.floor(Math.random() * this.bookmarks.length);
     this.selectBookmark(this.bookmarks[randomIndex]);
   }
 
-  sort() {
-    this.isSorted.next(!this.isSorted.getValue());
+  selectBookmark(bookmark: chrome.bookmarks.BookmarkTreeNode) {
+    chrome.tabs.query({ active: true, currentWindow: true }, () => {
+      chrome.tabs.create({ url: bookmark.url });
+      this.bookmarkService.remove(bookmark);
+    });
+  }
+
+  setSorting() {
+    const currentSorting = this.sorting$.getValue();
+    let sorting: Sorting;
+    if (currentSorting.field === 'dateAdded') {
+      sorting = {
+        field: 'title',
+        asc: true
+      };
+    } else if (currentSorting.field === 'title') {
+      if (currentSorting.asc) {
+        sorting = {
+          field: 'title',
+          asc: false
+        };
+      } else {
+        sorting = {
+          field: 'dateAdded',
+          asc: true
+        };
+      }
+    }
+
+    this.sorting$.next(sorting);
+  }
+
+  private sortBookmarks(a: chrome.bookmarks.BookmarkTreeNode, b: chrome.bookmarks.BookmarkTreeNode, sort: Sorting) {
+    const right = sort.asc ? a : b;
+    const left = sort.asc ? b : a;
+    return ('' + right[sort.field]).localeCompare('' + left[sort.field]);
   }
 }

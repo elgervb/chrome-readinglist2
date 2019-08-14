@@ -6,7 +6,9 @@
     <span class="container">
       <span class="version">{{version}}</span>
       <svg class="icon icon--sort" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-        [ngClass]="{'icon--sort__asc':!isSorted, 'icon--sort__desc': isSorted}"
+        title="sort bookmarks"
+        [class.icon--sort__asc]="sorting.field !== 'dateAdded' && sorting.asc"
+        [class.icon--sort__desc]="sorting.field !== 'dateAdded' && !sorting.asc"
         (click)="sortEvent.emit()">
         <g>
           <path class="icon--sort__up"

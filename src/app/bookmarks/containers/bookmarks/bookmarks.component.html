@@ -1,11 +1,11 @@
 <app-bookmark-header
   [bookmarks]="bookmarks"
   [currentUrlExists]="currentUrlExists"
-  [isSorted]="isSorted | async"
+  [sorting]="sorting$ | async"
   [version]="version"
   [countBookmarks]="countBookmarks"
   (addBookmark)="addBookmark()"
-  (sortEvent)="sort()">
+  (sortEvent)="setSorting()">
 </app-bookmark-header>
 
 <app-bookmark-list
