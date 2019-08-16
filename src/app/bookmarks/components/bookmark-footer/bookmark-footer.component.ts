@@ -14,7 +14,6 @@ export class BookmarkFooterComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
 }
