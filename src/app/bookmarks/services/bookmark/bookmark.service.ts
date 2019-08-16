@@ -2,7 +2,6 @@ import { Injectable, Inject } from '@angular/core';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
 
 import { take } from 'rxjs/operators';
-import { LoggerService } from '../logger/logger.service';
 import { BookmarkFolderToken } from '../bookmark-folder.token';
 
 const OTHER_BOOKMARKS = 'Other Bookmarks';
@@ -18,8 +17,7 @@ export class BookmarkService {
   private bookmarks = new BehaviorSubject<chrome.bookmarks.BookmarkTreeNode[]>([]);
 
   constructor(
-    @Inject(BookmarkFolderToken) private bookmarkFolder: string,
-    private logger: LoggerService
+    @Inject(BookmarkFolderToken) private bookmarkFolder: string
   ) {
     if (!this.bookmarkFolder) {
       throw new Error('No bookmark folder set. Use InjectionToken BookmarkFolderToken');
@@ -95,7 +93,6 @@ export class BookmarkService {
         if (match) {
           this.readingListId = match.id;
 
-          this.logger.log('ChromeBookmarkService', 'loaded bookmarks', match.children);
           this.bookmarks.next([...match.children]);
         } else {
           this.createReadinglistRoot(result, title)
