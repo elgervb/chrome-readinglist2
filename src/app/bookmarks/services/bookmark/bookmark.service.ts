@@ -87,7 +87,7 @@ export class BookmarkService {
   private loadChromeBookmarks(title: string): Observable<chrome.bookmarks.BookmarkTreeNode[]> {
     chrome.bookmarks.getTree(bookmarks => {
       const result = bookmarks[0].children
-        .find(child => child.title === OTHER_BOOKMARKS);
+        .find(child => child.title.toLowerCase() === OTHER_BOOKMARKS.toLowerCase());
       if (result && result.children) {
         const match = result.children.find(bookmark => bookmark.title === title);
         if (match) {
