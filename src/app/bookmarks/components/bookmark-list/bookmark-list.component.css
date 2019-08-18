@@ -1,7 +1,8 @@
 :host {
   display: block;
   flex: 2;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 ul {
   margin: 0;
