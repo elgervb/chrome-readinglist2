@@ -4,6 +4,7 @@ import { debounceTime, map, tap } from 'rxjs/operators';
 import { BookmarkService } from '../../services/bookmark/bookmark.service';
 import { VersionService } from '../../services/version/version.service';
 import { Sorting } from '../../models/sorting';
+import { environment } from 'src/environments/environment';
 
 const initialSorting: Sorting = {
   field: 'dateAdded',
@@ -26,6 +27,10 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
   get version() {
     return this.versionService.getVersion();
+  }
+
+  get devMode() {
+    return !environment.production;
   }
 
   private filter = new Subject<string>();
