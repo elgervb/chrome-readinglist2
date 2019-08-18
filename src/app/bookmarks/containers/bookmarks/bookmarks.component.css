@@ -4,6 +4,10 @@
   height: 100%;
 }
 
+app-bookmark-header.dev-mode {
+  background-color: #ffff6e;
+}
+
 app-bookmark-list {
   margin-top: 1rem;
 }
