@@ -78,12 +78,6 @@
             "browserTarget": "chrome-readinglist2:build"
           }
         },
-        "test": {
-          "builder": "@angular-builders/jest:run",
-          "options": {
-            "tsConfig": "src/tsconfig.spec.json"
-          }
-        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {

@@ -1,3 +1,5 @@
+import 'jest-preset-angular';
+
 const storageMock = () => {
   let storage = {};
   return {
