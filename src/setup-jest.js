@@ -10,6 +10,14 @@ const storageMock = () => {
   };
 };
 
+const chrome = {
+  bookmarks: {
+    getTree: jest.fn(),
+    create: jest.fn()
+  }
+};
+Object.defineProperty(window, 'chrome', { value: chrome });
+
 Object.defineProperty(window, 'localStorage', { value: storageMock() });
 Object.defineProperty(window, 'sessionStorage', { value: storageMock() });
 Object.defineProperty(window, 'getComputedStyle', {

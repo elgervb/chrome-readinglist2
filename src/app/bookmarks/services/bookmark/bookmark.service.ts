@@ -4,7 +4,7 @@ import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { BookmarkFolderToken } from '../bookmark-folder.token';
 
-const OTHER_BOOKMARKS = 'Other Bookmarks';
+export const OTHER_BOOKMARKS = 'Other Bookmarks';
 
 @Injectable({
   providedIn: 'root'
@@ -34,8 +34,7 @@ export class BookmarkService {
       create.parentId = this.readingListId;
 
       chrome.bookmarks.create(create, bookmark => {
-        const copy = [...this.bookmarks.value];
-        copy.push(bookmark);
+        const copy = [...this.bookmarks.value, bookmark];
         this.bookmarks.next(copy);
       });
     }
