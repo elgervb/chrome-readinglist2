@@ -5,7 +5,9 @@
   "version": "0.1.0",
   "permissions": [
     "bookmarks",
-    "tabs"
+    "tabs",
+    "https://www.google-analytics.com/",
+    "storage"
   ],
   "optional_permissions": [
     "http://*/",

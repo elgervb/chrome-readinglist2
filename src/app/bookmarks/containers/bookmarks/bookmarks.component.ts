@@ -5,6 +5,7 @@ import { BookmarkService } from '../../services/bookmark/bookmark.service';
 import { VersionService } from '../../services/version/version.service';
 import { Sorting } from '../../models/sorting';
 import { environment } from 'src/environments/environment';
+import { AnalyticsService } from 'src/app/core/analytics.service';
 
 const initialSorting: Sorting = {
   field: 'dateAdded',
@@ -39,10 +40,14 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   constructor(
     private bookmarkService: BookmarkService,
     private versionService: VersionService,
+    private analyticsService: AnalyticsService,
     private changeDetector: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
+
+    this.analyticsService.init('UA-613449-7'); // TODO: provide the GA ID
+
     const filter$ = this.filter.asObservable().pipe(debounceTime(200));
 
     combineLatest(this.bookmarkService.bookmarks$, filter$, this.sorting$)
@@ -93,6 +98,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
         url: tab.url,
         title: tab.title,
       });
+      this.analyticsService.sendEvent( 'bookmarks', 'add', 'bookmark', this.countBookmarks);
     });
   }
 
@@ -103,12 +109,14 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   randomBookmark() {
     const randomIndex = Math.floor(Math.random() * this.bookmarks.length);
     this.selectBookmark(this.bookmarks[randomIndex]);
+    this.analyticsService.sendEvent( 'bookmarks', 'random', 'bookmark', this.countBookmarks);
   }
 
   selectBookmark(bookmark: chrome.bookmarks.BookmarkTreeNode) {
     chrome.tabs.query({ active: true, currentWindow: true }, () => {
       chrome.tabs.create({ url: bookmark.url });
       this.bookmarkService.remove(bookmark);
+      this.analyticsService.sendEvent( 'bookmarks', 'select', 'bookmark', this.countBookmarks);
     });
   }
 
