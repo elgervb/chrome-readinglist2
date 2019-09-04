@@ -9,21 +9,18 @@ if (environment.production) {
   enableProdMode();
 }
 
-// Mock GoogleAnalytics
-if (!environment.production) {
-  const analytics: GoogleAnalytics = {
-    getService: () => ({
-      getTracker: () => ({
-        sendAppView: () => {},
-        sendEvent: () => {}
-      })
+const analytics: GoogleAnalytics = {
+  getService: () => ({
+    getTracker: () => ({
+      sendAppView: () => {},
+      sendEvent: () => {}
     })
-  };
-  // tslint:disable: no-string-literal
-  // @ts-ignore
-  window['analytics'] = analytics;
-  // tslint:enable: no-string-literal
-}
+  })
+};
+// tslint:disable: no-string-literal
+// @ts-ignore
+window['analytics'] = window['analytics'] || analytics;
+// tslint:enable: no-string-literal
 
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.error(err));
