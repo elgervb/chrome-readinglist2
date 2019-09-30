@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { BookmarkService } from '../../services/bookmark/bookmark.service';
 import { VersionService } from '../../services/version/version.service';
 import { ChangeDetectorRef, NO_ERRORS_SCHEMA } from '@angular/core';
-import { AnalyticsService } from 'src/app/core/analytics.service';
 
 describe('BookmarksComponent', () => {
   let component: BookmarksComponent;
@@ -28,7 +27,7 @@ describe('BookmarksComponent', () => {
         BookmarkService,
         VersionService,
         ChangeDetectorRef,
-        { provide: AnalyticsService, useValue: analyticsService}
+        { provide: AnalyticsService, useValue: analyticsService }
       ],
       schemas: [NO_ERRORS_SCHEMA]
     })
