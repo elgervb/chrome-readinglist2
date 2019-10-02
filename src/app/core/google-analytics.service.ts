@@ -28,10 +28,9 @@ export class GoogleAnalyticsService {
     // @ts-ignore
     const ga = window['ga'];
     if (ga) {
-      console.log('GA!');
       ga(...args);
     } else {
-      console.log('!GA!');
+      console.log('Google analytics not defined');
     }
   }
 }
