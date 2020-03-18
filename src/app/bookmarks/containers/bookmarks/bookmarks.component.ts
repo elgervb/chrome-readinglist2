@@ -95,7 +95,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
         url: tab.url,
         title: tab.title,
       });
-      debugger;
+
       this.analyticsService.sendEvent('bookmarks', 'add', 'bookmark');
     });
   }
@@ -141,6 +141,8 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     }
 
     this.sorting$.next(sorting);
+
+    this.analyticsService.sendEvent('bookmarks', 'sort', `${sorting.field}:${sorting.asc ? 'asc' : 'desc'}`);
   }
 
   private sortBookmarks(a: chrome.bookmarks.BookmarkTreeNode, b: chrome.bookmarks.BookmarkTreeNode, sort: Sorting) {
