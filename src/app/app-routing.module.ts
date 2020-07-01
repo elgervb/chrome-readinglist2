@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: './bookmarks/bookmarks.module#BookmarksModule'
+    loadChildren: () => import('./bookmarks/bookmarks.module').then(m => m.BookmarksModule)
   }
 ];
 

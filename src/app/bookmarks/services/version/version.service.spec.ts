@@ -7,12 +7,12 @@ describe('VersionService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: VersionService = TestBed.get(VersionService);
+    const service: VersionService = TestBed.inject(VersionService);
     expect(service).toBeTruthy();
   });
 
   it('should return the version', () => {
-    const service: VersionService = TestBed.get(VersionService);
+    const service: VersionService = TestBed.inject(VersionService);
     expect(service.getVersion()).toBe('99.99.99.unittest');
   });
 });
