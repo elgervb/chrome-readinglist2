@@ -1,8 +1,12 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { GoogleAnalyticsService } from '@core/google-analytics.service';
 
 describe('AppComponent', () => {
+  const analytics = {
+    sendPageView: jest.fn()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -12,6 +16,9 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent
       ],
+      providers: [
+        { provide: GoogleAnalyticsService, useValue: analytics }
+      ]
     }).compileComponents();
   }));
 

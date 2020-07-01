@@ -5,7 +5,7 @@ import { BookmarkService } from '../../services/bookmark/bookmark.service';
 import { VersionService } from '../../services/version/version.service';
 import { Sorting } from '../../models/sorting';
 import { environment } from 'src/environments/environment';
-import { GoogleAnalyticsService } from 'src/app/core/google-analytics.service';
+import { GoogleAnalyticsService } from '@core/google-analytics.service';
 
 const initialSorting: Sorting = {
   field: 'dateAdded',
@@ -47,7 +47,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const filter$ = this.filter.asObservable().pipe(debounceTime(200));
 
-    combineLatest(this.bookmarkService.bookmarks$, filter$, this.sorting$)
+    combineLatest([this.bookmarkService.bookmarks$, filter$, this.sorting$])
       .pipe(
         tap(([allBookmarks, _, __]) => this.countBookmarks = allBookmarks ? allBookmarks.length : 0),
         map(([allBookmarks, filter, sort]) => {

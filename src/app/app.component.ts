@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GoogleAnalyticsService } from './core/google-analytics.service';
+import { GoogleAnalyticsService } from '@core/google-analytics.service';
 
 @Component({
   selector: 'app-root',

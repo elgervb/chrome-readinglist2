@@ -3,9 +3,9 @@ import 'jest-preset-angular';
 const storageMock = () => {
   let storage = {};
   return {
-    getItem: (key) => (key in storage ? storage[key] : null),
+    getItem: key => (key in storage ? storage[key] : null),
     setItem: (key, value) => (storage[key] = value || ''),
-    removeItem: (key) => delete storage[key],
+    removeItem: key => delete storage[key],
     clear: () => (storage = {})
   };
 };
@@ -23,3 +23,7 @@ Object.defineProperty(window, 'sessionStorage', { value: storageMock() });
 Object.defineProperty(window, 'getComputedStyle', {
   value: () => ['-webkit-appearance']
 });
+
+// Needed for mocking ga.js
+const scriptTag = document.createElement('script');
+document.documentElement.appendChild(scriptTag);
