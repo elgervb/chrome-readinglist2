@@ -43,6 +43,7 @@
   width: .5em;
 }
 .btn-add {
+  align-items: center;
   background-color: #69c773;
   border: none;
   border-radius: 50%;
