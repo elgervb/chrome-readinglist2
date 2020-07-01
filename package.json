@@ -35,7 +35,7 @@
     "jest-preset-angular": "^8.0.0",
     "ts-node": "~8.5.4",
     "tslint": "~5.15.0",
-    "typescript": "~3.7.5"
+    "typescript": "~3.9.5"
   },
   "engines": {
     "node": ">=10"
