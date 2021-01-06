@@ -84,13 +84,6 @@ describe('BookmarkHeaderComponent', () => {
       expect(fixture.debugElement.query(By.css('.icon--sort__desc'))).toBeTruthy();
     });
 
-    it('should not hilight icon for field dateAdded', () => {
-      component.sorting = { asc: false, field: 'dateAdded' };
-      fixture.detectChanges();
-
-      expect(fixture.debugElement.query(By.css('.icon--sort__asc'))).toBeFalsy();
-      expect(fixture.debugElement.query(By.css('.icon--sort__desc'))).toBeFalsy();
-    });
   });
 
   describe('add bookmark', () => {
