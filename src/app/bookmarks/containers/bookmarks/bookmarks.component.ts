@@ -26,6 +26,8 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   // the number of total (unfiltered) bookmarks
   countBookmarks: number;
 
+  filter = new Subject<string>();
+
   get version() {
     return this.versionService.getVersion();
   }
@@ -34,7 +36,6 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     return !environment.production;
   }
 
-  private filter = new Subject<string>();
   private unsubscribe = new Subject<void>();
 
   constructor(
@@ -45,6 +46,8 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    chrome.storage.sync.get('filter', data => data?.filter ? this.filter.next(data.filter) : undefined);
+
     const filter$ = this.filter.asObservable().pipe(debounceTime(200));
 
     combineLatest([this.bookmarkService.bookmarks$, filter$, this.sorting$])
@@ -57,8 +60,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
           let bookmarks = [...allBookmarks];
           if (filter) {
             bookmarks = allBookmarks.filter(bookmark =>
-              !filter
-              || bookmark.title.toLowerCase().includes(filter)
+              bookmark.title.toLowerCase().includes(filter)
               || bookmark.url.toLowerCase().includes(filter));
           }
 
@@ -71,7 +73,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
       });
 
     this.bookmarkService.load();
-    this.filter.next(undefined);
+    this.filter.next();
 
     this.bookmarkService.bookmarks$.subscribe(() => {
       chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -84,7 +86,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.unsubscribe.next(undefined);
+    this.unsubscribe.next();
     this.unsubscribe.complete();
   }
 
@@ -101,6 +103,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   }
 
   applyFilter(filter: string) {
+    chrome.storage.sync.set({ filter });
     this.filter.next(filter);
   }
 

@@ -31,7 +31,9 @@
 .version {
   margin-right: .5rem;
 }
-
+.icon--sort {
+  user-select: none;
+}
 .icon--sort__desc .icon--sort__up {
   fill: #333;
 }
@@ -59,6 +61,7 @@
   position: absolute;
   transition: all .3s ease-out;
   transform: translate(-50%,-50%);
+  user-select: none;
   width: 1.1em;
 }
 
