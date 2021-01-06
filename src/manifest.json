@@ -5,6 +5,7 @@
   "version": "0.1.5",
   "permissions": [
     "bookmarks",
+    "storage",
     "tabs"
   ],
   "optional_permissions": [

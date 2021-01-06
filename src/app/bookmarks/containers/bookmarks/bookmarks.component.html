@@ -17,6 +17,7 @@
 
 <app-bookmark-footer
   [bookmarks]="bookmarks"
+  [filter]="filter | async"
   (filterEvent)="applyFilter($event)"
   (randomBookmarkEvent)="randomBookmark()">
 </app-bookmark-footer>

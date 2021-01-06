@@ -7,6 +7,7 @@ import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 })
 export class BookmarkFooterComponent implements OnInit {
 
+  @Input() filter?: string;
   @Input() bookmarks: chrome.bookmarks.BookmarkTreeNode[];
 
   @Output() readonly filterEvent = new EventEmitter<string>();
@@ -15,5 +16,4 @@ export class BookmarkFooterComponent implements OnInit {
   constructor() { }
 
   ngOnInit() { }
-
 }
