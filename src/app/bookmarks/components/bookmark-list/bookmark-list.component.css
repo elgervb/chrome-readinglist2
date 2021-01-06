@@ -62,3 +62,13 @@ li:hover {
   text-align: center;
   margin-top: 4rem;
 }
+
+.btn {
+  border: 1px solid transparent;
+  color: var(--text-color-invert);
+  font-size: 1em;
+  font-weight: 500;
+  line-height: 1.5;
+  padding: calc(.5rem - 1px) calc(1rem - 1px);
+  transition: all .1s ease-in;
+}

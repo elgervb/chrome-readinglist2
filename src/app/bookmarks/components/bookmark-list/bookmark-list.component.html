@@ -10,5 +10,8 @@
 
 <ng-template #noBookmarks>
   <div *ngIf="!countBookmarks" class="no-bookmarks">No bookmarks present</div>
-  <div *ngIf="countBookmarks > 0" class="no-bookmarks">No bookmarks found</div>
+  <div *ngIf="countBookmarks > 0" class="no-bookmarks">
+    <p>No bookmarks found</p>
+    <button class="btn" (click)="clearFilter.emit()">clear filter</button>
+  </div>
 </ng-template>
