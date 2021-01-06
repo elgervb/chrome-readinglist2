@@ -2,22 +2,19 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.0.
 
-## Development server
+## Deploy
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+run
+```
+yarn build --prod
+```
+make sure you've bumped the version in package.json and manifest.json
 
-## Code scaffolding
+then zip the contents of the `dist` directory
+```
+zip -r -j -X dist/chrome-readinglist2.zip ./dist/chrome-readinglist2/
+``` 
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+goto Chrome extensions dashboard: https://chrome.google.com/webstore/devconsole
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Upload the zip as a new package
