@@ -10,6 +10,7 @@ export class BookmarkListComponent implements OnInit {
   @Input() countBookmarks: number;
 
   @Output() selectEvent = new EventEmitter<chrome.bookmarks.BookmarkTreeNode>();
+  @Output() clearFilter = new EventEmitter<void>();
 
   constructor() { }
 

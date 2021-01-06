@@ -12,6 +12,7 @@
 <app-bookmark-list
   [bookmarks]="bookmarks"
   [countBookmarks]="countBookmarks"
+  (clearFilter)="applyFilter('')"
   (selectEvent)="selectBookmark($event)">
 </app-bookmark-list>
 

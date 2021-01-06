@@ -14,6 +14,12 @@ const chrome = {
   bookmarks: {
     getTree: jest.fn(),
     create: jest.fn()
+  },
+  storage: {
+    sync: {
+      get: jest.fn(),
+      set: jest.fn()
+    }
   }
 };
 Object.defineProperty(window, 'chrome', { value: chrome });
