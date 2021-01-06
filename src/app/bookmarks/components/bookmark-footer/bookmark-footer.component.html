@@ -1,5 +1,5 @@
 
- <input type="text" class="filter" placeholder="filter" autofocus (input)="filterEvent.emit($event.target.value)">
+ <input type="text" class="filter" placeholder="filter" [value]="filter || ''" autofocus (input)="filterEvent.emit($event.target.value)">
  <button class="btn-random" title="Pick a random bookmark"
    (click)="randomBookmarkEvent.emit()"
    [disabled]="!bookmarks?.length">
