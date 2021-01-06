@@ -121,27 +121,13 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     });
   }
 
-  setSorting() {
+  setSorting(field?: 'dateAdded' | 'title' | 'url') {
     const currentSorting = this.sorting$.getValue();
-    let sorting: Sorting;
-    if (currentSorting.field === 'dateAdded') {
-      sorting = {
-        field: 'title',
-        asc: true
-      };
-    } else if (currentSorting.field === 'title') {
-      if (currentSorting.asc) {
-        sorting = {
-          field: 'title',
-          asc: false
-        };
-      } else {
-        sorting = {
-          field: 'dateAdded',
-          asc: true
-        };
-      }
-    }
+
+    const sorting: Sorting = {
+      field: field || currentSorting.field,
+      asc: !currentSorting.asc
+    };
 
     this.sorting$.next(sorting);
 

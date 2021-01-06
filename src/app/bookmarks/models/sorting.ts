@@ -1,4 +1,4 @@
 export interface Sorting {
-  field: 'dateAdded' | 'title';
+  field: 'dateAdded' | 'title' | 'url';
   asc: boolean;
 }
