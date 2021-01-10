@@ -12,6 +12,8 @@ const initialSorting: Sorting = {
   asc: true
 };
 
+const chromeReviewUrl = 'https://chrome.google.com/webstore/detail/chrome-reading-list-2-%E2%9D%A4/kdapifmgfmpofpeoehdelijjcdpmgdja';
+
 @Component({
   selector: 'app-bookmarks',
   templateUrl: './bookmarks.component.html',
@@ -113,11 +115,20 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     this.analyticsService.sendEvent('bookmarks', 'random', 'bookmark');
   }
 
+  openReview() {
+
+    chrome.tabs.query({ active: true, currentWindow: true }, () => {
+      chrome.tabs.create({ url: chromeReviewUrl });
+      this.analyticsService.sendEvent('bookmarks', 'review', 'add-review');
+    });
+
+  }
+
   selectBookmark(bookmark: chrome.bookmarks.BookmarkTreeNode) {
     chrome.tabs.query({ active: true, currentWindow: true }, () => {
       chrome.tabs.create({ url: bookmark.url });
       this.bookmarkService.remove(bookmark);
-      this.analyticsService.sendEvent('bookmarks', 'select', 'bookmark');
+      this.analyticsService.sendEvent('bookmarks', 'select', 'selectbookmark');
     });
   }
 

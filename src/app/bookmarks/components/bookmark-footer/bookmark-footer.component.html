@@ -1,7 +1,29 @@
 
- <input type="text" class="filter" placeholder="filter" [value]="filter || ''" autofocus (input)="filterEvent.emit($event.target.value)">
- <button class="btn-random" title="Pick a random bookmark"
-   (click)="randomBookmarkEvent.emit()"
-   [disabled]="!bookmarks?.length">
-   random
+<label for="filter">Search</label>
+<input type="text" id="filter" class="filter" placeholder="filter" [value]="filter || ''" autofocus (input)="filterEvent.emit($event.target.value)">
+<svg (click)="this.displayPopover = !this.displayPopover"class="heart" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <path d="m11.466 22.776c.141.144.333.224.534.224s.393-.08.534-.224l9.594-9.721c4.001-4.053 1.158-11.055-4.532-11.055-3.417 0-4.985 2.511-5.596 2.98-.614-.471-2.172-2.98-5.596-2.98-5.672 0-8.55 6.984-4.531 11.055z"/>
+</svg>
+<button class="btn-random" title="Pick a random bookmark"
+  (click)="randomBookmarkEvent.emit()"
+  [disabled]="!bookmarks?.length">
+  random
 </button>
+
+
+<ng-container
+    *ngIf="displayPopover"
+    [ngTemplateOutlet]="popoverTemplate">
+</ng-container>
+
+<ng-template #popoverTemplate>
+
+  <div class="backdrop"></div>
+  <div class="popover">
+    <p>If you like this extension,
+    please add a <a (click)="this.openReviewEvent.emit()" href="#">review</a>.</p>
+
+    <p>Thanks!</p>
+  </div>
+
+</ng-template>
