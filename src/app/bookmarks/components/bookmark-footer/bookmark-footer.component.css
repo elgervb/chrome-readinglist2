@@ -1,14 +1,16 @@
 :host {
+  align-items: center;
   box-shadow: 0px -1px 1px rgba(0, 0, 0, .25);
   display: flex;
   flex: 0 0 auto;
-  min-height: 2em;
   justify-content: space-between;
+  min-height: 2em;
+  padding: .25rem;
+  position: relative;
 }
 
 .filter {
   border: none;
-  border-bottom: 1px dotted #999;
   color: #999;
   font-size: .8em;
   outline: none;
@@ -20,6 +22,54 @@
 }
 
 .btn-random {
-  background: transparent;
-  border: none;
+  border: 1px solid transparent;
+  color: var(--text-color-invert);
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 500;
+  line-height: 1.5;
+  padding: calc(.5rem - 1px) calc(1rem - 1px);
+  transition: all .1s ease-in;
 }
+
+.heart {
+  animation: 1s ease-in-out 1s 3 heartbeat;
+  cursor: pointer;
+  fill: #f62459;
+  font-size: 2em;
+  height: 1em;
+  margin: 0 .5rem;
+  position: relative;
+  transform: scale(1);
+  transform-origin: bottom;
+  transition: transform .2s ease-out;
+  width: 1em;
+  z-index: 1001
+}
+
+.popover {
+  border-radius: 4px;
+  bottom: 50px;
+  right: 0;
+  padding: 0 1rem;
+  position: absolute;
+  width: 218px;
+  background-color: #fff;
+  z-index: 1001
+}
+
+.backdrop {
+  background-color: rgba(0, 0, 0, .6);
+  position: fixed;
+  height: 100vh;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+@keyframes heartbeat {
+  25% {transform: scale(1.5);}
+  50% {transform: scale(1);}
+}
+
+
