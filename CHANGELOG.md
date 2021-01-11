@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   Redesign readinglist header
 - [#42](https://github.com/elgervb/chrome-readinglist2/issues/42)
   https://github.com/elgervb/chrome-readinglist2/issues/42
+- [49](https://github.com/elgervb/chrome-readinglist2/issues/49)
+  update angular to 11
   
 ## 0.2.0
 ### Added
