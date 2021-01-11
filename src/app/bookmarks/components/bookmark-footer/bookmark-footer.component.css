@@ -66,8 +66,9 @@
 
 .backdrop {
   background-color: rgba(0, 0, 0, .6);
-  position: fixed;
   height: 100vh;
+  left: 0;
+  position: fixed;
   top: 0;
   width: 100%;
   z-index: 1000;
