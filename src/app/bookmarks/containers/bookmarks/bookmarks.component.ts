@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Subject, combineLatest } from 'rxjs';
-import { debounceTime, map, tap } from 'rxjs/operators';
+import { debounceTime, map, tap, takeUntil } from 'rxjs/operators';
 import { BookmarkService } from '../../services/bookmark/bookmark.service';
 import { VersionService } from '../../services/version/version.service';
 import { Sorting } from '../../models/sorting';
@@ -77,14 +77,20 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     this.bookmarkService.load();
     this.filter.next();
 
-    this.bookmarkService.bookmarks$.subscribe(() => {
-      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-        const tab = tabs[0];
-        this.currentUrlExists = this.bookmarkService.exists(tab.url);
+    this.bookmarkService.bookmarks$
+      .pipe(
+        // can current page be added?
+        tap(() => {
+          chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            const tab = tabs[0];
+            this.currentUrlExists = this.bookmarkService.exists(tab.url);
 
-        this.changeDetector.detectChanges();
-      });
-    });
+            this.changeDetector.detectChanges();
+          });
+        }),
+        tap(bookmarks => chrome.browserAction.setBadgeText({ text: `${bookmarks.length}` })),
+        takeUntil(this.unsubscribe)
+      ).subscribe();
   }
 
   ngOnDestroy() {
@@ -118,17 +124,17 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   openReview() {
 
     chrome.tabs.query({ active: true, currentWindow: true }, () => {
-      chrome.tabs.create({ url: chromeReviewUrl });
       this.analyticsService.sendEvent('bookmarks', 'review', 'add-review');
+      chrome.tabs.create({ url: chromeReviewUrl });
     });
 
   }
 
   selectBookmark(bookmark: chrome.bookmarks.BookmarkTreeNode) {
     chrome.tabs.query({ active: true, currentWindow: true }, () => {
-      chrome.tabs.create({ url: bookmark.url });
       this.bookmarkService.remove(bookmark);
       this.analyticsService.sendEvent('bookmarks', 'select', 'selectbookmark');
+      chrome.tabs.create({ url: bookmark.url });
     });
   }
 
