@@ -22,6 +22,7 @@
 }
 
 .btn-random {
+  background-color: #efefef;
   border: 1px solid transparent;
   color: var(--text-color-invert);
   cursor: pointer;
@@ -31,7 +32,9 @@
   padding: calc(.5rem - 1px) calc(1rem - 1px);
   transition: all .1s ease-in;
 }
-
+.btn-random:hover {
+  background-color: #dfdfdf;
+}
 .heart {
   animation: 1s ease-in-out 1s 3 heartbeat;
   cursor: pointer;
@@ -45,6 +48,9 @@
   transition: transform .2s ease-out;
   width: 1em;
   z-index: 1001
+}
+.heart:hover {
+  transform: scale(1.2);
 }
 
 .popover {
