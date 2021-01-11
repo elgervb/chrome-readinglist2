@@ -70,6 +70,7 @@
 
 .btn-add:disabled {
   background-color: #999;
+  box-shadow: 0px 0px 0px 2px #999, 2px 3px 10px rgba(0,0,0,.3), -2px 3px 10px rgba(0,0,0,.3);
   cursor: none;
   opacity: .5;
   pointer-events: none;
