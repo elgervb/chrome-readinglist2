@@ -5,14 +5,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-
-
----
+- [#39](https://github.com/elgervb/chrome-readinglist2/issues/39)
+  Link to extension reviews
 
 ## 0.2.0
 ### Added
 - [#37](https://github.com/elgervb/chrome-readinglist2/issues/37)
-remember filter in user settings
+  remember filter in user settings
 
 ## 0.1.5
 ### Added
