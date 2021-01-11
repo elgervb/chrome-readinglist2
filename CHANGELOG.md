@@ -11,7 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 0.2.0
 ### Added
-- [#37](remember filter in user settings)
+- [#37](https://github.com/elgervb/chrome-readinglist2/issues/37)
+remember filter in user settings
 
 ## 0.1.5
 ### Added
