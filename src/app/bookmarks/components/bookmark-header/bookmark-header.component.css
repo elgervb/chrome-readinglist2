@@ -1,7 +1,6 @@
 :host {
   box-shadow: 0 -4px 30px rgba(0,0,0,.5);
   flex: 0 0 auto;
-  margin-bottom: .7rem;
   position: relative;
 }
 .title {
@@ -49,6 +48,7 @@
   background-color: #69c773;
   border: none;
   border-radius: 50%;
+  box-shadow: 2px 3px 10px rgba(0,0,0,.3), -2px 3px 10px rgba(0,0,0,.3);
   color: #fff;
   cursor: pointer;
   display: flex;
