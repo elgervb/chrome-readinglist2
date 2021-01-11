@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BookmarkFooterComponent } from './bookmark-footer.component';
 import { By } from '@angular/platform-browser';
@@ -7,7 +7,7 @@ describe('BookmarkFooterComponent', () => {
   let component: BookmarkFooterComponent;
   let fixture: ComponentFixture<BookmarkFooterComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [BookmarkFooterComponent]
     })
