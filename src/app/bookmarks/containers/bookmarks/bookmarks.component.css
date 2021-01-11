@@ -4,6 +4,9 @@
   height: 100%;
 }
 
+app-bookmark-header {
+  height: 80px;
+}
 app-bookmark-header.dev-mode {
   background-color: #ffff6e;
 }
