@@ -53,7 +53,6 @@ export class BookmarkService {
   remove(remove: chrome.bookmarks.BookmarkTreeNode) {
     chrome.bookmarks.remove(remove.id, () => {
       const result = [...this.bookmarks.value].filter(bookmark => bookmark.id !== remove.id);
-
       this.bookmarks.next(result);
     });
   }
