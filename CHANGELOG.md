@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   Link to extension reviews in Chrome store
 - [#43](https://github.com/elgervb/chrome-readinglist2/issues/43)
   Improve scolling experience
+- [#47](https://github.com/elgervb/chrome-readinglist2/issues/47)
+  Redesign readinglist header
 - [#42](https://github.com/elgervb/chrome-readinglist2/issues/42)
   https://github.com/elgervb/chrome-readinglist2/issues/42
   
