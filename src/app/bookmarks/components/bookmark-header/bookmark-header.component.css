@@ -64,6 +64,9 @@
   user-select: none;
   width: 1.1em;
 }
+.btn-add:hover {
+  background-color: #4aa754;
+}
 
 .btn-add:disabled {
   background-color: #999;
