@@ -14,7 +14,6 @@ export class GlobalErrorHandler extends ErrorHandler {
   }
 
   handleError(error: Error | HttpErrorResponse) {
-    debugger;
     const gaService = this.injector.get<GoogleAnalyticsService>(GoogleAnalyticsService);
     if (error instanceof HttpErrorResponse) {
       // Server error happened

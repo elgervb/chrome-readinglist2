@@ -10,7 +10,9 @@ import { GoogleAnalyticsService } from '@core/google-analytics.service';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class HttpErrorInterceptor implements HttpInterceptor {
 
   constructor(private googleAnalyticsService: GoogleAnalyticsService) { }
@@ -20,7 +22,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       .pipe(
         retry(1),
         catchError((error: HttpErrorResponse) => {
-          debugger;
           let errorMessage = '';
           if (error.error instanceof ErrorEvent) {
             // client-side error
