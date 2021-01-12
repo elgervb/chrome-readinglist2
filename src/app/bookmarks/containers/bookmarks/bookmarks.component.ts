@@ -122,12 +122,10 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   }
 
   openReview() {
-
     chrome.tabs.query({ active: true, currentWindow: true }, () => {
       this.analyticsService.sendEvent('bookmarks', 'review', 'add-review');
       chrome.tabs.create({ url: chromeReviewUrl });
     });
-
   }
 
   selectBookmark(bookmark: chrome.bookmarks.BookmarkTreeNode) {

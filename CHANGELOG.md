@@ -12,9 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [#47](https://github.com/elgervb/chrome-readinglist2/issues/47)
   Redesign readinglist header
 - [#42](https://github.com/elgervb/chrome-readinglist2/issues/42)
-  https://github.com/elgervb/chrome-readinglist2/issues/42
-- [49](https://github.com/elgervb/chrome-readinglist2/issues/49)
-  update angular to 11
+  Show badge in extension icon with number of pages
+- [#49](https://github.com/elgervb/chrome-readinglist2/issues/49)
+  Update angular to 11
+- [#56](https://github.com/elgervb/chrome-readinglist2/issues/56)
+  Use Google Analytics to track errors
   
 ## 0.2.0
 ### Added
