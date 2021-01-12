@@ -106,7 +106,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
         title: tab.title,
       });
 
-      this.analyticsService.sendEvent('bookmarks', 'add', 'bookmark');
+      this.analyticsService.sendEvent('bookmarks', 'add', tab.url);
     });
   }
 
@@ -117,13 +117,14 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
   randomBookmark() {
     const randomIndex = Math.floor(Math.random() * this.bookmarks.length);
-    this.selectBookmark(this.bookmarks[randomIndex]);
-    this.analyticsService.sendEvent('bookmarks', 'random', 'bookmark');
+    const bookmark = this.bookmarks[randomIndex];
+    this.selectBookmark(bookmark);
+    this.analyticsService.sendEvent('bookmarks', 'random', bookmark.url);
   }
 
   openReview() {
     chrome.tabs.query({ active: true, currentWindow: true }, () => {
-      this.analyticsService.sendEvent('bookmarks', 'review', 'add-review');
+      this.analyticsService.sendEvent('extension', 'review');
       chrome.tabs.create({ url: chromeReviewUrl });
     });
   }
@@ -131,7 +132,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   selectBookmark(bookmark: chrome.bookmarks.BookmarkTreeNode) {
     chrome.tabs.query({ active: true, currentWindow: true }, () => {
       this.bookmarkService.remove(bookmark);
-      this.analyticsService.sendEvent('bookmarks', 'select', 'selectbookmark');
+      this.analyticsService.sendEvent('bookmarks', 'select', bookmark.url);
       chrome.tabs.create({ url: bookmark.url });
     });
   }
