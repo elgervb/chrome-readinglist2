@@ -15,15 +15,15 @@ export class GoogleAnalyticsService {
   /**
    * https://developers.google.com/analytics/devguides/collection/analyticsjs/events
    */
-  sendEvent(category: string, eventLabel: string, eventValue?: string) {
-    this.ga('send', 'event', category, eventLabel, eventValue);
+  sendEvent(category: string, eventAction: string, eventLabel?: string, eventValue?: number) {
+    this.ga('send', 'event', category, eventAction, eventLabel, eventValue);
   }
 
   sendPageView(title: string) {
     this.ga('send', 'pageview', title);
   }
 
-  private ga(...args: string[]): void {
+  private ga(...args: (string | number)[]): void {
     // tslint:disable: no-string-literal
     // @ts-ignore
     const ga = window['ga'];
