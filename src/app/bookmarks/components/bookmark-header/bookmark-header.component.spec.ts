@@ -34,13 +34,14 @@ describe('BookmarkHeaderComponent', () => {
   });
 
   it('should show how many bookmarks are present on screen', () => {
-
     component.countBookmarks = 4;
     component.bookmarks = [createBookmark(), createBookmark()];
     fixture.detectChanges();
 
-    expect(fixture.debugElement.query(By.css('.title--small')).nativeElement.textContent)
-      .toBe('(2 of 4)');
+    expect(fixture.debugElement.query(By.css('.currentCount')).nativeElement.textContent)
+      .toBe('2');
+    expect(fixture.debugElement.query(By.css('.totalCount')).nativeElement.textContent)
+      .toBe(' / 4');
   });
 
   it('should show the version', () => {
@@ -49,7 +50,7 @@ describe('BookmarkHeaderComponent', () => {
     fixture.detectChanges();
 
     expect(fixture.debugElement.query(By.css('.version')).nativeElement.textContent)
-      .toBe(version);
+      .toBe(`v${version}`);
   });
 
   describe('sorting', () => {
