@@ -5,10 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## 0.3.0
+
+### Added
 - [#39](https://github.com/elgervb/chrome-readinglist2/issues/39)
   Link to extension reviews in Chrome store
-- [#43](https://github.com/elgervb/chrome-readinglist2/issues/43)
-  Improve scolling experience
 - [#47](https://github.com/elgervb/chrome-readinglist2/issues/47)
   Redesign readinglist header
 - [#42](https://github.com/elgervb/chrome-readinglist2/issues/42)
@@ -17,6 +19,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   Update angular to 11
 - [#56](https://github.com/elgervb/chrome-readinglist2/issues/56)
   Use Google Analytics to track errors
+
+### Fixed
+- [#57](https://github.com/elgervb/chrome-readinglist2/issues/57)
+  Google Analytics manage category, action and label 
+- [#43](https://github.com/elgervb/chrome-readinglist2/issues/43)
+  Improve scolling experience
   
 ## 0.2.0
 ### Added
