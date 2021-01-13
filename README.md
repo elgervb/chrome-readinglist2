@@ -12,7 +12,9 @@ make sure you've bumped the version in package.json and manifest.json
 
 then zip the contents of the `dist` directory
 ```
-zip -r -j -X dist/chrome-readinglist2.zip ./dist/chrome-readinglist2/
+cd dist
+zip -r -X chrome-readinglist2.zip ./chrome-readinglist2/
+cd ..
 ``` 
 
 goto Chrome extensions dashboard: https://chrome.google.com/webstore/devconsole
