@@ -23,11 +23,10 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
   bookmarks: chrome.bookmarks.BookmarkTreeNode[];
   sorting$ = new BehaviorSubject<Sorting>(initialSorting);
-  // TODO: move this to the header. It has all bookmarks, so it can check if it exists
   currentUrlExists = true;
-  // the number of total (unfiltered) bookmarks
+  /** the number of total (unfiltered) bookmarks */
   countBookmarks: number;
-
+  /** filter the list of bookmarks with a search string */
   filter = new Subject<string>();
 
   get version() {
@@ -38,13 +37,13 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     return !environment.production;
   }
 
-  private unsubscribe = new Subject<void>();
+  private destroy$ = new Subject<void>();
 
   constructor(
-    private bookmarkService: BookmarkService,
-    private versionService: VersionService,
     private analyticsService: GoogleAnalyticsService,
-    private changeDetector: ChangeDetectorRef
+    private bookmarkService: BookmarkService,
+    private changeDetector: ChangeDetectorRef,
+    private versionService: VersionService
   ) { }
 
   ngOnInit() {
@@ -59,12 +58,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
           if (!allBookmarks) {
             return undefined;
           }
-          let bookmarks = [...allBookmarks];
-          if (filter) {
-            bookmarks = allBookmarks.filter(bookmark =>
-              bookmark.title.toLowerCase().includes(filter)
-              || bookmark.url.toLowerCase().includes(filter));
-          }
+          const bookmarks = filter ? this.filterBookmarks(filter, allBookmarks) : [...allBookmarks];
 
           return bookmarks.sort((a, b) => this.sortBookmarks(a, b, sort));
         })
@@ -89,13 +83,13 @@ export class BookmarksComponent implements OnInit, OnDestroy {
           });
         }),
         tap(bookmarks => chrome.browserAction.setBadgeText({ text: `${bookmarks.length}` })),
-        takeUntil(this.unsubscribe)
+        takeUntil(this.destroy$)
       ).subscribe();
   }
 
   ngOnDestroy() {
-    this.unsubscribe.next();
-    this.unsubscribe.complete();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   addBookmark() {
@@ -122,9 +116,13 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     this.analyticsService.sendEvent('bookmarks', 'random', bookmark.url);
   }
 
+  reviewPopoverShown(show: boolean) {
+    this.analyticsService.sendEvent('review', show ? 'show popover' : 'hide popover');
+  }
+
   openReview() {
     chrome.tabs.query({ active: true, currentWindow: true }, () => {
-      this.analyticsService.sendEvent('extension', 'review');
+      this.analyticsService.sendEvent('review', 'redirect');
       chrome.tabs.create({ url: chromeReviewUrl });
     });
   }
@@ -148,6 +146,12 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     this.sorting$.next(sorting);
 
     this.analyticsService.sendEvent('bookmarks', 'sort', `${sorting.field}:${sorting.asc ? 'asc' : 'desc'}`);
+  }
+
+  private filterBookmarks(filter: string, bookmarks: chrome.bookmarks.BookmarkTreeNode[]) {
+    return bookmarks.filter(bookmark =>
+      bookmark.title.toLowerCase().includes(filter)
+      || bookmark.url.toLowerCase().includes(filter));
   }
 
   private sortBookmarks(a: chrome.bookmarks.BookmarkTreeNode, b: chrome.bookmarks.BookmarkTreeNode, sort: Sorting) {

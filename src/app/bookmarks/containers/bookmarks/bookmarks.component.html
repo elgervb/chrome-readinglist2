@@ -21,5 +21,6 @@
   [filter]="filter | async"
   (filterEvent)="applyFilter($event)"
   (openReviewEvent)="openReview()"
+  (reviewPopoverShowEvent)="reviewPopoverShown($event)"
   (randomBookmarkEvent)="randomBookmark()">
 </app-bookmark-footer>

@@ -12,6 +12,7 @@ export class BookmarkFooterComponent implements OnInit {
 
   @Output() readonly filterEvent = new EventEmitter<string>();
   @Output() readonly randomBookmarkEvent = new EventEmitter<void>();
+  @Output() readonly reviewPopoverShowEvent = new EventEmitter<boolean>();
   @Output() readonly openReviewEvent = new EventEmitter<void>();
 
   @ViewChild('popoverTemplate') popoverRef: TemplateRef<HTMLElement>;
@@ -21,4 +22,9 @@ export class BookmarkFooterComponent implements OnInit {
   constructor() { }
 
   ngOnInit() { }
+
+  showPopover() {
+    this.displayPopover = !this.displayPopover
+    this.reviewPopoverShowEvent.emit(this.displayPopover);
+  }
 }
