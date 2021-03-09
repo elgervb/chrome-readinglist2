@@ -27,6 +27,7 @@
     "@angular/cli": "~11.0.6",
     "@angular/compiler-cli": "~11.0.8",
     "@angular/language-service": "~11.0.8",
+    "@elgervb/mock-data": "0.0.4",
     "@types/chrome": "^0.0.128",
     "@types/jest": "^26.0.20",
     "@types/node": "^14.14.20",
