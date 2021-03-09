@@ -13,13 +13,21 @@ const storageMock = () => {
 const chrome = {
   bookmarks: {
     getTree: jest.fn(),
-    create: jest.fn()
+    create: jest.fn(),
+    remove: jest.fn()
   },
   storage: {
     sync: {
       get: jest.fn(),
       set: jest.fn()
     }
+  },
+  tabs: {
+    create: jest.fn(),
+    query: jest.fn()
+  },
+  browserAction: {
+    setBadgeText: jest.fn()
   }
 };
 Object.defineProperty(window, 'chrome', { value: chrome });
