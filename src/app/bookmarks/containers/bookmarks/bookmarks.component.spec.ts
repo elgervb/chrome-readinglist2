@@ -2,17 +2,17 @@ import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BookmarksComponent } from './bookmarks.component';
 import { CommonModule } from '@angular/common';
-import { BookmarkService } from '../../services/bookmark/bookmark.service';
-import { VersionService } from '../../services/version/version.service';
-import { ChangeDetectorRef, NO_ERRORS_SCHEMA } from '@angular/core';
-import { GoogleAnalyticsService } from '@core/google-analytics.service';
 
-import { transform } from '@elgervb/mock-data';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { VersionService } from '../../services/version/version.service';
 
 describe('BookmarksComponent', () => {
 
   let fixture: ComponentFixture<BookmarksComponent>;
   let component: BookmarksComponent;
+  const versionService: Partial<VersionService> = {
+    getVersion: () => '1.0.0'
+  }
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -23,16 +23,7 @@ describe('BookmarksComponent', () => {
         CommonModule
       ],
       providers: [
-        BookmarkService,
-        VersionService,
-        ChangeDetectorRef,
-        {
-          provide: GoogleAnalyticsService, useValue: {
-            create: jest.fn(),
-            sendPageView: jest.fn(),
-            sendEvent: jest.fn()
-          }
-        }
+        {provide: VersionService, useValue: versionService}
       ],
       schemas: [NO_ERRORS_SCHEMA]
     })
@@ -61,53 +52,53 @@ describe('BookmarksComponent', () => {
     });
   })
 
-  describe('analytics', () => {
+  // describe('analytics', () => {
 
-    let analyticsService: GoogleAnalyticsService;
+  //   let analyticsService: GoogleAnalyticsService;
 
-    beforeEach(() => analyticsService = TestBed.inject(GoogleAnalyticsService));
+  //   beforeEach(() => analyticsService = TestBed.inject(GoogleAnalyticsService));
 
-    it('should sendEvent on addBookmark', () => {
-      const queryMock: jest.Mock = chrome.tabs.query as jest.Mock;
-      queryMock.mockImplementation((_, callback) => callback([{ url: 'https://url', title: 'title' }]));
-      component.addBookmark();
+  //   it('should sendEvent on addBookmark', () => {
+  //     const queryMock: jest.Mock = chrome.tabs.query as jest.Mock;
+  //     queryMock.mockImplementation((_, callback) => callback([{ url: 'https://url', title: 'title' }]));
+  //     component.addBookmark();
 
-      expect(analyticsService.sendEvent).toHaveBeenCalledWith('bookmarks', 'add', 'https://url');
-    });
+  //     expect(analyticsService.sendEvent).toHaveBeenCalledWith('bookmarks', 'add', 'https://url');
+  //   });
 
-    it('should sendEvent on randomBookmark', () => {
-      const bookmark = transform<chrome.bookmarks.BookmarkTreeNode>({
-        url: 'https://url'
-      });
-      component.bookmarks = [bookmark];
-      component.randomBookmark();
+    // it('should sendEvent on randomBookmark', () => {
+    //   const bookmark = transform<chrome.bookmarks.BookmarkTreeNode>({
+    //     url: 'https://url'
+    //   });
+    //   component.bookmarks = [bookmark];
+    //   component.randomBookmark();
 
-      expect(analyticsService.sendEvent).toHaveBeenCalledWith('bookmarks', 'random', 'https://url');
-    });
+    //   expect(analyticsService.sendEvent).toHaveBeenCalledWith('bookmarks', 'random', 'https://url');
+    // });
 
-    it('should sendEvent on reviewPopoverShown', () => {
-      component.reviewPopoverShown(true);
-      expect(analyticsService.sendEvent).toHaveBeenCalledWith('review', 'show popover');
+    // it('should sendEvent on reviewPopoverShown', () => {
+    //   component.reviewPopoverShown(true);
+    //   expect(analyticsService.sendEvent).toHaveBeenCalledWith('review', 'show popover');
 
-      component.reviewPopoverShown(false);
-      expect(analyticsService.sendEvent).toHaveBeenCalledWith('review', 'hide popover');
-    });
+    //   component.reviewPopoverShown(false);
+    //   expect(analyticsService.sendEvent).toHaveBeenCalledWith('review', 'hide popover');
+    // });
 
-    it('should sendEvent on openReview', () => {
-      const queryMock: jest.Mock = chrome.tabs.query as jest.Mock;
-      queryMock.mockImplementation((_, callback) => callback());
+    // it('should sendEvent on openReview', () => {
+    //   const queryMock: jest.Mock = chrome.tabs.query as jest.Mock;
+    //   queryMock.mockImplementation((_, callback) => callback());
 
-      component.openReview();
-      expect(analyticsService.sendEvent).toHaveBeenCalledWith('review', 'redirect');
-    });
+    //   component.openReview();
+    //   expect(analyticsService.sendEvent).toHaveBeenCalledWith('review', 'redirect');
+    // });
 
-    it('should sendEvent on setSorting', () => {
-      component.setSorting('url');
-      expect(analyticsService.sendEvent).toHaveBeenCalledWith('bookmarks', 'sort', 'url:desc');
+    // it('should sendEvent on setSorting', () => {
+    //   component.setSorting('url');
+    //   expect(analyticsService.sendEvent).toHaveBeenCalledWith('bookmarks', 'sort', 'url:desc');
 
-      component.setSorting('url');
-      expect(analyticsService.sendEvent).toHaveBeenCalledWith('bookmarks', 'sort', 'url:asc');
-    });
+    //   component.setSorting('url');
+    //   expect(analyticsService.sendEvent).toHaveBeenCalledWith('bookmarks', 'sort', 'url:asc');
+    // });
 
-  });
+  // });
 });

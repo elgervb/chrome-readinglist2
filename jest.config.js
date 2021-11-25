@@ -2,7 +2,7 @@
 module.exports = {
   preset: 'jest-preset-angular',
   roots: [
-    './src/'
+    './src'
   ],
   modulePathIgnorePatterns: [
     '<rootDir>/src/test.ts',
@@ -31,6 +31,8 @@ module.exports = {
   },
   moduleNameMapper: {
     '^@core/(.*)': '<rootDir>/src/app/core/$1',
+    '^@env/(.*)': '<rootDir>/src/environments/$1',
+    '^@manifest_json': '<rootDir>/src/manifest.json'
   },
   setupFilesAfterEnv: ['<rootDir>/src/setup-jest.js']
 };

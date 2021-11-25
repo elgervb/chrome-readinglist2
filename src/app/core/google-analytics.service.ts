@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import '@core/ga';
+import './ga';
 
 @Injectable({
   providedIn: 'root'
