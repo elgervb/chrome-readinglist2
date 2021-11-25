@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import * as manifest from 'src/manifest.json';
+import packageInfo from '@manifest_json';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +8,7 @@ export class VersionService {
 
   constructor() { }
 
-  getVersion() {
-    return manifest.version;
+  getVersion(): string {
+    return packageInfo.version;
   }
 }

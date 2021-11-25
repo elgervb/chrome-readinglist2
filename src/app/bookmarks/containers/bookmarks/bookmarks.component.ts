@@ -4,7 +4,7 @@ import { debounceTime, map, tap, takeUntil } from 'rxjs/operators';
 import { BookmarkService } from '../../services/bookmark/bookmark.service';
 import { VersionService } from '../../services/version/version.service';
 import { Sorting } from '../../models/sorting';
-import { environment } from 'src/environments/environment';
+import { environment } from '@env/environment';
 import { GoogleAnalyticsService } from '@core/google-analytics.service';
 
 const initialSorting: Sorting = {

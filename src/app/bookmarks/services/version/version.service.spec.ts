@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { VersionService } from './version.service';
-jest.mock('src/manifest.json', () => ({ version: '99.99.99.unittest' }));
+jest.mock('@manifest_json', () => ({ version: '99.99.99.unittest' }));
 
 describe('VersionService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

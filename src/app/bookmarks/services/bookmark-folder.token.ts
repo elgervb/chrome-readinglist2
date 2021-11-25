@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { environment } from '@env/environment';
 
 const READING_LIST_FOLDER_TITLE = 'My ReadingList';
 
