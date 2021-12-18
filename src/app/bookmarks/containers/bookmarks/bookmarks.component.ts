@@ -69,7 +69,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
       });
 
     this.bookmarkService.load();
-    this.filter.next();
+    this.filter.next('');
 
     this.bookmarkService.bookmarks$
       .pipe(
