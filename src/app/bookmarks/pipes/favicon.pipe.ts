@@ -6,7 +6,7 @@ import { ParsedUrl } from '../models';
 })
 export class FaviconPipe implements PipeTransform {
 
-  transform(bookmark?: chrome.bookmarks.BookmarkTreeNode): string {
+  transform(bookmark?: chrome.bookmarks.BookmarkTreeNode): string | null {
     if (!bookmark || !bookmark.url) {
       return null;
     }

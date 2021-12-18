@@ -27,4 +27,9 @@ export class BookmarkFooterComponent implements OnInit {
     this.displayPopover = !this.displayPopover
     this.reviewPopoverShowEvent.emit(this.displayPopover);
   }
+
+  emitFilterEvent(event: Event): void {
+    const target: HTMLInputElement = event.target as HTMLInputElement;
+    this.filterEvent.emit(target.value);
+  }
 }
