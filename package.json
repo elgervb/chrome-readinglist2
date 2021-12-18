@@ -18,7 +18,7 @@
     "@angular/platform-browser": "~13.0.2",
     "@angular/platform-browser-dynamic": "~13.0.2",
     "@angular/router": "~13.0.2",
-    "rxjs": "~6.5.4",
+    "rxjs": "~7.4.0",
     "tslib": "^2.3.1",
     "zone.js": "~0.11.4"
   },
@@ -30,7 +30,7 @@
     "@elgervb/mock-data": "0.0.4",
     "@types/chrome": "^0.0.128",
     "@types/jest": "^27.0.3",
-    "@types/node": "^14.14.20",
+    "@types/node": "^12.11.1",
     "codelyzer": "^6.0.1",
     "jest": "^27.3.1",
     "jest-preset-angular": "^11.0.1",
