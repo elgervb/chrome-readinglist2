@@ -1,11 +1,11 @@
-import { Component, OnInit, EventEmitter, Output, Input, ViewChild, TemplateRef } from '@angular/core';
+import { Component,  EventEmitter, Output, Input, ViewChild, TemplateRef } from '@angular/core';
 
 @Component({
   selector: 'app-bookmark-footer',
   templateUrl: './bookmark-footer.component.html',
   styleUrls: ['./bookmark-footer.component.css']
 })
-export class BookmarkFooterComponent implements OnInit {
+export class BookmarkFooterComponent {
 
   @Input() filter?: string;
   @Input() bookmarks: chrome.bookmarks.BookmarkTreeNode[];
@@ -18,10 +18,6 @@ export class BookmarkFooterComponent implements OnInit {
   @ViewChild('popoverTemplate') popoverRef: TemplateRef<HTMLElement>;
 
   displayPopover = false;
-
-  constructor() { }
-
-  ngOnInit() { }
 
   showPopover() {
     this.displayPopover = !this.displayPopover

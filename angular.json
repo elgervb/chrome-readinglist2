@@ -81,9 +81,21 @@
           "options": {
             "browserTarget": "chrome-readinglist2:build"
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     }
   },
-  "defaultProject": "chrome-readinglist2"
+  "defaultProject": "chrome-readinglist2",
+  "cli": {
+    "defaultCollection": "@angular-eslint/schematics"
+  }
 }
