@@ -7,9 +7,7 @@ import { GoogleAnalyticsService } from '@core/google-analytics.service';
 })
 export class GlobalErrorHandler extends ErrorHandler {
 
-  constructor(
-    private injector: Injector,
-  ) {
+  constructor(private injector: Injector ) {
     super();
   }
 
