@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Sorting } from '../../models/sorting';
 
 @Component({
@@ -6,7 +6,7 @@ import { Sorting } from '../../models/sorting';
   templateUrl: './bookmark-header.component.html',
   styleUrls: ['./bookmark-header.component.css']
 })
-export class BookmarkHeaderComponent implements OnInit {
+export class BookmarkHeaderComponent {
 
   @Input() bookmarks: chrome.bookmarks.BookmarkTreeNode[];
   @Input() sorting: Sorting;
@@ -16,8 +16,4 @@ export class BookmarkHeaderComponent implements OnInit {
 
   @Output() addBookmark = new EventEmitter<void>();
   @Output() sortEvent = new EventEmitter<void>();
-
-  constructor() { }
-
-  ngOnInit() { }
 }
