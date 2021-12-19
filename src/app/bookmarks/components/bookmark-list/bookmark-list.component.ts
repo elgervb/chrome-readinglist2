@@ -1,11 +1,12 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-bookmark-list',
   templateUrl: './bookmark-list.component.html',
-  styleUrls: ['./bookmark-list.component.css']
+  styleUrls: [ './bookmark-list.component.css' ]
 })
 export class BookmarkListComponent {
+
   @Input() bookmarks: chrome.bookmarks.BookmarkTreeNode[];
   @Input() countBookmarks: number;
 
@@ -15,4 +16,5 @@ export class BookmarkListComponent {
   trackByBookmark(_: number, bookmark: chrome.bookmarks.BookmarkTreeNode) {
     return bookmark.id;
   }
+
 }

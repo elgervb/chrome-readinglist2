@@ -4,9 +4,10 @@ import { GoogleAnalyticsService } from '@core/google-analytics.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: [ './app.component.css' ]
 })
 export class AppComponent implements OnInit {
+
   title = 'chrome-readinglist2';
 
   constructor(private analyticsService: GoogleAnalyticsService) { }
@@ -14,4 +15,5 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.analyticsService.sendPageView('open popup');
   }
+
 }

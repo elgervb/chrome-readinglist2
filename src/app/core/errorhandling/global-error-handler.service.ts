@@ -7,7 +7,7 @@ import { GoogleAnalyticsService } from '@core/google-analytics.service';
 })
 export class GlobalErrorHandler extends ErrorHandler {
 
-  constructor(private injector: Injector ) {
+  constructor(private injector: Injector) {
     super();
   }
 
@@ -23,11 +23,11 @@ export class GlobalErrorHandler extends ErrorHandler {
       // Send the error to the server
       gaService.sendEvent('error', error.message, JSON.stringify(error));
       return;
-    } else {
-      // Client Error Happend
-      // Send the error to the server
-      gaService.sendEvent('error', error.message, JSON.stringify(error));
     }
+    // Client Error Happend
+    // Send the error to the server
+    gaService.sendEvent('error', error.message, JSON.stringify(error));
+
   }
 
 }

@@ -8,9 +8,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpErrorInterceptor } from '@core/errorhandling/http-error.interceptor';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [ AppComponent ],
   imports: [
     BrowserModule,
     AppRoutingModule
@@ -26,6 +24,6 @@ import { HttpErrorInterceptor } from '@core/errorhandling/http-error.interceptor
       multi: true,
     },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }

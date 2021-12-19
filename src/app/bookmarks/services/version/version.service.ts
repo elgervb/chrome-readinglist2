@@ -6,9 +6,8 @@ import packageInfo from '@manifest_json';
 })
 export class VersionService {
 
-  constructor() { }
-
   getVersion(): string {
     return packageInfo.version;
   }
+
 }

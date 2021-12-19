@@ -1,16 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 
 import { BookmarkService, OTHER_BOOKMARKS } from './bookmark.service';
-import { BookmarkFolderToken } from '../bookmark-folder.token';
+import { bookmarkFolderToken } from '../bookmark-folder.token';
 
 describe('BookmarkService', () => {
 
   let service: BookmarkService;
 
   beforeEach(() => TestBed.configureTestingModule({
-    providers: [
-      { provide: BookmarkFolderToken, useValue: '/test' }
-    ]
+    providers: [ { provide: bookmarkFolderToken, useValue: '/test' } ]
   }));
 
   beforeEach(() => service = TestBed.inject(BookmarkService));
@@ -41,6 +39,7 @@ describe('BookmarkService', () => {
       }
     ];
     let createBookmark: chrome.bookmarks.BookmarkTreeNode;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     (chrome.bookmarks.getTree as jest.Mock).mockImplementation(callback => callback(bookmarks));
     (chrome.bookmarks.create as jest.Mock).mockImplementation((bookmark, callback) => {
       createBookmark = bookmark;
@@ -74,6 +73,7 @@ describe('BookmarkService', () => {
         ]
       }
     ];
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     (chrome.bookmarks.getTree as jest.Mock).mockImplementation(callback => callback(bookmarks));
 
     service.load();

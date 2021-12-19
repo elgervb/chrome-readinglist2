@@ -6,8 +6,6 @@ import './ga';
 })
 export class GoogleAnalyticsService {
 
-  constructor() { }
-
   create(gaId: string) {
     this.ga('create', gaId, 'auto');
   }
@@ -24,13 +22,14 @@ export class GoogleAnalyticsService {
   }
 
   private ga(...args: (string | number)[]): void {
-    // tslint:disable: no-string-literal
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const ga = window['ga'];
+    const { ga } = window;
     if (ga) {
       ga(...args);
     } else {
       console.log('Google analytics not defined');
     }
   }
+
 }

@@ -10,15 +10,9 @@ describe('AppComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ],
-      declarations: [
-        AppComponent
-      ],
-      providers: [
-        { provide: GoogleAnalyticsService, useValue: analytics }
-      ]
+      imports: [ RouterTestingModule ],
+      declarations: [ AppComponent ],
+      providers: [ { provide: GoogleAnalyticsService, useValue: analytics } ]
     }).compileComponents();
   }));
 

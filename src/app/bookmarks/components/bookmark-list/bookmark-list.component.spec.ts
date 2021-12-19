@@ -1,4 +1,4 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { BookmarkListComponent } from './bookmark-list.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
@@ -16,7 +16,7 @@ describe('BookmarkListComponent', () => {
         BookmarkListComponent,
         FaviconPipe
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
       .compileComponents();
   }));
