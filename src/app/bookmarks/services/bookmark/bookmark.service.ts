@@ -1,8 +1,8 @@
-import { Injectable, Inject } from '@angular/core';
-import { Subject, Observable, BehaviorSubject } from 'rxjs';
+import { Inject, Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 import { take } from 'rxjs/operators';
-import { BookmarkFolderToken } from '../bookmark-folder.token';
+import { bookmarkFolderToken } from '../bookmark-folder.token';
 
 export const OTHER_BOOKMARKS = 'Other Bookmarks';
 
@@ -16,11 +16,9 @@ export class BookmarkService {
 
   private bookmarks = new BehaviorSubject<chrome.bookmarks.BookmarkTreeNode[]>([]);
 
-  constructor(
-    @Inject(BookmarkFolderToken) private bookmarkFolder: string
-  ) {
+  constructor(@Inject(bookmarkFolderToken) private bookmarkFolder: string) {
     if (!this.bookmarkFolder) {
-      throw new Error('No bookmark folder set. Use InjectionToken BookmarkFolderToken');
+      throw new Error('No bookmark folder set. Use InjectionToken bookmarkFolderToken');
     }
     this.bookmarks$ = this.bookmarks.asObservable();
   }
@@ -34,7 +32,7 @@ export class BookmarkService {
       create.parentId = this.readingListId;
 
       chrome.bookmarks.create(create, bookmark => {
-        const copy = [...this.bookmarks.value, bookmark];
+        const copy = [ ...this.bookmarks.value, bookmark ];
         this.bookmarks.next(copy);
       });
     }
@@ -52,7 +50,7 @@ export class BookmarkService {
 
   remove(remove: chrome.bookmarks.BookmarkTreeNode) {
     chrome.bookmarks.remove(remove.id, () => {
-      const result = [...this.bookmarks.value].filter(bookmark => bookmark.id !== remove.id);
+      const result = [ ...this.bookmarks.value ].filter(bookmark => bookmark.id !== remove.id);
       this.bookmarks.next(result);
     });
   }
@@ -91,7 +89,7 @@ export class BookmarkService {
         if (match) {
           this.readingListId = match.id;
 
-          this.bookmarks.next([...match.children]);
+          this.bookmarks.next([ ...match.children ]);
         } else {
           this.createReadinglistRoot(result, title)
             .pipe(take(1))
@@ -105,4 +103,5 @@ export class BookmarkService {
 
     return this.bookmarks$;
   }
+
 }

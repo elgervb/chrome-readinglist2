@@ -24,13 +24,13 @@ export class FaviconPipe implements PipeTransform {
     parser.href = url;
 
     return {
-      protocol: parser.protocol,       // => "http:"
-      hostname: parser.hostname,       // => "example.com"
+      protocol: parser.protocol, // => "http:"
+      hostname: parser.hostname, // => "example.com"
       port: parseInt(parser.port, 10), // => "3000"
-      pathname: parser.pathname,       // => "/pathname/"
-      search: parser.search,           // => "?search=test"
-      hash: parser.hash,               // => "#hash"
-      host: parser.host                // => "example.com:3000"
+      pathname: parser.pathname, // => "/pathname/"
+      search: parser.search, // => "?search=test"
+      hash: parser.hash, // => "#hash"
+      host: parser.host // => "example.com:3000"
     };
   }
 

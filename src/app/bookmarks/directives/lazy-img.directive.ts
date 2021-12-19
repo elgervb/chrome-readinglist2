@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, Optional, Inject, InjectionToken } from '@angular/core';
+import { Directive, ElementRef, Inject, InjectionToken, Input, Optional } from '@angular/core';
 
 export const DEFAULT_LAZY_IMAGE = new InjectionToken<string>('default.lazy.image');
 
@@ -12,10 +12,10 @@ export class LazyImgDirective {
   private observer: IntersectionObserver;
 
   constructor(
-    private el: ElementRef,
+    private el: ElementRef<HTMLElement>,
     @Optional() @Inject(DEFAULT_LAZY_IMAGE) private defaultPath: string
   ) {
-    this.observer = new IntersectionObserver(this.loading.bind(this), {
+    this.observer = new IntersectionObserver(entries => this.loading(entries), {
       rootMargin: '50px 0px',
       threshold: 0.01
     });

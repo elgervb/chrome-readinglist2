@@ -1,9 +1,9 @@
-import { Component,  EventEmitter, Output, Input, ViewChild, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-bookmark-footer',
   templateUrl: './bookmark-footer.component.html',
-  styleUrls: ['./bookmark-footer.component.css']
+  styleUrls: [ './bookmark-footer.component.css' ]
 })
 export class BookmarkFooterComponent {
 
@@ -20,7 +20,7 @@ export class BookmarkFooterComponent {
   displayPopover = false;
 
   showPopover() {
-    this.displayPopover = !this.displayPopover
+    this.displayPopover = !this.displayPopover;
     this.reviewPopoverShowEvent.emit(this.displayPopover);
   }
 
@@ -28,4 +28,5 @@ export class BookmarkFooterComponent {
     const target: HTMLInputElement = event.target as HTMLInputElement;
     this.filterEvent.emit(target.value);
   }
+
 }

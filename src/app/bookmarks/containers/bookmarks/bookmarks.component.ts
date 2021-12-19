@@ -1,6 +1,6 @@
-import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
-import { BehaviorSubject, Subject, combineLatest } from 'rxjs';
-import { debounceTime, map, tap, takeUntil } from 'rxjs/operators';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
+import { debounceTime, map, takeUntil, tap } from 'rxjs/operators';
 import { BookmarkService } from '../../services/bookmark/bookmark.service';
 import { VersionService } from '../../services/version/version.service';
 import { Sorting } from '../../models/sorting';
@@ -17,7 +17,7 @@ const chromeReviewUrl = 'https://chrome.google.com/webstore/detail/chrome-readin
 @Component({
   selector: 'app-bookmarks',
   templateUrl: './bookmarks.component.html',
-  styleUrls: ['./bookmarks.component.css']
+  styleUrls: [ './bookmarks.component.css' ]
 })
 export class BookmarksComponent implements OnInit, OnDestroy {
 
@@ -29,12 +29,12 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   /** filter the list of bookmarks with a search string */
   filter = new Subject<string>();
 
-  get version() {
-    return this.versionService.getVersion();
-  }
-
   get devMode() {
     return !environment.production;
+  }
+
+  get version() {
+    return this.versionService.getVersion();
   }
 
   private destroy$ = new Subject<void>();
@@ -47,18 +47,19 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     chrome.storage.sync.get('filter', data => data?.filter ? this.filter.next(data.filter) : undefined);
 
     const filter$ = this.filter.asObservable().pipe(debounceTime(200));
 
-    combineLatest([this.bookmarkService.bookmarks$, filter$, this.sorting$])
+    combineLatest([ this.bookmarkService.bookmarks$, filter$, this.sorting$ ])
       .pipe(
-        tap(([allBookmarks, _, __]) => this.countBookmarks = allBookmarks ? allBookmarks.length : 0),
-        map(([allBookmarks, filter, sort]) => {
+        tap(([ allBookmarks ]) => this.countBookmarks = allBookmarks ? allBookmarks.length : 0),
+        map(([ allBookmarks, filter, sort ]) => {
           if (!allBookmarks) {
             return undefined;
           }
-          const bookmarks = filter ? this.filterBookmarks(filter, allBookmarks) : [...allBookmarks];
+          const bookmarks = filter ? this.filterBookmarks(filter, allBookmarks) : [ ...allBookmarks ];
 
           return bookmarks.sort((a, b) => this.sortBookmarks(a, b, sort));
         })
@@ -75,8 +76,8 @@ export class BookmarksComponent implements OnInit, OnDestroy {
       .pipe(
         // can current page be added?
         tap(() => {
-          chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-            const tab = tabs[0];
+          chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+            const [ tab ] = tabs;
             this.currentUrlExists = this.bookmarkService.exists(tab.url);
 
             this.changeDetector.detectChanges();
@@ -93,8 +94,8 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   }
 
   addBookmark() {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      const tab = tabs[0];
+    chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+      const [ tab ] = tabs;
       this.bookmarkService.add({
         url: tab.url,
         title: tab.title,
@@ -149,14 +150,14 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   }
 
   private filterBookmarks(filter: string, bookmarks: chrome.bookmarks.BookmarkTreeNode[]) {
-    return bookmarks.filter(bookmark =>
-      bookmark.title.toLowerCase().includes(filter)
-      || bookmark.url.toLowerCase().includes(filter));
+    return bookmarks.filter(bookmark => bookmark.title.toLowerCase().includes(filter) ||
+      bookmark.url.toLowerCase().includes(filter));
   }
 
   private sortBookmarks(a: chrome.bookmarks.BookmarkTreeNode, b: chrome.bookmarks.BookmarkTreeNode, sort: Sorting) {
     const right = sort.asc ? a : b;
     const left = sort.asc ? b : a;
-    return ('' + right[sort.field]).localeCompare('' + left[sort.field]);
+    return (`${right[sort.field]}`).localeCompare(`${left[sort.field]}`);
   }
+
 }

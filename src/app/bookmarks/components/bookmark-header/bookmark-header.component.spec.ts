@@ -1,4 +1,4 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { BookmarkHeaderComponent } from './bookmark-header.component';
 import { By } from '@angular/platform-browser';
@@ -12,7 +12,7 @@ describe('BookmarkHeaderComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [BookmarkHeaderComponent]
+      declarations: [ BookmarkHeaderComponent ]
     })
       .compileComponents();
   }));
@@ -35,7 +35,7 @@ describe('BookmarkHeaderComponent', () => {
 
   it('should show how many bookmarks are present on screen', () => {
     component.countBookmarks = 4;
-    component.bookmarks = [createBookmark(), createBookmark()];
+    component.bookmarks = [ createBookmark(), createBookmark() ];
     fixture.detectChanges();
 
     expect(fixture.debugElement.query(By.css('.currentCount')).nativeElement.textContent)
