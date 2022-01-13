@@ -36,7 +36,7 @@
   background-color: #dfdfdf;
 }
 .heart {
-  animation: 1s ease-in-out 1s 3 heartbeat;
+  /* animation: 1s ease-in-out 1s 3 heartbeat; */
   cursor: pointer;
   fill: #f62459;
   font-size: 2em;
