@@ -37,7 +37,7 @@ describe('BookmarksComponent', () => {
   describe('filtering', () => {
     let setFilterSpy: jest.SpyInstance;
 
-    beforeEach(() => setFilterSpy = jest.spyOn(component.filter, 'next'));
+    beforeEach(() => setFilterSpy = jest.spyOn(component.filter$, 'next'));
 
     it('applies a filter', () => {
       component.applyFilter('my-filter');
