@@ -6,10 +6,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+
+## 0.3.3
+### Added
 - [#79](https://github.com/elgervb/chrome-readinglist2/issues/79)
   Remember last sorting direction
 - [#93](https://github.com/elgervb/chrome-readinglist2/issues/93)
   Remove heart animation in footer
+
+
+## 0.3.2
+### Added
+- [#82](https://github.com/elgervb/chrome-readinglist2/issues/82)
+  Enable strict templates
+- [#81](https://github.com/elgervb/chrome-readinglist2/issues/81)
+  Move from tslint to eslint
+- [#80](https://github.com/elgervb/chrome-readinglist2/issues/80)
+  Update dependencies
 - [#61](https://github.com/elgervb/chrome-readinglist2/issues/61)
   Log analytics events
 

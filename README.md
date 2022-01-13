@@ -8,7 +8,7 @@ run
 ```
 yarn build --prod
 ```
-make sure you've bumped the version in package.json and manifest.json
+make sure you've bumped the version in `package.json` and `manifest.json`
 
 then zip the contents of the `dist` directory
 ```
