@@ -5,6 +5,9 @@ import { CommonModule } from '@angular/common';
 
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { VersionService } from '../../services/version/version.service';
+import { GoogleAnalyticsService } from '@core/google-analytics.service';
+
+import { transform } from '@elgervb/mock-data';
 
 describe('BookmarksComponent', () => {
 
@@ -46,53 +49,58 @@ describe('BookmarksComponent', () => {
     });
   });
 
-  // describe('analytics', () => {
+  describe('analytics', () => {
 
-  //   let analyticsService: GoogleAnalyticsService;
+    let analyticsService: GoogleAnalyticsService;
+    let analyticsSend: jest.SpyInstance;
 
-  //   beforeEach(() => analyticsService = TestBed.inject(GoogleAnalyticsService));
+    beforeEach(() => {
+      analyticsService = TestBed.inject(GoogleAnalyticsService);
+      analyticsSend = jest.spyOn(analyticsService, 'sendEvent');
+    });
 
-  //   it('should sendEvent on addBookmark', () => {
-  //     const queryMock: jest.Mock = chrome.tabs.query as jest.Mock;
-  //     queryMock.mockImplementation((_, callback) => callback([{ url: 'https://url', title: 'title' }]));
-  //     component.addBookmark();
+    it('should sendEvent on addBookmark', () => {
+      const queryMock: jest.Mock = chrome.tabs.query as jest.Mock;
+      queryMock.mockImplementation((_, callback) => callback([ { url: 'https://url', title: 'title' } ]));
+      component.addBookmark();
 
-  //     expect(analyticsService.sendEvent).toHaveBeenCalledWith('bookmarks', 'add', 'https://url');
-  //   });
+      // eslint-disable-next-line @typescript-eslint/unbound-method
+      expect(analyticsSend).toHaveBeenCalledWith('bookmarks', 'add', 'https://url');
+    });
 
-  // it('should sendEvent on randomBookmark', () => {
-  //   const bookmark = transform<chrome.bookmarks.BookmarkTreeNode>({
-  //     url: 'https://url'
-  //   });
-  //   component.bookmarks = [bookmark];
-  //   component.randomBookmark();
+    it('should sendEvent on randomBookmark', () => {
+      const bookmark = transform<chrome.bookmarks.BookmarkTreeNode>({
+        url: 'https://url'
+      });
+      component.bookmarks = [ bookmark ];
+      component.randomBookmark();
 
-  //   expect(analyticsService.sendEvent).toHaveBeenCalledWith('bookmarks', 'random', 'https://url');
-  // });
+      expect(analyticsSend).toHaveBeenCalledWith('bookmarks', 'random', 'https://url');
+    });
 
-  // it('should sendEvent on reviewPopoverShown', () => {
-  //   component.reviewPopoverShown(true);
-  //   expect(analyticsService.sendEvent).toHaveBeenCalledWith('review', 'show popover');
+    it('should sendEvent on reviewPopoverShown', () => {
+      component.reviewPopoverShown(true);
+      expect(analyticsSend).toHaveBeenCalledWith('review', 'show popover');
 
-  //   component.reviewPopoverShown(false);
-  //   expect(analyticsService.sendEvent).toHaveBeenCalledWith('review', 'hide popover');
-  // });
+      component.reviewPopoverShown(false);
+      expect(analyticsSend).toHaveBeenCalledWith('review', 'hide popover');
+    });
 
-  // it('should sendEvent on openReview', () => {
-  //   const queryMock: jest.Mock = chrome.tabs.query as jest.Mock;
-  //   queryMock.mockImplementation((_, callback) => callback());
+    it('should sendEvent on openReview', () => {
+      const queryMock: jest.Mock = chrome.tabs.query as jest.Mock;
+      queryMock.mockImplementation((_, callback) => callback());
 
-  //   component.openReview();
-  //   expect(analyticsService.sendEvent).toHaveBeenCalledWith('review', 'redirect');
-  // });
+      component.openReview();
+      expect(analyticsSend).toHaveBeenCalledWith('review', 'redirect');
+    });
 
-  // it('should sendEvent on setSorting', () => {
-  //   component.setSorting('url');
-  //   expect(analyticsService.sendEvent).toHaveBeenCalledWith('bookmarks', 'sort', 'url:desc');
+    it('should sendEvent on setSorting', () => {
+      component.setSorting('url');
+      expect(analyticsSend).toHaveBeenCalledWith('bookmarks', 'sort', 'url:desc');
 
-  //   component.setSorting('url');
-  //   expect(analyticsService.sendEvent).toHaveBeenCalledWith('bookmarks', 'sort', 'url:asc');
-  // });
+      component.setSorting('url');
+      expect(analyticsSend).toHaveBeenCalledWith('bookmarks', 'sort', 'url:asc');
+    });
 
-  // });
+  });
 });
