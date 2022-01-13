@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- [#79](https://github.com/elgervb/chrome-readinglist2/issues/79)
+  Remember last sorting direction
 - [#93](https://github.com/elgervb/chrome-readinglist2/issues/93)
   Remove heart animation in footer
 - [#61](https://github.com/elgervb/chrome-readinglist2/issues/61)
