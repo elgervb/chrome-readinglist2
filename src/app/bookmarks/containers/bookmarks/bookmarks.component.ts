@@ -27,7 +27,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   /** the number of total (unfiltered) bookmarks */
   countBookmarks: number;
   /** filter the list of bookmarks with a search string */
-  filter = new Subject<string>();
+  filter$ = new Subject<string>();
 
   get devMode() {
     return !environment.production;
@@ -47,10 +47,10 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    chrome.storage.sync.get('filter', data => data?.filter ? this.filter.next(data.filter) : undefined);
+    chrome.storage.sync.get('filter', data => data?.filter ? this.filter$.next(data.filter) : undefined);
+    chrome.storage.sync.get('sorting', data => data?.sorting ? this.sorting$.next(data.sorting) : undefined);
 
-    const filter$ = this.filter.asObservable().pipe(debounceTime(200));
+    const filter$ = this.filter$.asObservable().pipe(debounceTime(200));
 
     combineLatest([ this.bookmarkService.bookmarks$, filter$, this.sorting$ ])
       .pipe(
@@ -70,7 +70,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
       });
 
     this.bookmarkService.load();
-    this.filter.next('');
+    this.filter$.next('');
 
     this.bookmarkService.bookmarks$
       .pipe(
@@ -107,7 +107,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
   applyFilter(filter: string) {
     chrome.storage.sync.set({ filter });
-    this.filter.next(filter);
+    this.filter$.next(filter);
   }
 
   randomBookmark() {
@@ -146,6 +146,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
     this.sorting$.next(sorting);
 
+    chrome.storage.sync.set({ sorting });
     this.analyticsService.sendEvent('bookmarks', 'sort', `${sorting.field}:${sorting.asc ? 'asc' : 'desc'}`);
   }
 

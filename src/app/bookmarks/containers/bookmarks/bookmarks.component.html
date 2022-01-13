@@ -18,7 +18,7 @@
 
 <app-bookmark-footer
   [bookmarks]="bookmarks"
-  [filter]="filter | async"
+  [filter]="filter$ | async"
   (filterEvent)="applyFilter($event)"
   (openReviewEvent)="openReview()"
   (reviewPopoverShowEvent)="reviewPopoverShown($event)"
