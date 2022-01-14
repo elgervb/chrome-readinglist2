@@ -42,7 +42,14 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "optimization": true,
+              "optimization": {
+                "scripts": true,
+                "fonts": true,
+                "styles": {
+                  "inlineCritical": false,
+                  "minify": true
+                }
+              },
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,

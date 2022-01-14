@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 
+## 0.3.4
+### Fixed
+- [#98](https://github.com/elgervb/chrome-readinglist2/issues/98)
+  Fix huge sort icon
+
 ## 0.3.3
 ### Added
 - [#79](https://github.com/elgervb/chrome-readinglist2/issues/79)

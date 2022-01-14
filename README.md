@@ -6,7 +6,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 run
 ```
-yarn build --prod
+yarn build
 ```
 make sure you've bumped the version in `package.json` and `manifest.json`
 

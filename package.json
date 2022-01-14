@@ -1,10 +1,10 @@
 {
   "name": "chrome-readinglist2",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "scripts": {
     "ng": "ng",
     "start": "ng build --watch",
-    "build": "ng build --configuration production",
+    "build": "ng build --configuration production --named-chunks",
     "test": "jest",
     "lint": "ng lint"
   },
