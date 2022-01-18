@@ -6,7 +6,8 @@
     "start": "ng build --watch",
     "build": "ng build --configuration production --named-chunks",
     "test": "jest",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "stryker": "stryker run"
   },
   "private": true,
   "dependencies": {
