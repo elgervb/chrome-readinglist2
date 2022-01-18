@@ -4,6 +4,7 @@
     <div class="text">
       <div class="title">{{ bookmark.title }}</div>
       <div class="url">{{ bookmark.url }}</div>
+      <div class="date">{{ bookmark.dateAdded | date : 'MMM d y' }}</div>
     </div>
   </li>
 </ul>
