@@ -30,11 +30,10 @@ export class BookmarkService {
       // always put it in the reading list
       create.parentId = this.readingListId;
 
-      chrome.bookmarks.create(create)
-        .then(bookmark => {
-          const copy = [ ...this.bookmarks.value, bookmark ];
-          this.bookmarks.next(copy);
-        });
+      chrome.bookmarks.create(create, (bookmark => {
+        const copy = [ ...this.bookmarks.value, bookmark ];
+        this.bookmarks.next(copy);
+      }));
     }
   }
 
