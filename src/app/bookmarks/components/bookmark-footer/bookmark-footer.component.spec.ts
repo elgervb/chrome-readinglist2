@@ -49,4 +49,14 @@ describe('BookmarkFooterComponent', () => {
 
     expect(emit).toBe('abc');
   });
+
+  it('should show popup', () => {
+    const emitSpy = jest.spyOn(component.reviewPopoverShowEvent, 'emit');
+
+    component.showPopover();
+    expect(emitSpy).toHaveBeenCalledWith(true);
+
+    component.showPopover();
+    expect(emitSpy).toHaveBeenCalledWith(false);
+  });
 });

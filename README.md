@@ -2,6 +2,8 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.0.
 
+Chrome Manifest Version 3 API: https://developer.chrome.com/docs/extensions/reference/
+
 ## Deploy
 
 run

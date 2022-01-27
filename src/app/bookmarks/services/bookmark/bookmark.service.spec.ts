@@ -14,6 +14,7 @@ describe('BookmarkService', () => {
   beforeEach(() => service = TestBed.inject(BookmarkService));
 
   afterEach(() => jest.resetAllMocks());
+
   it('should be created', () => {
     expect(service).toBeTruthy();
   });

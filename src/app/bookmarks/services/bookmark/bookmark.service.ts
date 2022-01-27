@@ -23,18 +23,17 @@ export class BookmarkService {
     this.bookmarks$ = this.bookmarks.asObservable();
   }
 
-  add(create: chrome.bookmarks.BookmarkCreateArg) {
+  add(create: chrome.bookmarks.BookmarkCreateArg): void {
     const bookmarkExists = this.exists(create.url);
 
     if (!bookmarkExists) {
-
       // always put it in the reading list
       create.parentId = this.readingListId;
 
-      chrome.bookmarks.create(create, bookmark => {
+      chrome.bookmarks.create(create, (bookmark => {
         const copy = [ ...this.bookmarks.value, bookmark ];
         this.bookmarks.next(copy);
-      });
+      }));
     }
   }
 

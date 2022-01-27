@@ -1,5 +1,5 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Chrome Reading List 2 ❤",
   "description": "Reading list of pages or articles to be read later",
   "version": "0.3.6",
@@ -8,11 +8,11 @@
     "storage",
     "tabs"
   ],
-  "optional_permissions": [
+  "host_permissions": [
     "http://*/",
     "https://*/"
   ],
-  "browser_action": {
+  "action": {
     "default_title": "Reading list",
     "default_icon": {
       "16": "assets/icon16.png",
@@ -26,5 +26,7 @@
     "48": "assets/icon48.png",
     "128": "assets/icon128.png"
   },
-  "content_security_policy": "script-src 'self' 'unsafe-eval' https://www.google-analytics.com; object-src 'self'"
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
 }

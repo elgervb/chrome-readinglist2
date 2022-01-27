@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
-import { debounceTime, map, takeUntil, tap } from 'rxjs/operators';
+import { debounceTime, map, share, takeUntil, tap } from 'rxjs/operators';
 import { BookmarkService } from '../../services/bookmark/bookmark.service';
 import { VersionService } from '../../services/version/version.service';
 import { Sorting } from '../../models/sorting';
@@ -47,12 +47,15 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    chrome.storage.sync.get('filter', data => data?.filter ? this.filter$.next(data.filter) : undefined);
-    chrome.storage.sync.get('sorting', data => data?.sorting ? this.sorting$.next(data.sorting) : undefined);
+    chrome.storage.sync.get([ 'filter', 'sorting' ], data => {
+      this.filter$.next(data?.filter);
+      this.sorting$.next(data?.sorting);
+    });
 
     const filter$ = this.filter$.asObservable().pipe(debounceTime(200));
+    const bookmarks$ = this.bookmarkService.bookmarks$.pipe(share());
 
-    combineLatest([ this.bookmarkService.bookmarks$, filter$, this.sorting$ ])
+    combineLatest([ bookmarks$, filter$, this.sorting$ ])
       .pipe(
         tap(([ allBookmarks ]) => this.countBookmarks = allBookmarks ? allBookmarks.length : 0),
         map(([ allBookmarks, filter, sort ]) => {
@@ -72,7 +75,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     this.bookmarkService.load();
     this.filter$.next('');
 
-    this.bookmarkService.bookmarks$
+    bookmarks$
       .pipe(
         // can current page be added?
         tap(() => {
@@ -83,9 +86,9 @@ export class BookmarksComponent implements OnInit, OnDestroy {
             this.changeDetector.detectChanges();
           });
         }),
-        tap(bookmarks => chrome.browserAction.setBadgeText({ text: `${bookmarks.length}` })),
+        tap(bookmarks => chrome.action.setBadgeText({ text: `${bookmarks.length}` })),
         takeUntil(this.destroy$)
-      ).subscribe();
+      ).subscribe(bookmarks => console.log(bookmarks));
   }
 
   ngOnDestroy() {
@@ -93,7 +96,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  addBookmark() {
+  addBookmark(): void {
     chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
       const [ tab ] = tabs;
       this.bookmarkService.add({
