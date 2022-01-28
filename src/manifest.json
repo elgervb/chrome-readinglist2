@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Chrome Reading List 2 ❤",
   "description": "Reading list of pages or articles to be read later",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "permissions": [
     "bookmarks",
     "storage",

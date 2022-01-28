@@ -48,8 +48,8 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     chrome.storage.sync.get([ 'filter', 'sorting' ], data => {
-      this.filter$.next(data?.filter);
-      this.sorting$.next(data?.sorting);
+      this.filter$.next(data?.filter || '');
+      this.sorting$.next(data?.sorting || initialSorting);
     });
 
     const filter$ = this.filter$.asObservable().pipe(debounceTime(200));
@@ -88,7 +88,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
         }),
         tap(bookmarks => chrome.action.setBadgeText({ text: `${bookmarks.length}` })),
         takeUntil(this.destroy$)
-      ).subscribe(bookmarks => console.log(bookmarks));
+      ).subscribe();
   }
 
   ngOnDestroy() {
