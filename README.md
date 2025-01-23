@@ -12,12 +12,12 @@ yarn build
 ```
 make sure you've bumped the version in `package.json` and `manifest.json`
 
-then zip the contents of the `dist` directory
+then zip the contents of the `chrome-readinglist2` directory
 ```
-cd dist
+cd dist/chrome-readinglist2
 rm *.zip
 zip -r -X chrome-readinglist2.zip ./chrome-readinglist2/
-cd ..
+cd ../..
 ls -lhk dist/*.zip
 ``` 
 
