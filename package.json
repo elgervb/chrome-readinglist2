@@ -51,7 +51,7 @@
     "jest-preset-angular": "^11.0.1",
     "stryker-cli": "^1.0.2",
     "ts-node": "~10.4.0",
-    "typescript": "5.7.3"
+    "typescript": "5.5.4"
   },
   "engines": {
     "node": ">=22"
