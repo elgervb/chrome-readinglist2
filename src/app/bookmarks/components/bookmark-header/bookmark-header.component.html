@@ -1,20 +1,20 @@
 <header class="header">
 
   <div class="left">
-    <span class="currentCount">{{ bookmarks?.length }}</span>
-    @if (countBookmarks && bookmarks?.length !== countBookmarks) {
-      <span class="totalCount"> / {{countBookmarks}}</span>
+    <span class="currentCount">{{ bookmarks()?.length }}</span>
+    @if (countBookmarks() && bookmarks()?.length !== countBookmarks()) {
+      <span class="totalCount"> / {{countBookmarks()}}</span>
     }
   </div>
 
   <h1 class="title">Reading list</h1>
 
   <div class="right">
-    <span class="version">v{{version}}</span>
+    <span class="version">v{{version()}}</span>
     <svg class="icon icon--sort" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
       title="sort bookmarks"
-      [class.icon--sort__asc]="sorting.asc"
-      [class.icon--sort__desc]="!sorting.asc"
+      [class.icon--sort__asc]="sorting().asc"
+      [class.icon--sort__desc]="!sorting().asc"
       (click)="sortEvent.emit()">
       <g>
         <path class="icon--sort__up"
@@ -31,7 +31,7 @@
   </div>
 
   <button class="btn-add" title="Add current page"
-    [disabled]="currentUrlExists"
+    [disabled]="currentUrlExists()"
     (click)="addBookmark.emit()">
     <svg class="icon icon--plus" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
       <g>

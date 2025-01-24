@@ -1,4 +1,4 @@
-import { Directive, ElementRef, InjectionToken, Input, inject } from '@angular/core';
+import { Directive, ElementRef, InjectionToken, inject, input } from '@angular/core';
 
 export const DEFAULT_LAZY_IMAGE = new InjectionToken<string>('default.lazy.image');
 
@@ -8,7 +8,7 @@ export class LazyImgDirective {
   private defaultPath = inject(DEFAULT_LAZY_IMAGE, { optional: true });
 
 
-  @Input() appLazyImg: string;
+  readonly appLazyImg = input<string>(undefined);
 
   private observer: IntersectionObserver;
 
@@ -35,7 +35,7 @@ export class LazyImgDirective {
 
   private preloadImage(image: ElementRef) {
     const element: HTMLImageElement = image.nativeElement;
-    element.src = this.appLazyImg;
+    element.src = this.appLazyImg();
     element.onerror = () => {
       if (this.defaultPath) {
         element.src = this.defaultPath;

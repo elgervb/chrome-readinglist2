@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output, input } from '@angular/core';
 import { Sorting } from '../../models/sorting';
 
 
@@ -9,11 +9,11 @@ import { Sorting } from '../../models/sorting';
 })
 export class BookmarkHeaderComponent {
 
-  @Input() bookmarks: chrome.bookmarks.BookmarkTreeNode[];
-  @Input() sorting: Sorting;
-  @Input() currentUrlExists: boolean;
-  @Input() version: string;
-  @Input() countBookmarks: number;
+  readonly bookmarks = input<chrome.bookmarks.BookmarkTreeNode[]>(undefined);
+  readonly sorting = input<Sorting>(undefined);
+  readonly currentUrlExists = input<boolean>(undefined);
+  readonly version = input<string>(undefined);
+  readonly countBookmarks = input<number>(undefined);
 
   @Output() addBookmark = new EventEmitter<void>();
   @Output() sortEvent = new EventEmitter<void>();

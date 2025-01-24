@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Output, TemplateRef, ViewChild, input } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
@@ -9,8 +9,8 @@ import { NgTemplateOutlet } from '@angular/common';
 })
 export class BookmarkFooterComponent {
 
-  @Input() filter?: string;
-  @Input() bookmarks: chrome.bookmarks.BookmarkTreeNode[];
+  readonly filter = input<string>(undefined);
+  readonly bookmarks = input<chrome.bookmarks.BookmarkTreeNode[]>(undefined);
 
   @Output() readonly filterEvent = new EventEmitter<string>();
   @Output() readonly randomBookmarkEvent = new EventEmitter<void>();
