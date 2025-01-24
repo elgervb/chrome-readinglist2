@@ -6,6 +6,10 @@ import { VersionService } from '../../services/version/version.service';
 import { Sorting } from '../../models/sorting';
 import { environment } from '@env/environment';
 import { GoogleAnalyticsService } from '@core/google-analytics.service';
+import { BookmarkHeaderComponent } from '../../components/bookmark-header/bookmark-header.component';
+import { BookmarkListComponent } from '../../components/bookmark-list/bookmark-list.component';
+import { BookmarkFooterComponent } from '../../components/bookmark-footer/bookmark-footer.component';
+import { AsyncPipe } from '@angular/common';
 
 const initialSorting: Sorting = {
   field: 'dateAdded',
@@ -18,7 +22,7 @@ const chromeReviewUrl = 'https://chrome.google.com/webstore/detail/chrome-readin
     selector: 'app-bookmarks',
     templateUrl: './bookmarks.component.html',
     styleUrls: ['./bookmarks.component.css'],
-    standalone: false
+    imports: [BookmarkHeaderComponent, BookmarkListComponent, BookmarkFooterComponent, AsyncPipe]
 })
 export class BookmarksComponent implements OnInit, OnDestroy {
 

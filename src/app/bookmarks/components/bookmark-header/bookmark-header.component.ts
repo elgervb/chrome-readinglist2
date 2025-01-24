@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Sorting } from '../../models/sorting';
+import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'app-bookmark-header',
     templateUrl: './bookmark-header.component.html',
     styleUrls: ['./bookmark-header.component.css'],
-    standalone: false
+    imports: [NgIf]
 })
 export class BookmarkHeaderComponent {
 

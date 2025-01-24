@@ -1,10 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { NgIf, NgFor, DatePipe } from '@angular/common';
+import { LazyImgDirective } from '../../directives/lazy-img.directive';
+import { FaviconPipe } from '../../pipes/favicon.pipe';
 
 @Component({
     selector: 'app-bookmark-list',
     templateUrl: './bookmark-list.component.html',
     styleUrls: ['./bookmark-list.component.css'],
-    standalone: false
+    imports: [NgIf, NgFor, LazyImgDirective, DatePipe, FaviconPipe]
 })
 export class BookmarkListComponent {
 

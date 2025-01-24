@@ -9,18 +9,16 @@ import { DEFAULT_LAZY_IMAGE, LazyImgDirective } from './directives';
 export const DEFAULT_IMAGE = '/assets/bookmark-default.svg';
 
 @NgModule({
-  declarations: [
-    BookmarksComponent,
-    BookmarkListComponent,
-    BookmarkHeaderComponent,
-    BookmarkFooterComponent,
-    FaviconPipe,
-    LazyImgDirective
-  ],
-  imports: [
-    CommonModule,
-    BookmarksRoutingModule
-  ],
-  providers: [ { provide: DEFAULT_LAZY_IMAGE, useValue: DEFAULT_IMAGE } ]
+    imports: [
+        CommonModule,
+        BookmarksRoutingModule,
+        BookmarksComponent,
+        BookmarkListComponent,
+        BookmarkHeaderComponent,
+        BookmarkFooterComponent,
+        FaviconPipe,
+        LazyImgDirective
+    ],
+    providers: [{ provide: DEFAULT_LAZY_IMAGE, useValue: DEFAULT_IMAGE }]
 })
 export class BookmarksModule { }

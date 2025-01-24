@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
+import { NgIf, NgTemplateOutlet } from '@angular/common';
 
 @Component({
     selector: 'app-bookmark-footer',
     templateUrl: './bookmark-footer.component.html',
     styleUrls: ['./bookmark-footer.component.css'],
-    standalone: false
+    imports: [NgIf, NgTemplateOutlet]
 })
 export class BookmarkFooterComponent {
 

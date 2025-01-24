@@ -2,10 +2,7 @@ import { Directive, ElementRef, Inject, InjectionToken, Input, Optional } from '
 
 export const DEFAULT_LAZY_IMAGE = new InjectionToken<string>('default.lazy.image');
 
-@Directive({
-    selector: '[appLazyImg]',
-    standalone: false
-})
+@Directive({ selector: '[appLazyImg]' })
 export class LazyImgDirective {
 
   @Input() appLazyImg: string;
