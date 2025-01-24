@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 import { take } from 'rxjs/operators';
@@ -10,13 +10,15 @@ export const OTHER_BOOKMARKS = 'Other Bookmarks';
   providedIn: 'root'
 })
 export class BookmarkService {
+  private bookmarkFolder = inject(bookmarkFolderToken);
+
 
   bookmarks$: Observable<chrome.bookmarks.BookmarkTreeNode[]>;
   readingListId: string;
 
   private bookmarks = new BehaviorSubject<chrome.bookmarks.BookmarkTreeNode[]>([]);
 
-  constructor(@Inject(bookmarkFolderToken) private bookmarkFolder: string) {
+  constructor() {
     if (!this.bookmarkFolder) {
       throw new Error('No bookmark folder set. Use InjectionToken bookmarkFolderToken');
     }

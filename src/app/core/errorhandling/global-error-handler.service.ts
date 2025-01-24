@@ -1,15 +1,13 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorHandler, Injectable, Injector } from '@angular/core';
+import { ErrorHandler, Injectable, Injector, inject } from '@angular/core';
 import { GoogleAnalyticsService } from '@core/google-analytics.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GlobalErrorHandler extends ErrorHandler {
+  private injector = inject(Injector);
 
-  constructor(private injector: Injector) {
-    super();
-  }
 
   handleError(error: Error | HttpErrorResponse) {
     const gaService = this.injector.get<GoogleAnalyticsService>(GoogleAnalyticsService);

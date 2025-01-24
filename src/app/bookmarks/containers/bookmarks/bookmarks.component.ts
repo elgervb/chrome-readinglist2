@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
 import { debounceTime, map, share, takeUntil, tap } from 'rxjs/operators';
 import { BookmarkService } from '../../services/bookmark/bookmark.service';
@@ -25,6 +25,11 @@ const chromeReviewUrl = 'https://chrome.google.com/webstore/detail/chrome-readin
     imports: [BookmarkHeaderComponent, BookmarkListComponent, BookmarkFooterComponent, AsyncPipe]
 })
 export class BookmarksComponent implements OnInit, OnDestroy {
+  private analyticsService = inject(GoogleAnalyticsService);
+  private bookmarkService = inject(BookmarkService);
+  private changeDetector = inject(ChangeDetectorRef);
+  private versionService = inject(VersionService);
+
 
   bookmarks: chrome.bookmarks.BookmarkTreeNode[];
   sorting$ = new BehaviorSubject<Sorting>(initialSorting);
@@ -43,13 +48,6 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   }
 
   private destroy$ = new Subject<void>();
-
-  constructor(
-    private analyticsService: GoogleAnalyticsService,
-    private bookmarkService: BookmarkService,
-    private changeDetector: ChangeDetectorRef,
-    private versionService: VersionService
-  ) { }
 
   ngOnInit() {
     chrome.storage.sync.get([ 'filter', 'sorting' ], data => {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { GoogleAnalyticsService } from '@core/google-analytics.service';
 
 @Component({
@@ -8,10 +8,10 @@ import { GoogleAnalyticsService } from '@core/google-analytics.service';
     standalone: false
 })
 export class AppComponent implements OnInit {
+  private analyticsService = inject(GoogleAnalyticsService);
+
 
   title = 'chrome-readinglist2';
-
-  constructor(private analyticsService: GoogleAnalyticsService) { }
 
   ngOnInit() {
     this.analyticsService.sendPageView('open popup');
