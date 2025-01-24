@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Sorting } from '../../models/sorting';
 
 
@@ -15,7 +15,7 @@ export class BookmarkHeaderComponent {
   readonly version = input<string>(undefined);
   readonly countBookmarks = input<number>(undefined);
 
-  @Output() addBookmark = new EventEmitter<void>();
-  @Output() sortEvent = new EventEmitter<void>();
+  readonly addBookmark = output<void>();
+  readonly sortEvent = output<void>();
 
 }
