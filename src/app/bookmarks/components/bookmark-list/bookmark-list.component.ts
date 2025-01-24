@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-bookmark-list',
-  templateUrl: './bookmark-list.component.html',
-  styleUrls: [ './bookmark-list.component.css' ]
+    selector: 'app-bookmark-list',
+    templateUrl: './bookmark-list.component.html',
+    styleUrls: ['./bookmark-list.component.css'],
+    standalone: false
 })
 export class BookmarkListComponent {
 

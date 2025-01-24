@@ -15,9 +15,10 @@ const initialSorting: Sorting = {
 const chromeReviewUrl = 'https://chrome.google.com/webstore/detail/chrome-reading-list-2-%E2%9D%A4/kdapifmgfmpofpeoehdelijjcdpmgdja';
 
 @Component({
-  selector: 'app-bookmarks',
-  templateUrl: './bookmarks.component.html',
-  styleUrls: [ './bookmarks.component.css' ]
+    selector: 'app-bookmarks',
+    templateUrl: './bookmarks.component.html',
+    styleUrls: ['./bookmarks.component.css'],
+    standalone: false
 })
 export class BookmarksComponent implements OnInit, OnDestroy {
 

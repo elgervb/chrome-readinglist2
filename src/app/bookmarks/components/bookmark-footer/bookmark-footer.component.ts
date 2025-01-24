@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'app-bookmark-footer',
-  templateUrl: './bookmark-footer.component.html',
-  styleUrls: [ './bookmark-footer.component.css' ]
+    selector: 'app-bookmark-footer',
+    templateUrl: './bookmark-footer.component.html',
+    styleUrls: ['./bookmark-footer.component.css'],
+    standalone: false
 })
 export class BookmarkFooterComponent {
 

@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { ParsedUrl } from '../models';
 
 @Pipe({
-  name: 'favicon'
+    name: 'favicon',
+    standalone: false
 })
 export class FaviconPipe implements PipeTransform {
 

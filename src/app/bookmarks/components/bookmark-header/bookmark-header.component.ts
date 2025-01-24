@@ -2,9 +2,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Sorting } from '../../models/sorting';
 
 @Component({
-  selector: 'app-bookmark-header',
-  templateUrl: './bookmark-header.component.html',
-  styleUrls: [ './bookmark-header.component.css' ]
+    selector: 'app-bookmark-header',
+    templateUrl: './bookmark-header.component.html',
+    styleUrls: ['./bookmark-header.component.css'],
+    standalone: false
 })
 export class BookmarkHeaderComponent {
 
