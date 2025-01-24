@@ -11,19 +11,20 @@
 </button>
 
 
-<ng-container
-    *ngIf="displayPopover"
+@if (displayPopover) {
+  <ng-container
     [ngTemplateOutlet]="popoverTemplate">
-</ng-container>
+  </ng-container>
+}
 
 <ng-template #popoverTemplate>
 
   <div class="backdrop"></div>
   <div class="popover">
     <p>If you like this extension,
-    please add a <a (click)="this.openReviewEvent.emit()" href="#">review</a>.</p>
+      please add a <a (click)="this.openReviewEvent.emit()" href="#">review</a>.</p>
 
-    <p>Thanks!</p>
-  </div>
+      <p>Thanks!</p>
+    </div>
 
-</ng-template>
+  </ng-template>
