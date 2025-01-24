@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild, input, output } from '@angular/core';
+import { Component, TemplateRef, input, output, viewChild } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
@@ -17,7 +17,7 @@ export class BookmarkFooterComponent {
   readonly reviewPopoverShowEvent = output<boolean>();
   readonly openReviewEvent = output<void>();
 
-  @ViewChild('popoverTemplate') popoverRef: TemplateRef<HTMLElement>;
+  readonly popoverRef = viewChild<TemplateRef<HTMLElement>>('popoverTemplate');
 
   displayPopover = false;
 
