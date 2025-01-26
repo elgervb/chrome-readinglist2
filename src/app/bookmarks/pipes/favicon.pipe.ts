@@ -13,7 +13,7 @@ export class FaviconPipe implements PipeTransform {
     return this.getFavicon(bookmark.url);
   }
 
-  private getFavicon(url: string) {
+  private getFavicon(url: string): string {
     const parsed = this.parseUrl(url);
     return `${this.getBaseUrl(parsed)}/favicon.ico`;
   }

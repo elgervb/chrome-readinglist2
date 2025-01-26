@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
 import { debounceTime, map, share, takeUntil, tap } from 'rxjs/operators';
 import { BookmarkService } from '../../services/bookmark/bookmark.service';
@@ -19,17 +19,12 @@ const initialSorting: Sorting = {
 const chromeReviewUrl = 'https://chrome.google.com/webstore/detail/chrome-reading-list-2-%E2%9D%A4/kdapifmgfmpofpeoehdelijjcdpmgdja';
 
 @Component({
-    selector: 'app-bookmarks',
-    templateUrl: './bookmarks.component.html',
-    styleUrls: ['./bookmarks.component.css'],
-    imports: [BookmarkHeaderComponent, BookmarkListComponent, BookmarkFooterComponent, AsyncPipe]
+  selector: 'app-bookmarks',
+  templateUrl: './bookmarks.component.html',
+  styleUrls: [ './bookmarks.component.css' ],
+  imports: [ BookmarkHeaderComponent, BookmarkListComponent, BookmarkFooterComponent, AsyncPipe ]
 })
 export class BookmarksComponent implements OnInit, OnDestroy {
-  private analyticsService = inject(GoogleAnalyticsService);
-  private bookmarkService = inject(BookmarkService);
-  private changeDetector = inject(ChangeDetectorRef);
-  private versionService = inject(VersionService);
-
 
   bookmarks: chrome.bookmarks.BookmarkTreeNode[];
   sorting$ = new BehaviorSubject<Sorting>(initialSorting);
@@ -39,17 +34,22 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   /** filter the list of bookmarks with a search string */
   filter$ = new Subject<string>();
 
-  get devMode() {
+  get devMode(): boolean {
     return !environment.production;
   }
 
-  get version() {
+  get version(): string {
     return this.versionService.getVersion();
   }
 
-  private destroy$ = new Subject<void>();
+  private readonly analyticsService = inject(GoogleAnalyticsService);
+  private readonly bookmarkService = inject(BookmarkService);
+  private readonly changeDetector = inject(ChangeDetectorRef);
+  private readonly versionService = inject(VersionService);
 
-  ngOnInit() {
+  private readonly destroy$ = new Subject<void>();
+
+  ngOnInit(): void {
     chrome.storage.sync.get([ 'filter', 'sorting' ], data => {
       this.filter$.next(data?.filter || '');
       this.sorting$.next(data?.sorting || initialSorting);
@@ -94,7 +94,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
       ).subscribe();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
@@ -111,30 +111,30 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     });
   }
 
-  applyFilter(filter: string) {
+  applyFilter(filter: string): void {
     chrome.storage.sync.set({ filter });
     this.filter$.next(filter);
   }
 
-  randomBookmark() {
+  randomBookmark(): void {
     const randomIndex = Math.floor(Math.random() * this.bookmarks.length);
     const bookmark = this.bookmarks[randomIndex];
     this.selectBookmark(bookmark);
     this.analyticsService.sendEvent('bookmarks', 'random', bookmark.url);
   }
 
-  reviewPopoverShown(show: boolean) {
+  reviewPopoverShown(show: boolean): void {
     this.analyticsService.sendEvent('review', show ? 'show popover' : 'hide popover');
   }
 
-  openReview() {
+  openReview(): void {
     chrome.tabs.query({ active: true, currentWindow: true }, () => {
       this.analyticsService.sendEvent('review', 'redirect');
       chrome.tabs.create({ url: chromeReviewUrl });
     });
   }
 
-  selectBookmark(bookmark: chrome.bookmarks.BookmarkTreeNode) {
+  selectBookmark(bookmark: chrome.bookmarks.BookmarkTreeNode): void {
     chrome.tabs.query({ active: true, currentWindow: true }, () => {
       this.bookmarkService.remove(bookmark);
       this.analyticsService.sendEvent('bookmarks', 'select', bookmark.url);
@@ -142,7 +142,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     });
   }
 
-  setSorting(field?: 'dateAdded' | 'title' | 'url') {
+  setSorting(field?: 'dateAdded' | 'title' | 'url'): void {
     const currentSorting = this.sorting$.getValue();
 
     const sorting: Sorting = {
@@ -156,12 +156,12 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     this.analyticsService.sendEvent('bookmarks', 'sort', `${sorting.field}:${sorting.asc ? 'asc' : 'desc'}`);
   }
 
-  private filterBookmarks(filter: string, bookmarks: chrome.bookmarks.BookmarkTreeNode[]) {
+  private filterBookmarks(filter: string, bookmarks: chrome.bookmarks.BookmarkTreeNode[]): chrome.bookmarks.BookmarkTreeNode[] {
     return bookmarks.filter(bookmark => bookmark.title.toLowerCase().includes(filter) ||
       bookmark.url.toLowerCase().includes(filter));
   }
 
-  private sortBookmarks(a: chrome.bookmarks.BookmarkTreeNode, b: chrome.bookmarks.BookmarkTreeNode, sort: Sorting) {
+  private sortBookmarks(a: chrome.bookmarks.BookmarkTreeNode, b: chrome.bookmarks.BookmarkTreeNode, sort: Sorting): number {
     const right = sort.asc ? a : b;
     const left = sort.asc ? b : a;
     return (`${right[sort.field]}`).localeCompare(`${left[sort.field]}`);

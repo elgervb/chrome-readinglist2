@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 import { take } from 'rxjs/operators';
@@ -10,13 +10,12 @@ export const OTHER_BOOKMARKS = 'Other Bookmarks';
   providedIn: 'root'
 })
 export class BookmarkService {
-  private bookmarkFolder = inject(bookmarkFolderToken);
-
 
   bookmarks$: Observable<chrome.bookmarks.BookmarkTreeNode[]>;
   readingListId: string;
 
-  private bookmarks = new BehaviorSubject<chrome.bookmarks.BookmarkTreeNode[]>([]);
+  private readonly bookmarkFolder = inject(bookmarkFolderToken);
+  private readonly bookmarks = new BehaviorSubject<chrome.bookmarks.BookmarkTreeNode[]>([]);
 
   constructor() {
     if (!this.bookmarkFolder) {
@@ -49,14 +48,14 @@ export class BookmarkService {
     return this.bookmarks$;
   }
 
-  remove(remove: chrome.bookmarks.BookmarkTreeNode) {
+  remove(remove: chrome.bookmarks.BookmarkTreeNode): void {
     chrome.bookmarks.remove(remove.id, () => {
       const result = [ ...this.bookmarks.value ].filter(bookmark => bookmark.id !== remove.id);
       this.bookmarks.next(result);
     });
   }
 
-  select(bookmark: chrome.bookmarks.BookmarkTreeNode) {
+  select(bookmark: chrome.bookmarks.BookmarkTreeNode): void {
     window.open(bookmark.url, '_blank');
     this.remove(bookmark);
   }

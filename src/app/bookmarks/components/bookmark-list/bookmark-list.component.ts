@@ -4,10 +4,10 @@ import { LazyImgDirective } from '../../directives/lazy-img.directive';
 import { FaviconPipe } from '../../pipes/favicon.pipe';
 
 @Component({
-    selector: 'app-bookmark-list',
-    templateUrl: './bookmark-list.component.html',
-    styleUrls: ['./bookmark-list.component.css'],
-    imports: [LazyImgDirective, DatePipe, FaviconPipe]
+  selector: 'app-bookmark-list',
+  templateUrl: './bookmark-list.component.html',
+  styleUrls: [ './bookmark-list.component.css' ],
+  imports: [ LazyImgDirective, DatePipe, FaviconPipe ]
 })
 export class BookmarkListComponent {
 
@@ -17,7 +17,7 @@ export class BookmarkListComponent {
   readonly selectEvent = output<chrome.bookmarks.BookmarkTreeNode>();
   readonly clearFilter = output<void>();
 
-  trackByBookmark(_: number, bookmark: chrome.bookmarks.BookmarkTreeNode) {
+  trackByBookmark(_: number, bookmark: chrome.bookmarks.BookmarkTreeNode): string {
     return bookmark.id;
   }
 

@@ -1,11 +1,11 @@
-import { Component, TemplateRef, input, output, viewChild } from '@angular/core';
+import { Component, input, output, TemplateRef, viewChild } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
-    selector: 'app-bookmark-footer',
-    templateUrl: './bookmark-footer.component.html',
-    styleUrls: ['./bookmark-footer.component.css'],
-    imports: [NgTemplateOutlet]
+  selector: 'app-bookmark-footer',
+  templateUrl: './bookmark-footer.component.html',
+  styleUrls: [ './bookmark-footer.component.css' ],
+  imports: [ NgTemplateOutlet ]
 })
 export class BookmarkFooterComponent {
 
@@ -21,7 +21,7 @@ export class BookmarkFooterComponent {
 
   displayPopover = false;
 
-  showPopover() {
+  showPopover(): void {
     this.displayPopover = !this.displayPopover;
     this.reviewPopoverShowEvent.emit(this.displayPopover);
   }
