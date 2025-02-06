@@ -1,12 +1,17 @@
-import { TestBed } from '@angular/core/testing';
-
 import { GoogleAnalyticsService } from './google-analytics.service';
 
+import { createServiceFactory, SpectatorService } from '@ngneat/spectator/jest';
+
 describe('GoogleAnalyticsService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  let spectator: SpectatorService<GoogleAnalyticsService>;
+  const createService = createServiceFactory({
+    service: GoogleAnalyticsService,
+  });
+
+
+  beforeEach(() => spectator = createService());
 
   it('should be created', () => {
-    const service: GoogleAnalyticsService = TestBed.inject(GoogleAnalyticsService);
-    expect(service).toBeTruthy();
+    expect(spectator.service).toBeTruthy();
   });
 });

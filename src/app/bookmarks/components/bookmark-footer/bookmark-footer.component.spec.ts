@@ -1,34 +1,24 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { BookmarkFooterComponent } from './bookmark-footer.component';
 import { By } from '@angular/platform-browser';
 
+import { createComponentFactory, Spectator } from '@ngneat/spectator/jest';
+
 describe('BookmarkFooterComponent', () => {
-  let component: BookmarkFooterComponent;
-  let fixture: ComponentFixture<BookmarkFooterComponent>;
+  let spectator: Spectator<BookmarkFooterComponent>;
+  const createComponent = createComponentFactory(BookmarkFooterComponent);
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ BookmarkFooterComponent ]
-    })
-      .compileComponents();
-  }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(BookmarkFooterComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  beforeEach(() => spectator = createComponent());
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(spectator.component).toBeTruthy();
   });
 
   it('should emit random bookmark event', () => {
     let emit = false;
-    component.randomBookmarkEvent.subscribe(() => emit = true);
+    spectator.component.randomBookmarkEvent.subscribe(() => emit = true);
 
-    const button = fixture.debugElement.query(By.css('.btn-random'));
+    const button = spectator.fixture.debugElement.query(By.css('.btn-random'));
     expect(button).toBeTruthy();
     button.triggerEventHandler('click', void 0);
 
@@ -37,9 +27,9 @@ describe('BookmarkFooterComponent', () => {
 
   it('should emit filter event', () => {
     let emit = '';
-    component.filterEvent.subscribe((val: string) => emit = val);
+    spectator.component.filterEvent.subscribe((val: string) => emit = val);
 
-    const input = fixture.debugElement.query(By.css('.filter'));
+    const input = spectator.fixture.debugElement.query(By.css('.filter'));
     expect(input).toBeTruthy();
     input.triggerEventHandler('input', {
       target: {
@@ -51,12 +41,13 @@ describe('BookmarkFooterComponent', () => {
   });
 
   it('should show popup', () => {
-    const emitSpy = jest.spyOn(component.reviewPopoverShowEvent, 'emit');
+    const emitSpy = jest.spyOn(spectator.component.reviewPopoverShowEvent, 'emit');
 
-    component.showPopover();
+    spectator.component.showPopover();
     expect(emitSpy).toHaveBeenCalledWith(true);
 
-    component.showPopover();
+    spectator.component.showPopover();
     expect(emitSpy).toHaveBeenCalledWith(false);
   });
+
 });

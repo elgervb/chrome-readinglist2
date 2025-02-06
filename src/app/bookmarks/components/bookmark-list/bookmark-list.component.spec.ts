@@ -1,39 +1,27 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-
 import { BookmarkListComponent } from './bookmark-list.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { FaviconPipe } from '../../pipes/favicon.pipe';
 import { createBookmark } from '../../test-utils';
 import { By } from '@angular/platform-browser';
 
+import { createComponentFactory, Spectator } from '@ngneat/spectator/jest';
+
 describe('BookmarkListComponent', () => {
-  let component: BookmarkListComponent;
-  let fixture: ComponentFixture<BookmarkListComponent>;
-
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        BookmarkListComponent,
-        FaviconPipe
-      ],
-      schemas: [ NO_ERRORS_SCHEMA ]
-    })
-      .compileComponents();
-  }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(BookmarkListComponent);
-    component = fixture.componentInstance;
-    component.bookmarks = [];
-    fixture.detectChanges();
+  let spectator: Spectator<BookmarkListComponent>;
+  const createComponent = createComponentFactory({
+    component: BookmarkListComponent,
+    imports: [ FaviconPipe ],
+    schemas: [ NO_ERRORS_SCHEMA ] // TODO: no NO_ERRORS_SCHEMA
   });
 
+  beforeEach(() => spectator = createComponent({ props: { bookmarks: [] } }));
+
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(spectator.component).toBeTruthy();
   });
 
   it('should show message if no bookmarks are present', () => {
-    const noBookmarksEl = fixture.debugElement.query(By.css('.no-bookmarks'));
+    const noBookmarksEl = spectator.fixture.debugElement.query(By.css('.no-bookmarks'));
     expect(noBookmarksEl).toBeTruthy();
     expect(noBookmarksEl.nativeElement.textContent).toBe('No bookmarks present');
   });
@@ -48,16 +36,17 @@ describe('BookmarkListComponent', () => {
         bookmark2
       ];
 
-      component.bookmarks = bookmarks;
-      fixture.detectChanges();
+      spectator.setInput('bookmarks', bookmarks);
+      spectator.fixture.detectChanges();
     });
 
     it('should render bookmarks', () => {
-      const listItems = fixture.debugElement.queryAll(By.css('li'));
+      const listItems = spectator.fixture.debugElement.queryAll(By.css('li'));
       expect(listItems.length).toBe(2);
 
       expect(listItems[0].query(By.css('.url')).nativeElement.textContent).toBe(bookmark1.url);
       expect(listItems[1].query(By.css('.url')).nativeElement.textContent).toBe(bookmark2.url);
     });
   });
+
 });
