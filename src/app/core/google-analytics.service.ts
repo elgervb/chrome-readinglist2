@@ -6,18 +6,18 @@ import './ga';
 })
 export class GoogleAnalyticsService {
 
-  create(gaId: string) {
+  create(gaId: string): void {
     this.ga('create', gaId, 'auto');
   }
 
   /**
    * https://developers.google.com/analytics/devguides/collection/analyticsjs/events
    */
-  sendEvent(category: string, eventAction: string, eventLabel?: string, eventValue?: number) {
+  sendEvent(category: string, eventAction: string, eventLabel?: string, eventValue?: number): void {
     this.ga('send', 'event', category, eventAction, eventLabel, eventValue);
   }
 
-  sendPageView(title: string) {
+  sendPageView(title: string): void {
     this.ga('send', 'pageview', title);
   }
 

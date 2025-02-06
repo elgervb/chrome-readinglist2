@@ -1,26 +1,27 @@
-import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
+import { Component, input, output, TemplateRef, viewChild } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
-    selector: 'app-bookmark-footer',
-    templateUrl: './bookmark-footer.component.html',
-    styleUrls: ['./bookmark-footer.component.css'],
-    standalone: false
+  selector: 'app-bookmark-footer',
+  templateUrl: './bookmark-footer.component.html',
+  styleUrls: [ './bookmark-footer.component.css' ],
+  imports: [ NgTemplateOutlet ]
 })
 export class BookmarkFooterComponent {
 
-  @Input() filter?: string;
-  @Input() bookmarks: chrome.bookmarks.BookmarkTreeNode[];
+  readonly filter = input<string>(undefined);
+  readonly bookmarks = input<chrome.bookmarks.BookmarkTreeNode[]>(undefined);
 
-  @Output() readonly filterEvent = new EventEmitter<string>();
-  @Output() readonly randomBookmarkEvent = new EventEmitter<void>();
-  @Output() readonly reviewPopoverShowEvent = new EventEmitter<boolean>();
-  @Output() readonly openReviewEvent = new EventEmitter<void>();
+  readonly filterEvent = output<string>();
+  readonly randomBookmarkEvent = output<void>();
+  readonly reviewPopoverShowEvent = output<boolean>();
+  readonly openReviewEvent = output<void>();
 
-  @ViewChild('popoverTemplate') popoverRef: TemplateRef<HTMLElement>;
+  readonly popoverRef = viewChild<TemplateRef<HTMLElement>>('popoverTemplate');
 
   displayPopover = false;
 
-  showPopover() {
+  showPopover(): void {
     this.displayPopover = !this.displayPopover;
     this.reviewPopoverShowEvent.emit(this.displayPopover);
   }

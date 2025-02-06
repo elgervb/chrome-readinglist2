@@ -1,22 +1,23 @@
-import { TestBed } from '@angular/core/testing';
-
 import { BookmarkService, OTHER_BOOKMARKS } from './bookmark.service';
 import { bookmarkFolderToken } from '../bookmark-folder.token';
 
+import { createServiceFactory, SpectatorService } from '@ngneat/spectator/jest';
+
 describe('BookmarkService', () => {
-
-  let service: BookmarkService;
-
-  beforeEach(() => TestBed.configureTestingModule({
+  let spectator: SpectatorService<BookmarkService>;
+  // TODO: use mock for bookmarFolderToken
+  const createService = createServiceFactory({
+    service: BookmarkService,
     providers: [ { provide: bookmarkFolderToken, useValue: '/test' } ]
-  }));
+  });
 
-  beforeEach(() => service = TestBed.inject(BookmarkService));
+
+  beforeEach(() => spectator = createService());
 
   afterEach(() => jest.resetAllMocks());
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  it('should create', () => {
+    expect(spectator.service).toBeTruthy();
   });
 
   it('should create root bookmark folder', () => {
@@ -47,7 +48,7 @@ describe('BookmarkService', () => {
       callback();
     });
 
-    service.load();
+    spectator.service.load();
 
     expect(chrome.bookmarks.getTree).toHaveBeenCalledTimes(1);
     expect(chrome.bookmarks.create).toHaveBeenCalledTimes(1);
@@ -77,9 +78,9 @@ describe('BookmarkService', () => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     (chrome.bookmarks.getTree as jest.Mock).mockImplementation(callback => callback(bookmarks));
 
-    service.load();
+    spectator.service.load();
 
-    expect(service.readingListId).toBe('3');
+    expect(spectator.service.readingListId).toBe('3');
     expect(chrome.bookmarks.getTree).toHaveBeenCalledTimes(1);
   });
 });

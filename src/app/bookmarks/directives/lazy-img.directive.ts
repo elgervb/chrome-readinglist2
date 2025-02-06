@@ -1,21 +1,19 @@
-import { Directive, ElementRef, Inject, InjectionToken, Input, Optional } from '@angular/core';
+import { Directive, ElementRef, inject, InjectionToken, input } from '@angular/core';
 
 export const DEFAULT_LAZY_IMAGE = new InjectionToken<string>('default.lazy.image');
 
-@Directive({
-    selector: '[appLazyImg]',
-    standalone: false
-})
+@Directive({ selector: '[appLazyImg]' })
 export class LazyImgDirective {
 
-  @Input() appLazyImg: string;
+  readonly appLazyImg = input<string>(undefined);
 
-  private observer: IntersectionObserver;
+  private readonly el = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly defaultPath = inject(DEFAULT_LAZY_IMAGE, { optional: true });
+  private readonly observer: IntersectionObserver;
 
-  constructor(
-    private el: ElementRef<HTMLElement>,
-    @Optional() @Inject(DEFAULT_LAZY_IMAGE) private defaultPath: string
-  ) {
+  constructor() {
+    const { el } = this;
+
     this.observer = new IntersectionObserver(entries => this.loading(entries), {
       rootMargin: '50px 0px',
       threshold: 0.01
@@ -23,7 +21,7 @@ export class LazyImgDirective {
     this.observer.observe(el.nativeElement);
   }
 
-  loading(changes: IntersectionObserverEntry[]) {
+  loading(changes: IntersectionObserverEntry[]): void {
     changes.forEach(change => {
       // Are we in viewport?
       if (change.intersectionRatio > 0) {
@@ -34,9 +32,9 @@ export class LazyImgDirective {
     });
   }
 
-  private preloadImage(image: ElementRef) {
+  private preloadImage(image: ElementRef): void {
     const element: HTMLImageElement = image.nativeElement;
-    element.src = this.appLazyImg;
+    element.src = this.appLazyImg();
     element.onerror = () => {
       if (this.defaultPath) {
         element.src = this.defaultPath;

@@ -1,5 +1,3 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-
 import { BookmarksComponent } from './bookmarks.component';
 import { CommonModule } from '@angular/common';
 
@@ -9,41 +7,34 @@ import { GoogleAnalyticsService } from '@core/google-analytics.service';
 
 import { transform } from '@elgervb/mock-data';
 
-describe('BookmarksComponent', () => {
+import { createComponentFactory, Spectator } from '@ngneat/spectator/jest';
 
-  let fixture: ComponentFixture<BookmarksComponent>;
-  let component: BookmarksComponent;
+describe('BookmarksComponent', () => {
+  let spectator: Spectator<BookmarksComponent>;
   const versionService: Partial<VersionService> = {
     getVersion: () => '1.0.0'
   };
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ BookmarksComponent ],
-      imports: [ CommonModule ],
-      providers: [ { provide: VersionService, useValue: versionService } ],
-      schemas: [ NO_ERRORS_SCHEMA ]
-    })
-      .compileComponents();
-  }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(BookmarksComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+  const createComponent = createComponentFactory({
+    component: BookmarksComponent,
+    imports: [ CommonModule ],
+    providers: [ { provide: VersionService, useValue: versionService } ], // TODO: use mock
+    schemas: [ NO_ERRORS_SCHEMA ] // TODO: no NO_ERRORS_SCHEMA
   });
 
+  beforeEach(() => spectator = createComponent());
+
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(spectator.component).toBeTruthy();
   });
 
   describe('filtering', () => {
     let setFilterSpy: jest.SpyInstance;
 
-    beforeEach(() => setFilterSpy = jest.spyOn(component.filter$, 'next'));
+    beforeEach(() => setFilterSpy = jest.spyOn(spectator.component.filter$, 'next'));
 
     it('applies a filter', () => {
-      component.applyFilter('my-filter');
+      spectator.component.applyFilter('my-filter');
 
       expect(setFilterSpy).toHaveBeenCalledWith('my-filter');
     });
@@ -55,14 +46,14 @@ describe('BookmarksComponent', () => {
     let analyticsSend: jest.SpyInstance;
 
     beforeEach(() => {
-      analyticsService = TestBed.inject(GoogleAnalyticsService);
+      analyticsService = spectator.inject(GoogleAnalyticsService);
       analyticsSend = jest.spyOn(analyticsService, 'sendEvent');
     });
 
     it('should sendEvent on addBookmark', () => {
       const queryMock: jest.Mock = chrome.tabs.query as jest.Mock;
       queryMock.mockImplementation((_, callback) => callback([ { url: 'https://url', title: 'title' } ]));
-      component.addBookmark();
+      spectator.component.addBookmark();
 
       // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(analyticsSend).toHaveBeenCalledWith('bookmarks', 'add', 'https://url');
@@ -72,17 +63,17 @@ describe('BookmarksComponent', () => {
       const bookmark = transform<chrome.bookmarks.BookmarkTreeNode>({
         url: 'https://url'
       });
-      component.bookmarks = [ bookmark ];
-      component.randomBookmark();
+      spectator.component.bookmarks = [ bookmark ];
+      spectator.component.randomBookmark();
 
       expect(analyticsSend).toHaveBeenCalledWith('bookmarks', 'random', 'https://url');
     });
 
     it('should sendEvent on reviewPopoverShown', () => {
-      component.reviewPopoverShown(true);
+      spectator.component.reviewPopoverShown(true);
       expect(analyticsSend).toHaveBeenCalledWith('review', 'show popover');
 
-      component.reviewPopoverShown(false);
+      spectator.component.reviewPopoverShown(false);
       expect(analyticsSend).toHaveBeenCalledWith('review', 'hide popover');
     });
 
@@ -90,15 +81,15 @@ describe('BookmarksComponent', () => {
       const queryMock: jest.Mock = chrome.tabs.query as jest.Mock;
       queryMock.mockImplementation((_, callback) => callback());
 
-      component.openReview();
+      spectator.component.openReview();
       expect(analyticsSend).toHaveBeenCalledWith('review', 'redirect');
     });
 
     it('should sendEvent on setSorting', () => {
-      component.setSorting('url');
+      spectator.component.setSorting('url');
       expect(analyticsSend).toHaveBeenCalledWith('bookmarks', 'sort', 'url:desc');
 
-      component.setSorting('url');
+      spectator.component.setSorting('url');
       expect(analyticsSend).toHaveBeenCalledWith('bookmarks', 'sort', 'url:asc');
     });
 

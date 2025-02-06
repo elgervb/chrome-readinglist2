@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { BookmarksComponent } from './containers';
+
 
 const routes: Routes = [
   {
     path: '',
-    component: BookmarksComponent
+    loadComponent: () => import('./containers').then(m => m.BookmarksComponent)
   }
 ];
 

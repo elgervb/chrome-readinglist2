@@ -1,5 +1,5 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { GoogleAnalyticsService } from '@core/google-analytics.service';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
@@ -9,7 +9,8 @@ import { catchError, retry } from 'rxjs/operators';
 })
 export class HttpErrorInterceptor implements HttpInterceptor {
 
-  constructor(private googleAnalyticsService: GoogleAnalyticsService) { }
+  private googleAnalyticsService = inject(GoogleAnalyticsService);
+
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request)

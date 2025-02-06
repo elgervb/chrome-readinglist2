@@ -1,31 +1,20 @@
-import { TestBed, waitForAsync } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { GoogleAnalyticsService } from '@core/google-analytics.service';
 
+import { createComponentFactory, Spectator } from '@ngneat/spectator/jest';
+import { RouterOutlet } from '@angular/router';
+
 describe('AppComponent', () => {
-  const analytics = {
-    sendPageView: jest.fn()
-  };
-
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [ RouterTestingModule ],
-      declarations: [ AppComponent ],
-      providers: [ { provide: GoogleAnalyticsService, useValue: analytics } ]
-    }).compileComponents();
-  }));
-
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
+  let spectator: Spectator<AppComponent>;
+  const createComponent = createComponentFactory({
+    component: AppComponent,
+    imports: [ RouterOutlet ],
+    mocks: [ GoogleAnalyticsService ]
   });
 
-  it('should have a router outlet', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('router-outlet')).toBeTruthy();
+  beforeEach(() => spectator = createComponent());
+
+  it('should register a page view with analytics', () => {
+    expect(spectator.inject(GoogleAnalyticsService).sendPageView).toHaveBeenCalledWith('open popup');
   });
 });

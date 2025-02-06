@@ -1,16 +1,18 @@
-import { TestBed } from '@angular/core/testing';
-
 import { HttpErrorInterceptor } from './http-error.interceptor';
 
-describe('HttpErrorInterceptor', () => {
-  let service: HttpErrorInterceptor;
+import { createServiceFactory, SpectatorService } from '@ngneat/spectator/jest';
+import { GoogleAnalyticsService } from '@core/google-analytics.service';
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(HttpErrorInterceptor);
+describe('HttpErrorInterceptor', () => {
+  let spectator: SpectatorService<HttpErrorInterceptor>;
+  const createService = createServiceFactory({
+    service: HttpErrorInterceptor,
+    mocks: [ GoogleAnalyticsService ]
   });
 
+  beforeEach(() => spectator = createService());
+
   it('should be created', () => {
-    expect(service).toBeTruthy();
+    expect(spectator.service).toBeTruthy();
   });
 });

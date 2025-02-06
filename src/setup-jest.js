@@ -1,4 +1,5 @@
-import 'jest-preset-angular/setup-jest';
+import { setupZoneTestEnv } from 'jest-preset-angular/setup-env/zone';
+setupZoneTestEnv();
 
 const storageMock = () => {
   let storage = {};
@@ -37,6 +38,12 @@ Object.defineProperty(window, 'sessionStorage', { value: storageMock() });
 Object.defineProperty(window, 'getComputedStyle', {
   value: () => ['-webkit-appearance']
 });
+
+window.IntersectionObserver = jest.fn(() => ({
+  observe: jest.fn(),
+  unobserve: jest.fn(),
+}))
+
 
 // Needed for mocking ga.js
 const scriptTag = document.createElement('script');

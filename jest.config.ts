@@ -1,6 +1,11 @@
+import presets from 'jest-preset-angular/presets';
+import { type JestConfigWithTsJest, pathsToModuleNameMapper } from 'ts-jest';
 
-module.exports = {
-  preset: 'jest-preset-angular',
+import { compilerOptions } from './tsconfig.json';
+
+
+export default {
+  ...presets.createCjsPreset(),
   roots: [
     './src'
   ],
@@ -29,10 +34,6 @@ module.exports = {
       lines: 50
     }
   },
-  moduleNameMapper: {
-    '^@core/(.*)': '<rootDir>/src/app/core/$1',
-    '^@env/(.*)': '<rootDir>/src/environments/$1',
-    '^@manifest_json': '<rootDir>/src/manifest.json'
-  },
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>' }),
   setupFilesAfterEnv: ['<rootDir>/src/setup-jest.js']
-};
+} satisfies JestConfigWithTsJest;

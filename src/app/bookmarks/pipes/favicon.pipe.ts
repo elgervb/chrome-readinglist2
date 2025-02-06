@@ -1,10 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { ParsedUrl } from '../models';
 
-@Pipe({
-    name: 'favicon',
-    standalone: false
-})
+// TODO: use native lazy image
+@Pipe({ name: 'favicon' })
 export class FaviconPipe implements PipeTransform {
 
   transform(bookmark?: chrome.bookmarks.BookmarkTreeNode): string | null {
@@ -15,7 +13,7 @@ export class FaviconPipe implements PipeTransform {
     return this.getFavicon(bookmark.url);
   }
 
-  private getFavicon(url: string) {
+  private getFavicon(url: string): string {
     const parsed = this.parseUrl(url);
     return `${this.getBaseUrl(parsed)}/favicon.ico`;
   }
@@ -24,6 +22,7 @@ export class FaviconPipe implements PipeTransform {
     const parser = document.createElement('a');
     parser.href = url;
 
+    // TODO: use Object destructuring
     return {
       protocol: parser.protocol, // => "http:"
       hostname: parser.hostname, // => "example.com"

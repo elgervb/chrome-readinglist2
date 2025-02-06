@@ -1,18 +1,25 @@
-<ul *ngIf="bookmarks?.length; else noBookmarks">
-  <li *ngFor="let bookmark of bookmarks; trackBy:trackByBookmark" (pointerup)="selectEvent.emit(bookmark)">
-    <img [appLazyImg]="bookmark | favicon" alt="Favicon for {{bookmark.url}}" class="favicon" />
-    <div class="text">
-      <div class="title">{{ bookmark.title }}</div>
-      <div class="url">{{ bookmark.url }}</div>
-      <div class="date">{{ bookmark.dateAdded | date : 'MMM d y' }}</div>
+@if (bookmarks()?.length) {
+  <ul>
+    @for (bookmark of bookmarks(); track trackByBookmark($index, bookmark)) {
+      <li (pointerup)="selectEvent.emit(bookmark)">
+        <img [appLazyImg]="bookmark | favicon" alt="Favicon for {{bookmark.url}}" class="favicon" />
+        <div class="text">
+          <div class="title">{{ bookmark.title }}</div>
+          <div class="url">{{ bookmark.url }}</div>
+          <div class="date">{{ bookmark.dateAdded | date : 'MMM d y' }}</div>
+        </div>
+      </li>
+    }
+  </ul>
+} @else {
+  @if (!countBookmarks()) {
+    <div class="no-bookmarks">No bookmarks present</div>
+  }
+  @else if (countBookmarks() > 0) {
+    <div class="no-bookmarks">
+      <p>No bookmarks found</p>
+      <button class="btn" (click)="clearFilter.emit()">clear filter</button>
     </div>
-  </li>
-</ul>
+  }
+}
 
-<ng-template #noBookmarks>
-  <div *ngIf="!countBookmarks" class="no-bookmarks">No bookmarks present</div>
-  <div *ngIf="countBookmarks > 0" class="no-bookmarks">
-    <p>No bookmarks found</p>
-    <button class="btn" (click)="clearFilter.emit()">clear filter</button>
-  </div>
-</ng-template>
