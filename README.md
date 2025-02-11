@@ -16,9 +16,9 @@ then zip the contents of the `chrome-readinglist2` directory
 ```
 cd dist/chrome-readinglist2
 rm *.zip
-zip -r -X chrome-readinglist2.zip ./chrome-readinglist2/
+zip -r -X chrome-readinglist2.zip ./browser/
 cd ../..
-ls -lhk dist/*.zip
+ls -lhk dist/chrome-readinglist2/*.zip
 ``` 
 
 goto Chrome extensions dashboard: https://chrome.google.com/webstore/devconsole
