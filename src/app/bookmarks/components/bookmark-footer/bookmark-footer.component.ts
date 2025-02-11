@@ -1,11 +1,9 @@
 import { Component, input, output, TemplateRef, viewChild } from '@angular/core';
-import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
   selector: 'app-bookmark-footer',
   templateUrl: './bookmark-footer.component.html',
-  styleUrls: [ './bookmark-footer.component.css' ],
-  imports: [ NgTemplateOutlet ]
+  styleUrls: [ './bookmark-footer.component.css' ]
 })
 export class BookmarkFooterComponent {
 
@@ -19,7 +17,7 @@ export class BookmarkFooterComponent {
 
   readonly popoverRef = viewChild<TemplateRef<HTMLElement>>('popoverTemplate');
 
-  displayPopover = false;
+  displayPopover = false; // TODO: as a signal #127
 
   showPopover(): void {
     this.displayPopover = !this.displayPopover;

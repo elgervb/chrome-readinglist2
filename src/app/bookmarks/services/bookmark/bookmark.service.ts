@@ -6,6 +6,34 @@ import { bookmarkFolderToken } from '../bookmark-folder.token';
 
 export const OTHER_BOOKMARKS = 'Other Bookmarks';
 
+/**
+ * Service to manage bookmarks in a Chrome extension.
+ *
+ * @remarks
+ * This service provides methods to add, remove, check existence, and load bookmarks using the Chrome bookmarks API.
+ * It maintains an observable stream of bookmarks and ensures that bookmarks are added to a specific reading list folder.
+ *
+ * @example
+ * ```typescript
+ * const bookmarkService = inject(BookmarkService);
+ *
+ * // Add a new bookmark
+ * bookmarkService.add({ title: 'Example', url: 'https://example.com' });
+ *
+ * // Remove a bookmark
+ * bookmarkService.remove(bookmark);
+ *
+ * // Check if a bookmark exists
+ * const exists = bookmarkService.exists('https://example.com');
+ *
+ * // Load bookmarks
+ * bookmarkService.load().subscribe(bookmarks => {
+ *   console.log(bookmarks);
+ * });
+ * ```
+ *
+ * @public
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -24,6 +52,15 @@ export class BookmarkService {
     this.bookmarks$ = this.bookmarks.asObservable();
   }
 
+  /**
+   * Adds a new bookmark to the reading list if it does not already exist.
+   *
+   * @param create - The bookmark creation arguments.
+   * @remarks
+   * This method checks if a bookmark with the given URL already exists. If it does not exist,
+   * it sets the parentId to the reading list ID and creates the bookmark using the Chrome bookmarks API.
+   * The newly created bookmark is then added to the current list of bookmarks.
+   */
   add(create: chrome.bookmarks.BookmarkCreateArg): void {
     const bookmarkExists = this.exists(create.url);
 
@@ -38,16 +75,33 @@ export class BookmarkService {
     }
   }
 
+  /**
+   * Checks if a bookmark with the given URL exists in the bookmarks list.
+   *
+   * @param url - The URL of the bookmark to check.
+   * @returns `true` if a bookmark with the given URL exists, otherwise `false`.
+   */
   exists(url: string): boolean {
     return this.bookmarks.getValue().some(bookmark => url === bookmark.url);
   }
 
+  /**
+   * Loads the bookmarks from the Chrome bookmarks API and returns an observable
+   * of the bookmark tree nodes.
+   *
+   * @returns {Observable<chrome.bookmarks.BookmarkTreeNode[]>} An observable that emits the bookmark tree nodes.
+   */
   load(): Observable<chrome.bookmarks.BookmarkTreeNode[]> {
     this.loadChromeBookmarks(this.bookmarkFolder);
 
     return this.bookmarks$;
   }
 
+  /**
+   * Removes a bookmark from the Chrome bookmarks and updates the local bookmarks state.
+   *
+   * @param remove - The bookmark node to be removed.
+   */
   remove(remove: chrome.bookmarks.BookmarkTreeNode): void {
     chrome.bookmarks.remove(remove.id, () => {
       const result = [ ...this.bookmarks.value ].filter(bookmark => bookmark.id !== remove.id);
@@ -55,6 +109,12 @@ export class BookmarkService {
     });
   }
 
+  /**
+   * Opens the given bookmark URL in a new browser tab and removes the bookmark.
+   *
+   * @param {chrome.bookmarks.BookmarkTreeNode} bookmark - The bookmark to be opened and removed.
+   * @returns {void}
+   */
   select(bookmark: chrome.bookmarks.BookmarkTreeNode): void {
     window.open(bookmark.url, '_blank');
     this.remove(bookmark);
@@ -84,7 +144,7 @@ export class BookmarkService {
     chrome.bookmarks.getTree(bookmarks => {
       const result = bookmarks[0].children
         .find(child => child.title.toLowerCase() === OTHER_BOOKMARKS.toLowerCase());
-      if (result && result.children) {
+      if (result?.children) {
         const match = result.children.find(bookmark => bookmark.title === title);
         if (match) {
           this.readingListId = match.id;

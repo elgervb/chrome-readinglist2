@@ -1,26 +1,30 @@
-<app-bookmark-header
-  [bookmarks]="bookmarks"
-  [currentUrlExists]="currentUrlExists"
-  [sorting]="sorting$ | async"
-  [version]="version"
-  [countBookmarks]="countBookmarks"
-  (addBookmark)="addBookmark()"
-  (sortEvent)="setSorting()"
-  [class.dev-mode]="devMode">
-</app-bookmark-header>
-
-<app-bookmark-list
-  [bookmarks]="bookmarks"
-  [countBookmarks]="countBookmarks"
-  (clearFilter)="applyFilter('')"
-  (selectEvent)="selectBookmark($event)">
-</app-bookmark-list>
-
-<app-bookmark-footer
-  [bookmarks]="bookmarks"
-  [filter]="filter$ | async"
-  (filterEvent)="applyFilter($event)"
-  (openReviewEvent)="openReview()"
-  (reviewPopoverShowEvent)="reviewPopoverShown($event)"
-  (randomBookmarkEvent)="randomBookmark()">
-</app-bookmark-footer>
+@defer {
+  <app-bookmark-header
+    [bookmarks]="bookmarks()"
+    [currentUrlExists]="currentUrlExists()"
+    [sorting]="sorting()"
+    [version]="version"
+    [countBookmarks]="countBookmarks()"
+    (addBookmark)="addBookmark()"
+    (sortEvent)="setSorting()"
+    [class.dev-mode]="devMode">
+  </app-bookmark-header>
+}
+@defer {
+  <app-bookmark-list
+    [bookmarks]="bookmarks()"
+    [countBookmarks]="countBookmarks()"
+    (clearFilter)="applyFilter('')"
+    (selectEvent)="selectBookmark($event)">
+  </app-bookmark-list>
+}
+@defer {
+  <app-bookmark-footer
+    [bookmarks]="bookmarks()"
+    [filter]="filter()"
+    (filterEvent)="applyFilter($event)"
+    (openReviewEvent)="openReview()"
+    (reviewPopoverShowEvent)="reviewPopoverShown($event)"
+    (randomBookmarkEvent)="randomBookmark()">
+  </app-bookmark-footer>
+}

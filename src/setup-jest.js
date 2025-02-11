@@ -27,7 +27,7 @@ const chrome = {
     create: jest.fn(),
     query: jest.fn()
   },
-  browserAction: {
+  action: {
     setBadgeText: jest.fn()
   }
 };

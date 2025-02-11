@@ -17,8 +17,4 @@ export class BookmarkListComponent {
   readonly selectEvent = output<chrome.bookmarks.BookmarkTreeNode>();
   readonly clearFilter = output<void>();
 
-  trackByBookmark(_: number, bookmark: chrome.bookmarks.BookmarkTreeNode): string {
-    return bookmark.id;
-  }
-
 }
