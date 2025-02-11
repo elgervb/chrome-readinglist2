@@ -1,11 +1,12 @@
-import { Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { Sorting } from '../../models/sorting';
 
 
 @Component({
   selector: 'app-bookmark-header',
   templateUrl: './bookmark-header.component.html',
-  styleUrls: [ './bookmark-header.component.css' ]
+  styleUrls: [ './bookmark-header.component.css' ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BookmarkHeaderComponent {
 

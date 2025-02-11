@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, signal } from '@angular/core';
 import { share } from 'rxjs/operators';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { BookmarkService } from '../../services/bookmark/bookmark.service';
@@ -24,7 +24,8 @@ const chromeReviewUrl = 'https://chrome.google.com/webstore/detail/chrome-readin
   templateUrl: './bookmarks.component.html',
   styleUrls: [ './bookmarks.component.css' ],
   imports: [ BookmarkHeaderComponent, BookmarkListComponent, BookmarkFooterComponent ],
-  providers: [ { provide: DEFAULT_LAZY_IMAGE, useValue: DEFAULT_IMAGE } ]
+  providers: [ { provide: DEFAULT_LAZY_IMAGE, useValue: DEFAULT_IMAGE } ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BookmarksComponent {
 

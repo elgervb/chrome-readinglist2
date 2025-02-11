@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { LazyImgDirective } from '../../directives/lazy-img.directive';
 import { FaviconPipe } from '../../pipes/favicon.pipe';
@@ -7,7 +7,8 @@ import { FaviconPipe } from '../../pipes/favicon.pipe';
   selector: 'app-bookmark-list',
   templateUrl: './bookmark-list.component.html',
   styleUrls: [ './bookmark-list.component.css' ],
-  imports: [ LazyImgDirective, DatePipe, FaviconPipe ]
+  imports: [ LazyImgDirective, DatePipe, FaviconPipe ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BookmarkListComponent {
 

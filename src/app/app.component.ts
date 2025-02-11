@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { GoogleAnalyticsService } from '@core/google-analytics.service';
 
@@ -6,7 +6,8 @@ import { GoogleAnalyticsService } from '@core/google-analytics.service';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: [ './app.component.css' ],
-  imports: [ RouterOutlet ]
+  imports: [ RouterOutlet ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
 
