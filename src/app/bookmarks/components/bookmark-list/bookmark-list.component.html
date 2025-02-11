@@ -1,6 +1,6 @@
 @if (bookmarks()?.length) {
   <ul>
-    @for (bookmark of bookmarks(); track trackByBookmark($index, bookmark)) {
+    @for (bookmark of bookmarks(); track bookmark.id) {
       <li (pointerup)="selectEvent.emit(bookmark)">
         <img [appLazyImg]="bookmark | favicon" alt="Favicon for {{bookmark.url}}" class="favicon" />
         <div class="text">

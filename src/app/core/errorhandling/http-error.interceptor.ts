@@ -9,7 +9,7 @@ import { catchError, retry } from 'rxjs/operators';
 })
 export class HttpErrorInterceptor implements HttpInterceptor {
 
-  private googleAnalyticsService = inject(GoogleAnalyticsService);
+  private readonly googleAnalyticsService = inject(GoogleAnalyticsService);
 
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {

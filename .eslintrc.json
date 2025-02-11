@@ -46,7 +46,8 @@
         "@angular-eslint/use-lifecycle-interface": "error",
         "@angular-eslint/use-pipe-transform-interface": "error",
         "prefer-arrow/prefer-arrow-functions": "off",
-        "@typescript-eslint/unbound-method": "off"
+        "@typescript-eslint/unbound-method": "off",
+        "@typescript-eslint/member-ordering": "off"
       }
     },
     {

@@ -7,7 +7,7 @@ import { GoogleAnalyticsService } from '@core/google-analytics.service';
 })
 export class GlobalErrorHandler extends ErrorHandler {
 
-  private injector = inject(Injector);
+  private readonly injector = inject(Injector);
 
 
   handleError(error: Error | HttpErrorResponse): void {
