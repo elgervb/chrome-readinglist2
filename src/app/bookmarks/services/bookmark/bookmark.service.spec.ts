@@ -5,7 +5,6 @@ import { createServiceFactory, SpectatorService } from '@ngneat/spectator/jest';
 
 describe('BookmarkService', () => {
   let spectator: SpectatorService<BookmarkService>;
-  // TODO: use mock for bookmarFolderToken
   const createService = createServiceFactory({
     service: BookmarkService,
     providers: [ { provide: bookmarkFolderToken, useValue: '/test' } ]
@@ -41,7 +40,6 @@ describe('BookmarkService', () => {
       }
     ];
     let createBookmark: chrome.bookmarks.BookmarkTreeNode;
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     (chrome.bookmarks.getTree as jest.Mock).mockImplementation(callback => callback(bookmarks));
     (chrome.bookmarks.create as jest.Mock).mockImplementation((bookmark, callback) => {
       createBookmark = bookmark;
@@ -75,7 +73,6 @@ describe('BookmarkService', () => {
         ]
       }
     ];
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     (chrome.bookmarks.getTree as jest.Mock).mockImplementation(callback => callback(bookmarks));
 
     spectator.service.load();

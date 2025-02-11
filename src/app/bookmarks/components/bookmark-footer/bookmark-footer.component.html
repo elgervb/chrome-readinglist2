@@ -12,10 +12,10 @@
 
 
   @defer (on hover(heart)) {
-    @if(displayPopover) {
+    @if(displayPopover()) {
       <div class="backdrop"></div>
       <div class="popover">
-        <p>If you like this extension, please add a <a (click)="this.openReviewEvent.emit()" href="#">review</a>.</p>
+        <p>If you like this extension, please add a <a (click)="openReviewEvent.emit()" href="#">review</a>.</p>
         <p>Thanks!</p>
       </div>
     }

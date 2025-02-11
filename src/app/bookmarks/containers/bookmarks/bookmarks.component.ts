@@ -58,7 +58,7 @@ export class BookmarksComponent {
 
     this.bookmarkService.load();
 
-    effect(() => chrome.action.setBadgeText({ text: `${this.bookmarks().length}` }));
+    effect(() => chrome.action.setBadgeText({ text: `${this.allBookmarks().length}` }));
     effect(() => {
       if (this.bookmarks().length > 0) {
         chrome.tabs.query({ active: true, currentWindow: true }, tabs => {

@@ -35,8 +35,11 @@
 .btn-random:hover {
   background-color: #dfdfdf;
 }
+.btn-random[disabled] {
+  cursor: not-allowed;
+  opacity: .5;
+}
 .heart {
-  /* animation: 1s ease-in-out 1s 3 heartbeat; */
   cursor: pointer;
   fill: #f62459;
   font-size: 2em;

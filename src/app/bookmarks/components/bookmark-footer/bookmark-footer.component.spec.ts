@@ -14,30 +14,27 @@ describe('BookmarkFooterComponent', () => {
     expect(spectator.component).toBeTruthy();
   });
 
-  it('should emit random bookmark event', () => {
-    let emit = false;
-    spectator.component.randomBookmarkEvent.subscribe(() => emit = true);
-
-    const button = spectator.fixture.debugElement.query(By.css('.btn-random'));
-    expect(button).toBeTruthy();
-    button.triggerEventHandler('click', void 0);
-
-    expect(emit).toBe(true);
+  it('should emit random bookmark event', done => {
+    spectator.component.randomBookmarkEvent.subscribe(() => {
+      const button = spectator.fixture.debugElement.query(By.css('.btn-random'));
+      expect(button).toBeTruthy();
+      button.triggerEventHandler('click', void 0);
+      done();
+    });
   });
 
-  it('should emit filter event', () => {
-    let emit = '';
-    spectator.component.filterEvent.subscribe((val: string) => emit = val);
-
-    const input = spectator.fixture.debugElement.query(By.css('.filter'));
-    expect(input).toBeTruthy();
-    input.triggerEventHandler('input', {
-      target: {
-        value: 'abc'
-      }
+  it('should emit filter event', done => {
+    spectator.component.filterEvent.subscribe((val: string) => {
+      const input = spectator.fixture.debugElement.query(By.css('.filter'));
+      expect(input).toBeTruthy();
+      input.triggerEventHandler('input', {
+        target: {
+          value: 'abc'
+        }
+      });
+      expect(val).toBe('abc');
+      done();
     });
-
-    expect(emit).toBe('abc');
   });
 
   it('should show popup', () => {

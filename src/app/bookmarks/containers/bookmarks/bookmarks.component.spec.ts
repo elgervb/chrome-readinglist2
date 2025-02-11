@@ -51,7 +51,6 @@ describe('BookmarksComponent', () => {
       queryMock.mockImplementation((_, callback) => callback([ { url: 'https://url', title: 'title' } ]));
       spectator.component.addBookmark();
 
-      // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(analyticsSend).toHaveBeenCalledWith('bookmarks', 'add', 'https://url');
     });
 
