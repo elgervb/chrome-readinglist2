@@ -49,7 +49,7 @@ export class BookmarksComponent {
     return bookmarks.sort((a, b) => this.sortBookmarks(a, b, this.sorting()));
   });
 
-  currentUrlExists = signal(true);
+  readonly currentUrlExists = signal(true);
 
   constructor() {
     chrome.storage.sync.get([ 'filter', 'sorting' ], data => {

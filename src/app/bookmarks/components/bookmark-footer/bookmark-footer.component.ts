@@ -1,9 +1,12 @@
 import { ChangeDetectionStrategy, Component, input, output, signal, TemplateRef, viewChild } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-bookmark-footer',
   templateUrl: './bookmark-footer.component.html',
   styleUrls: [ './bookmark-footer.component.css' ],
+  imports: [ ReactiveFormsModule ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BookmarkFooterComponent {
@@ -20,9 +23,10 @@ export class BookmarkFooterComponent {
 
   readonly displayPopover = signal(false);
 
-  emitFilterEvent(event: Event): void {
-    const target: HTMLInputElement = event.target as HTMLInputElement;
-    this.filterEvent.emit(target.value);
+  readonly filterInput = new FormControl<string>('');
+
+  constructor() {
+    this.filterInput.valueChanges.pipe(debounceTime(200), distinctUntilChanged()).subscribe(value => this.filterEvent.emit(value));
   }
 
   showPopover(): void {

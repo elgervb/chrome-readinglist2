@@ -1,6 +1,5 @@
 
 import { BookmarkFooterComponent } from './bookmark-footer.component';
-import { By } from '@angular/platform-browser';
 
 import { createComponentFactory, Spectator } from '@ngneat/spectator/jest';
 
@@ -16,25 +15,34 @@ describe('BookmarkFooterComponent', () => {
 
   it('should emit random bookmark event', done => {
     spectator.component.randomBookmarkEvent.subscribe(() => {
-      const button = spectator.fixture.debugElement.query(By.css('.btn-random'));
-      expect(button).toBeTruthy();
-      button.triggerEventHandler('click', void 0);
       done();
     });
+
+    const button = spectator.query<HTMLButtonElement>('.btn-random');
+    expect(button).toBeTruthy();
+    expect(button.disabled).toBeTruthy();
+
+    spectator.setInput('bookmarks', [ { id: '1', title: 'abc', url: 'http://abc.com' } ]);
+    expect(button.disabled).toBeFalsy();
+
+    spectator.click('.btn-random');
   });
 
   it('should emit filter event', done => {
     spectator.component.filterEvent.subscribe((val: string) => {
-      const input = spectator.fixture.debugElement.query(By.css('.filter'));
-      expect(input).toBeTruthy();
-      input.triggerEventHandler('input', {
-        target: {
-          value: 'abc'
-        }
-      });
       expect(val).toBe('abc');
       done();
     });
+
+    const input = spectator.query<HTMLInputElement>('.filter');
+    expect(input).toBeTruthy();
+    spectator.triggerEventHandler('.filter', 'input', {
+      target: {
+        value: 'abc'
+      }
+    });
+
+
   });
 
   it('should show popup', () => {
